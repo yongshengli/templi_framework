@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+	{template file=head}
+	<link href="{THEMES_URL}common/css/profile.css" rel="stylesheet" />
+    <link href="{JS_URL}datepicker/css/datepicker.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="{JS_URL}datepicker/js/datepicker.js"></script>
+</head>
+<body>
+<div class="wrap">
+	{template file=header}
+	<div class="main_wrap">
+		<div class="bread_crumb">
+			<a href="{url('index/index/index')}" class="home" title="首页">首页</a><em>&gt;</em><a href="{url('home/member_info/profile')}">设置</a>
+<!--#
+$_profileBread = Wind::getApp()->getResponse()->getData('G','profileBread');
+foreach ($_profileBread as $key => $_item) {
+if (!$_item || !is_array($_item)) continue;
+#-->
+			<em>&gt;</em><a href="{$_item['url']}">{$_item['title']}</a>
+<!--#}#-->
+		</div>
+		<div class="cc profile_page">
+			<div class="md">
+				{template file="profile_left"}
+			</div>
+			<div class="cm">
+				<div class="cw">
+					<div class="box_wrap">
+					   {template file='member_info_profile'}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--<template source='TPL:common.footer' load='true' />-->
+</div>
+</body>
+</html>

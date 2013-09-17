@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+	{template file='head'}
+	<link href="{THEMES_URL}common/css/profile.css" rel="stylesheet" />
+</head>
+<body>
+<div class="wrap">
+    {template file='header'}
+    <div class="main_wrap">
+		<div class="bread_crumb">
+			<a href="{@url:}" class="home" title="{@C:site.info.name}">首页</a><em>&gt;</em><a href="{@url:profile/index/run}">设置</a>
+		</div>
+		<div class="cc profile_page">
+			<div class="md">
+				{template file='profile_left'}
+			</div>
+			<div class="cm">
+				<div class="cw">
+					<div class="box_wrap">
+<!--头像上传开始-->
+						<div class="content">
+							<div class="profile_nav">
+								<ul>
+									<li class="current"><a href="{@url:profile/avatar/run?_left=avatar}">更改头像</a></li>
+								</ul>
+							</div>
+							<div class="avatar_other">
+								<form id="J_avatgar_normal_form" action="{url('home/member_info/avatar')}" method="post" enctype="multipart/form-data" >
+								<dl class="cc">
+									<dt>
+										<img class="J_avatar J_previewImg" src="{@Pw::getAvatar($loginUser->uid, 'big')}" data-type="big" width="200" height="200" />
+									</dt>
+									<dd>
+										<div class="mb10"><input type="file" name="avatar" class="J_upload_preview"></div>
+										<div class="gray mb20">支持JPG、JPEG、PNG文件格式</div>
+                                        <input type="submit" name="dosubmit" value="上传"/>
+										<button type="submit" class="btn btn_submit btn_big mr20" id="J_avatgar_normal_btn">保存</button>
+									</dd>
+								</dl>
+								</form>
+							</div>
+						</div>
+<!--头像上传结束-->
+					<img src="{getAvatar(Session::get('userid'), 'big')}" />
+					<img src="{getAvatar(Session::get('userid'), 'middle')}" />
+					<img src="{getAvatar(Session::get('userid'), 'small')}" />
+                    <img src="{getAvatar(Session::get('userid'), 'original')}" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+    
+
+        <!--<form action="{url('home/member_info/password')}" method="post">
+            <div class="fieldset flash" id="fsUploadProgress"></div>
+            <span id="startUpload" style="display: none;"></span>
+            <input type="submit" name="dosubmit" value="保存"/>
+        </form>-->
+<script type="text/javascript" src="{JS_URL}swfupload/swfupload.js"></script>
+<script type="text/javascript" src="{JS_URL}swfupload/swfupload.queue.js"></script>
+<script type="text/javascript" src="{JS_URL}swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="{JS_URL}swfupload/callbacks.js"></script>
+<script>
+$(function($){
+    var settings = {
+            upload_url:"{url('home/member_info/upload')}",           //附件上传服务器地址
+            //file_post_name:editor.options.fileFieldName,      //向后台提交的表单名
+            flash_url:"/public/js/swfupload/swfupload.swf",
+            flash9_url:"/public/js/swfupload/swfupload_fp9.swf",
+            post_params:{"PHPSESSID":"<?php echo session_id(); ?>"}, //解决session丢失问题
+            file_size_limit:"100 MB",                                 //文件大小限制，此处仅是前端flash选择时候的限制，具体还需要和后端结合判断
+            file_types:"*.*",                                         //允许的扩展名，多个扩展名之间用分号隔开，支持*通配符
+            file_types_description:"All Files",                      //扩展名描述
+            file_upload_limit:100,                                   //单次可同时上传的文件数目
+            file_queue_limit:10,                                      //队列中可同时上传的文件数目
+            custom_settings:{                                         //自定义设置，用户可在此向服务器传递自定义变量
+                progressTarget:"fsUploadProgress",
+                startUploadId:"startUpload"
+            },
+            debug:false,
+
+            // 按钮设置
+            //button_image_url:"../../themes/default/images/filescan.png",
+            button_width:"100",
+            button_height:"25",
+            button_placeholder_id:"spanButtonPlaceHolder",
+            button_text:'<span class="theFont">选择文件</span>',
+            button_text_style:".theFont { font-size:14px;}",
+            button_text_left_padding:10,
+            button_text_top_padding:4,
+
+            // 所有回调函数 in handlers.js
+            swfupload_preload_handler:preLoad,
+            swfupload_load_failed_handler:loadFailed,
+            file_queued_handler:fileQueued,
+            file_queue_error_handler:fileQueueError,
+            //选择文件完成回调
+            file_dialog_complete_handler:function(numFilesSelected, numFilesQueued) {
+                var me = this;        //此处的this是swfupload对象
+                if (numFilesQueued > 0) {
+                    dialog.buttons[0].setDisabled(true);
+                    var start = $G(this.customSettings.startUploadId);
+                    start.style.display = "";
+                    start.onclick = function(){
+                        me.startUpload();
+                        start.style.display = "none";
+                    }
+                }
+            },
+            upload_start_handler:uploadStart,
+            upload_progress_handler:uploadProgress,
+            upload_error_handler:uploadError,
+            upload_success_handler:function (file, serverData) {
+                try{
+                    var info = eval("("+serverData+")");
+                }catch(e){}
+                var progress = new FileProgress(file, this.customSettings.progressTarget);
+                if(info.state=="SUCCESS"){
+                    progress.setComplete();
+                    progress.setStatus("<span style='color: #0b0;font-weight: bold'>"+lang.uploadSuccess+"</span>");
+                    filesList.push({url:info.url,type:info.fileType,original:info.original});
+                    progress.toggleCancel(true,this,lang.delSuccessFile);
+                }else{
+                    progress.setError();
+                    progress.setStatus(info.state);
+                    progress.toggleCancel(true,this,lang.delFailSaveFile);
+                }
+
+            },
+            //上传完成回调
+            upload_complete_handler:uploadComplete,
+            //队列完成回调
+            queue_complete_handler:function(numFilesUploaded){
+                dialog.buttons[0].setDisabled(false);
+//                var status = $G("divStatus");
+//                var num = status.innerHTML.match(/\d+/g);
+//                status.innerHTML = ((num && num[0] ?parseInt(num[0]):0) + numFilesUploaded) +lang.statusPrompt;
+            }
+        };
+        swfupload = new SWFUpload( settings );
+})
+</script>
+{template file='footer'}

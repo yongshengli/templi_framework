@@ -1,0 +1,91 @@
+<div class="content">
+    <form class="J_profile_form" action="{url('home/member_info/profile')}" method="post">
+	<div class="profile_ct">
+		<dl class="cc">
+			<dt>性别：</dt>
+			<dd><label class="mr20"><input name="info[gender]" type="radio" value="1" {if $info['gender']==1} checked="checked" {/if} />男</label>
+				<label class="mr20"><input name="info[gender]" type="radio" value="2" {if $info['gender']==2} checked="checked" {/if} />女</label>
+			</dd>
+		</dl>
+		<dl class="cc">
+			<dt>生日：</dt>
+			<dd class="J_date_select">
+				<input class="input mr10" type="text" name="info[birthday]" value="{$info['birthday']}" id="datepicker" readonly="readonly"/>
+			</dd>
+		</dl>
+		<dl class="cc">
+			<dt>现居住地：</dt>
+			<dd class="J_region_set">
+				<input type="hidden" name="info[location_id]" readonly="readonly" id="location_id" value="{$info[location_id]}"/>
+                <input class="input mr10" type="text" name="info[location]" readonly="readonly" id="location_name" value="{$info['location']}" onclick="select_area('location');"/>
+			</dd>
+		</dl>
+		<dl class="cc">
+			<dt>家乡：</dt>
+			<dd class="J_region_set">
+				<input type="hidden" name="info[hometown_id]" readonly="readonly" id="hometown_id" value="{$info[hometown_id]}"/>
+                <input class="input mr10" type="text" name="info[hometown]" id="hometown_name" readonly="readonly" value="{$info['hometown']}" onclick="select_area('hometown');"/>
+			</dd>
+		</dl>
+        <dl class="cc">
+            <dt>QQ:</dt>
+            <dd><input class="input mr10" type="text" name="info[qq]" value="{$info['qq']}"/></dd>
+        </dl>
+        <dl class="cc">
+            <dt>msn:</dt><dd><input class="input mr10" type="text" name="info[msn]" value="{$info[msn]}"/></dd>
+        </dl>
+        <dl class="cc">
+            <dt>阿里旺旺:</dt><dd><input class="input mr10" type="text" name="info[aliww]" value="{$info['aliww']}"/></dd>
+        </dl>
+        <dl class="cc">
+            <dt>手机号:</dt><dd><input class="input mr10" type="text" name="info[mobile]" value="{$info['mobile']}"/></dd>
+        </dl>
+		<dl class="cc">
+			<dt>个人主页：</dt>
+			<dd><input type="text" class="input length_6 mr10" name="homepage" value="{$info['homepage']}"/><span id="J_profile_tip_homepage" class="f12 gray"></span></dd>
+		</dl>
+		<dl class="cc">
+			<dt>自我简介：</dt>
+			<dd><textarea class="length_6 mr10" name="profile">{$info['profile']}</textarea><span id="J_profile_tip_profile" class="f12 gray"></span></dd>
+		</dl>
+<!--#if ($isAllowSign) {#-->
+		<dl class="cc">
+			<dt>帖子签名：</dt>
+			<dd><textarea class="length_6 mr10" name="bbs_sign" id="J_bbs_sign">{$info['sign']}</textarea><a href="" id="J_ubbdemo" class="tips_icon_help f12 gray" title="ubb使用帮助"></a>
+			<span id="J_profile_tip_bbs_sign" class="f12 gray"></span><!--#if ($isSignBan) {#--><br/><span class="red">签名已被禁止，如有疑问请联系管理员。</span><!--#}#-->
+			</dd>
+		</dl>
+<!--#}#-->
+		<dl class="cc">
+			<dt>&nbsp;</dt>
+			<dd><button type="submit" class="btn btn_submit btn_big mr10" name="dosubmit">提交</button></dd>
+		</dl>
+	</div>
+	</form>
+</div>
+<script>
+$(function($){
+    $('#datepicker').DatePicker({
+		date: '2013-07-23',
+		calendars: 1,
+		starts: 1,
+        onChange: function(formated, dates){
+			$('#datepicker').val(formated).DatePickerHide();
+		}
+	});
+ })
+ function select_area(field){
+    	$.layer({
+    		type: 2,
+    		title: '选择地区',
+    		offset: ['100px',''],
+    		closeBtn: [0,true],
+    		bgcolor: '',
+    		area: ['610px', '300px'],
+    		border: [10 , 0.5 , '#EF8016', false],
+    		iframe: {src : '{url("home/member_info/location")}&field='+field+'"}'}
+    	});
+        //alert(layer_id);
+    	//layer.tips('许个好愿吧', '#wish', 5);
+    }
+</script>

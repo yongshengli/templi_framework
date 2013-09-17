@@ -1,0 +1,7 @@
+<div class="menubar">
+	<ul>
+        {loop $leftmenu $r}
+		<li class="{$r['current']}"><a href="{$r['url']}" id="profile_{$key}">{$r['title']}</a></li>
+        {/loop}
+	</ul>
+</div>

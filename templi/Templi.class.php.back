@@ -1,0 +1,30 @@
+<?php
+/**
+ * TempLi框架 采用mvc模式 简单 小巧 易用
+ * 核心类
+ * @author 七觞酒
+ * @email 739800600@qq.com
+ * @date  2013-07-08
+ */
+class Templi{
+    
+    //当前 创建的应用
+    private static $_app=array();
+    /**
+     * 获取版本信息
+     */
+    public static function getVersion()
+	{
+		return '1.0.0';
+	}
+    public function iseet(){
+        
+    }
+    public function get(){
+        
+    }
+    public function set(){
+        
+    }
+}
+?>

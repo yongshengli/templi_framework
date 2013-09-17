@@ -1,0 +1,31 @@
+{include Templi::include_html('header','index')}
+ <div class="mainbody">
+    <div class="main_left">
+        <div class="box-hd">
+            <h3 class="box-hd-title">今日新闻</h3>
+            <span class="box-hd-more"><a href="#">更多</a></span>
+        </div>
+        {loop $data['list'] $r}
+            <div class="news_box">
+                <h3><a href="<?=url('news/index/detail',array('id'=>$r['id']))?>">{$r['title']}</a></h3>
+                <div class="news_des">
+                    {$r['description']}
+                </div>
+                <div class="news_other">{date('Y-m-d H:i:s',$r['ctime'])}</div>
+            </div>
+        {/loop}
+        
+        <div  class="pages">
+              <div class="inR">
+                    {$data['page_html']}
+              </div>
+        </div>
+    </div>
+    <div class="main_right">
+        <div class="box-hd">
+            <h3 class="box-hd-title">热门新闻</h3>
+            <span class="box-hd-more"><a href="#">更多</a></span>
+        </div>
+    </div>
+</div>
+{include Templi::include_html('footer','index')}

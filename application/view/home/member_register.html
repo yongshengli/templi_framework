@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    {template file='head'}
+    <link href="{THEMES_URL}common/css/register.css" type="text/css" rel="stylesheet" />
+    <link href="{JS_URL}formvalidator/themes/126/style/style.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="{JS_URL}formValidator/formValidator-4.1.3.js"></script>
+    <script src="{JS_URL}formValidator/formValidatorRegex.js" type="text/javascript" charset="UTF-8"></script>
+</head>
+<body>
+<div class="wrap">
+<!--<style>.header_wrap{top:29px;}body{padding-top:75px;}</style>
+<div id="notice">{$site_info_notice}</div>-->
+    <header class="header_wrap">
+    	<div id="J_header" class="header cc">
+    		<div class="logo">
+    			<a href="{APP_URL}">
+    				<img src="{THEMES_URL}common/images/logo.png" alt="{TEMPLI::get_config('app_name')}"/>
+    			</a>
+    		</div>
+    		<nav class="nav_wrap">
+    			<div class="nav">
+    				<ul>
+    					<li class="current"><a href="">首页</a></li>
+    				</ul>
+    			</div>
+    		</nav>
+    		<div class="header_search" role="search">
+    			<form action="{@url:search/s/run}" method="post">
+    				<input type="text" id="s" aria-label="搜索关键词" accesskey="s" placeholder="搜索其实很简单" x-webkit-speech speech name="keyword"/>
+    				<button type="submit" aria-label="搜索"><span>搜索</span></button>
+    			</form>
+    		</div>
+    		{template file='header_login'}
+    	</div>
+    </header>
+	<div class="nav_weak" id="{$ck}">
+		<ul class="cc">
+			<li class="{$current}">{$_v['name']|html}</li>
+		</ul>
+	</div>
+    <div class="tac"><advertisement id='Site.NavBanner' sys='1'/></div>
+
+    <div class="main_wrap">
+		<div class="box_wrap register cc">
+			<h2 class="reg_head">欢迎注册成为 {Templi::get_config('app_name')} 会员</h2>
+			<div class="reg_cont_wrap">
+				<div class="reg_cont">
+					<form name="registerForm" id="registerForm" method="post" action="{url('home/member/register')}">
+					<div class="reg_form">
+						<!--
+						<dl>
+							<dt><label for="J_reg_invitecode">邀请码：</label></dt>
+							<dd><span class="must_red">*</span><input id="J_reg_invitecode" name='invitecode' type="text" aria-required="true" class="input length_4" value="{$invitecode}"><br/>
+						      if ($config['invite.pay.open']) {<a href="index.php?m=my&c=invite">购买邀请码</a> 
+							</dd>
+							<dd class="dd_r" id="J_reg_tip_invitecode">本站开启邀请注册，请填写邀请码</dd>
+						</dl>
+						<div class="invite_box_wrap" style="display:none">
+							<div class="invite_box">
+								<div class="hd"><a href="" class="fr">收起&uarr;</a><strong class="b">购买邀请码</strong></div>
+								<div class="tips">在线支付成功后将自动返回至注册页面并显示邀请码。<br>如果返回后没有显示邀请码，请到电子邮箱查收或联系站长。</div>
+								<div class="ct">
+									<ul>
+										<li><em>电子邮箱：</em><span><input type="email" class="input"></span><span class="tips_icon_error">电子邮箱格式错误</span></li>
+										<li><em>支付金额：</em><span class="s2 mr10">1元</span>有效期1天</li>
+										<li><em>&nbsp;</em><button type="button" class="btn btn_submit">立即付款</button></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						}elseif ($invite) {
+						<input type="hidden" name="invite" value="{$invite}" />
+						-->
+						<dl>
+							<dt><label>用户名：</label></dt>
+							<dd><span class="must_red">*</span><input id="J_reg_username" name="info[username]" type="text" class="input length_4 J_reg_input" value=""/></dd>
+							<dd class="dd_r" id="J_reg_usernameTip" role="tooltip" aria-hidden="true"></dd>
+						</dl>
+						<dl>
+							<dt><label>密码：</label></dt>
+							<dd><span class="must_red">*</span><input aria-required="true" id="J_reg_password" data-id="password" name="info[password]" type="password" class="input length_4" value=""/></dd>
+							<dd class="dd_r" id="J_reg_passwordTip" role="tooltip" aria-hidden="true"></dd>
+						</dl>
+						<dl>
+							<dt><label>确认密码：</label></dt>
+							<dd><span class="must_red">*</span><input aria-required="true" id="J_reg_repassword" data-id="repassword" name="info[repassword]" type="password" class="input length_4" value=""/></dd>
+							<dd class="dd_r" id="J_reg_repasswordTip" role="tooltip" aria-hidden="true"></dd>
+						</dl>
+						<dl>
+							<dt><label>电子邮箱：</label></dt>
+							<dd>
+								<div id="J_email_list" class="fl mail_down" style="display:;margin-top:27px;"></div>
+								<span class="must_red">*</span><input aria-required="true" autocomplete="off" id="J_reg_email" data-id="email" name="info[email]" type="text" class="input length_4" value=""/>
+							</dd>
+							<dd class="dd_r" id="J_reg_emailTip" role="tooltip" aria-hidden="true"></dd>
+						</dl>
+						
+						<!--if ($config['active.phone']) {
+						<dl id="J_moblie_dl">
+							<dt><label for="">手机号码：</label></dt>
+							<dd><span class="must_red">*</span><input type="hidden" id="J_reg_mobile_hide" name="mobile"><input id="J_reg_mobile" data-counttime="90" type="text" aria-required="true" class="input length_4" value=""></dd>
+							<dd class="dd_r"><button style="display:none;" id="J_show_mcode" name="mobile" type="button" class="btn mr5">获取验证码</button><span class="dd_r" id="J_reg_tip__mobile" role="tooltip" aria-hidden="true"></span><span id="J_mcode_tip" class="reg_tips" style="display:none;">验证码已发送到<span id="J_send_mobile"></span><a href="" id="J_mobile_change" class="s4">（修改号码）</a>超过90秒未收到验证码，请点击重新发送。<button id="J_mcode_resend" class="btn disabled" type="button" disabled>90秒后重新发送</button></span></dd>
+						</dl>
+						<dl id="J_mcode_dl">
+							<dt><label for="">手机验证码：</label></dt>
+							<dd><span class="must_red">*</span><input id="J_reg_mobileCode" name="mobileCode" type="text" class="input length_4" value=""></dd>
+							<dd class="dd_r"><span class="dd_r" id="J_reg_tip_mobileCode" role="tooltip" aria-hidden="true"></span></dd>
+						</dl>
+						 }
+						
+						if ($config['active.check']) {
+						<dl class="cc">
+							<dt><label for="J_reg_regreason">注册原因：</label></dt>
+							<dd><span class="must_red">*</span><textarea id="J_reg_regreason" data-id="regreason" name="regreason" class="length_4"></textarea></dd>
+							<dd id="J_reg_tip_regreason" class="dd_r"></dd>
+						</dl>
+						<!--#}#-->
+						
+						<!--#foreach ($config['active.field'] as $field) {
+							//if ($config['active.phone'] && $field == 'mobile') continue;
+							$fieldsInfo = $needFields[$field];
+						
+						<segment tpl="TPL:u.register_segment_needfields" args='$field, $fieldsInfo' alias="register_segment_needfields" name="{$fieldsInfo['segment']}"/>
+						
+						}#-->
+						
+		
+						<dl>
+							<dt><label>验证码：</label></dt>
+							<dd>
+								<span class="must_red">*</span>
+								<div class="cc mb5" style="height:30px;"><input id="J_reg_code" data-id="code" name="info[captcha]" type="text" class="input length_4 fl"></div>
+								<div id="J_register_verify"><img src="{url('index/verify')}" width="70" height="30" id="img_verify" onclick="this.src='index.php?m=index&c=verify&time='+Math.random()"/></span>
+                                <a href="javascript:;" onclick="$('img_verify').attr('src','{url('index/verify')}')">看不清，换一张</a></div>
+							</dd>
+							<dd class="dd_r"><div id="J_reg_codeTip"></div></dd>
+						</dl>
+						<dl>
+							<dt>&nbsp;</dt>
+							<dd>
+                                <input type="hidden" name="dosubmit" value="true" readonly="readonly"/>
+                                <input class="btn btn_big btn_submit mr20" type="submit" id="doRegister" value="同意以下协议并注册"/>
+                            </dd>
+						</dl>
+						<div class="agreements">
+						<div><a id="J_agreements_btn" href="" class="s4" title="点击显示本协议">《本站协议规章内容》</a></div>
+						<pre id="J_agreements_content" style="display:none;">{$config['protocol']|html}</pre></div>
+					</div>
+					</form>
+				</div>
+			</div>
+			<div class="reg_side">
+				<div class="reg_side_cont">
+					<p class="mb10">已经有帐号？</p>
+					<p><a rel="nofollow" href="{url('home/member/login')}" class="btn btn_big">立即登录</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	$.formValidator.initConfig({formID:"registerForm",theme:"templi",submitOnce:true,
+    		ajaxPrompt : '有数据正在异步验证，请稍等...'
+    	});
+        $("#J_reg_username").formValidator({onShowText:"请输入用户名",onShow:"请输入用户名",onFocus:"用户名3-15个字符",onCorrect:"用户名可以注册"}).inputValidator({min:3,max:15,onError:"你输入的用户名非法"})
+	    .ajaxValidator({
+    		async : false,
+    		url : "{url('home/member/check_username')}",
+    		success : function(data){
+                if( data == "inexistence" ) 
+                    return true;
+                else if(data == "existent") 
+                    return '用户名已存在';
+                else 
+                    return data;
+    		},
+    		buttons: $("#doRegister"),
+    		error: function(jqXHR, textStatus, errorThrown){alert("服务器没有返回数据，可能服务器忙，请重试"+errorThrown);},
+    		onError : "用户名不可用，请更换用户名",
+    		onWait : "正在校验用户名..."
+    	});
+        $("#J_reg_password").formValidator({onShow:"请输入密码",onFocus:"密码长度6-20个字符",onCorrect:"密码正确"}).inputValidator({min:6,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"密码两边不能有空符号"},onError:"密码长度6-20个字符"}).passwordValidator({compareID:"J_reg_username"});
+        $("#J_reg_repassword").formValidator({onShow:"再次输入密码",onFocus:"确认密码长度6-20个字符",onCorrect:"确认密码正确"}).inputValidator({min:6,max:20,empty:{leftEmpty:false,rightEmpty:false,emptyError:"重复密码两边不能有空符号"},onError:"确认密码长度6-20个字符"}).compareValidator({desID:"J_reg_password",operateor:"=",onError:"2次密码不一致"});
+        $("#J_reg_email").formValidator({onShow:"请输入邮箱",onFocus:'邮箱6-30个字符',onCorrect:"邮箱输入正确",defaultValue:"@"}).inputValidator({min:6,max:30,onError:"你输入的邮箱格式不正确"}).regexValidator({regExp:"^([\\w-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([\\w-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$",onError:"你输入的邮箱格式不正确"});
+        $("#J_reg_code").formValidator({onShow:"请输入验证码",onFocus:"请输入验证码",onCorrect:"验证码正确"}).inputValidator({min:4,max:4,onError:"验证码错误"})
+	    .ajaxValidator({
+    		async : false,
+    		url : "{url('home/member/check_captcha')}",
+    		success : function(data){
+                if( data == "correct" ) return true;
+    			return "验证码错误";
+    		},
+    		buttons: $("#doRegister"),
+    		error: function(jqXHR, textStatus, errorThrown){alert("服务器没有返回数据，可能服务器忙，请重试"+errorThrown);},
+    		onError : "验证码错误",
+    		onWait : "正在校验验证码..."
+    	});
+    })
+    </script>
+{template file='footer'}
