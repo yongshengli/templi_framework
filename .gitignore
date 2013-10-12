@@ -1,6 +1,6 @@
 # Build folder and log file
 build/
 build.log
-application/cache
+cms/cache
 nbproject
 .gitignore~

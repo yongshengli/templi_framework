@@ -13,13 +13,24 @@ $config = array(
     /**
      * 应用脚本目录
      */
-    'app_path'=>ROOT_PATH.'application/',
+    'app_path'=>ROOT_PATH,
     /**
      * 运行模式
      * run_mode=>array('development','testing','production')
      */
      'run_mode'=>'development',
-
+    /**
+     * 默认模块
+     */
+     'default_module'=>'home',
+    /**
+     * 默认控制器
+     */
+     'default_controller'=>'member',
+    /**
+     * 默认操作
+     */
+     'default_action'=>'login',
     /**
      * url 配置
      * 类型 http://www.TempLi.com/m/c-a-id-5.html 1 静态需要开启apache rewrite 模块 0 动态 

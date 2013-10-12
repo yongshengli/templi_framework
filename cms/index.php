@@ -21,8 +21,8 @@ define('UPLOAD_URL',PUBLIC_URL.'uploads/');
 define('JS_URL',PUBLIC_URL.'js/');
 //主题 路径
 define('THEMES_URL',PUBLIC_URL.'themes/');
-require ROOT_PATH.'templi/Templi.class.php';
-$config = require ROOT_PATH.'/application/config/config.php';
+require '../templi/Templi.class.php';
+$config = require ROOT_PATH.'config/config.php';
 
 $app = new Templi();
 $app->create_webapp($config)->run();

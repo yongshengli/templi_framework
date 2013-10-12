@@ -13,9 +13,10 @@ class Appliction{
      * 初始化应用
      */
     public static function init(){
-        $GLOBALS['module']     = (isset($_GET['m']) && $_GET['m'])?trim($_GET['m']):(isset($_POST['m'])?trim($_POST['m']):'index');
-        $GLOBALS['controller'] = (isset($_GET['c']) && $_GET['c'])?trim($_GET['c']):(isset($_POST['c'])?trim($_POST['c']):'index');
-        $GLOBALS['action']     = (isset($_GET['a']) && $_GET['a'])?trim($_GET['a']):(isset($_POST['a'])?trim($_POST['a']):'index');
+        
+        $GLOBALS['module']     = (isset($_GET['m']) && $_GET['m'])?trim($_GET['m']):(isset($_POST['m'])?trim($_POST['m']):Templi::get_config('default_module'));
+        $GLOBALS['controller'] = (isset($_GET['c']) && $_GET['c'])?trim($_GET['c']):(isset($_POST['c'])?trim($_POST['c']):Templi::get_config('default_controller'));
+        $GLOBALS['action']     = (isset($_GET['a']) && $_GET['a'])?trim($_GET['a']):(isset($_POST['a'])?trim($_POST['a']):Templi::get_config('default_action'));
         $controller = self::loade_controller($GLOBALS['controller'],$GLOBALS['module']);
         if(substr($GLOBALS['action'],0,2)=='__'){
             if(APP_DEBUG)
