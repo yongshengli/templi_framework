@@ -23,30 +23,30 @@ class Appliction{
             else
                 show_404();
         }else{
-			// 关闭APP_DUBUG时 对页面压缩
-			if(APP_DEBUG || !ob_start('ob_gzhandler')) ob_start();
+	// 关闭APP_DUBUG时 对页面压缩
+	if(APP_DEBUG || !ob_start('ob_gzhandler')) ob_start();
             call_user_func(array(&$controller,$GLOBALS['action']));
-			ob_end_flush();
+	    ob_end_flush();
         }
     }
     /**
      * 加载控制器
      */
     private static function loade_controller($classname,$module){
-        if(!is_dir(APP_PATH.'controller/'.$module)){
+        if(!is_dir(Templi::get_config('app_path').'controller/'.$module)){
             if(APP_DEBUG)
                 throw new Abnormal($module.'模块不存在',0,true);
             else
                 show_404();
         }
         $classname .= 'Controller';
-        $path = APP_PATH.'controller/'.$module.'/'.$classname.'.php';
+        $path = Templi::get_config('app_path').'controller/'.$module.'/'.$classname.'.php';
         if(file_exists($path)){
             Templi::include_file($path);
             return new $classname;
         }else{
             //如果设置了empty控制器 则调用该控制器
-            $path =APP_PATH.'controller/'.$module.'/emptyController.php';
+            $path =Templi::get_config('app_path').'controller/'.$module.'/emptyController.php';
             if(file_exists($path)){
                 Templi::include_file($path);
                 return new emptyController();

@@ -77,14 +77,14 @@ class admin extends Controller{
             $file = $GLOBALS['controller'].'_'.$GLOBALS['action'].'.tpl.php';
         $module = $module?$module:$GLOBALS['module'];
         if($module=='admin'){
-            return APP_PATH.'view/'.$module.'/'.$file;
+            return Templi::get_config('app_path').'view/'.$module.'/'.$file;
         }else{
-            return APP_PATH.'view/'.$module.'/admin/'.$file;
+            return Templi::get_config('app_path').'view/'.$module.'/admin/'.$file;
         }
         
     }
     public function tpl($file){
-        $path = APP_PATH.'view/admin/';
+        $path = Templi::get_config('app_path').'view/admin/';
         return $path.$file.'.tpl.php';
     }
     /**

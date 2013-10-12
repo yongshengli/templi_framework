@@ -43,18 +43,18 @@ class Model{
      * @param array $config 数据库配置信息  
      */
     public function db($sign= 0,$config = array()){
-		static $db = array();
+	static $db = array();
         Templi::include_common_file('Cache.class.php');
         $this->cache = Cache::factory();
-		if(!$db[$sign]){
+	if(!$db[$sign]){
             if(!$congfig){
                 $config =Templi::get_config($config);
                 $this->dbdrive = $config['dbdrive']?$config['dbdrive']:templi::get_config('dbdrive');
             }
-			require_once('Model/'.ucfirst($this->dbdrive).'.class.php');
-			$db[$sign] = new $this->dbdrive($config['dbhost'], $config['dbuser'], $config['dbpsw'], $config['dbname'],$config['charset'],$config['pconnect']);
-		}
-		$this->db = &$db[$sign];
+            require_once('Model/'.ucfirst($this->dbdrive).'.class.php');
+            $db[$sign] = new $this->dbdrive($config['dbhost'], $config['dbuser'], $config['dbpsw'], $config['dbname'],$config['charset'],$config['pconnect']);
+        }
+	$this->db = &$db[$sign];
         return $this;
     }
     /**

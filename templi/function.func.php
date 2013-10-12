@@ -146,7 +146,7 @@ function url($main_params = NULL, $params = array(), $url_model = NULL){
     $url_model = $url_model?$url_model:Templi::get_config('url_model');
     //$url_model = 2;
     $params =   array_map('trim',$params);
-    $str   =   trim(APP_URL,'/').'/';
+    $str   =   rtrim(APP_URL,'/').'/';
     //http://www.TempLi.com/m/c-a-id-5.html
     if($url_model ==1){
         $str .=$main_params[0].'/'.$main_params[1].'-'.$main_params[2];
