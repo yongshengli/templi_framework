@@ -18,11 +18,11 @@ class Model{
     //缓存类
     public $cache=null;
     
-    private $_where ='';
-    private $_field ='*';
-    private $_order ='';
-    private $_limit ='';
-    private $_set   ='';
+    private $_where = '';
+    private $_field = '*';
+    private $_order = '';
+    private $_limit = '';
+    private $_set   = '';
     private $_page  =array('current_page'=>1,'pageNum'=>8,'urlrule'=>'','maxpage'=>0);
     /**
      * 构造函数
@@ -43,18 +43,18 @@ class Model{
      * @param array $config 数据库配置信息  
      */
     public function db($sign= 0,$config = array()){
-		static $db = array();
+	static $db = array();
         Templi::include_common_file('Cache.class.php');
         $this->cache = Cache::factory();
-		if(!$db[$sign]){
+	if(!$db[$sign]){
             if(!$congfig){
                 $config =Templi::get_config($config);
                 $this->dbdrive = $config['dbdrive']?$config['dbdrive']:templi::get_config('dbdrive');
             }
-			require_once('Model/'.ucfirst($this->dbdrive).'.class.php');
-			$db[$sign] = new $this->dbdrive($config['dbhost'], $config['dbuser'], $config['dbpsw'], $config['dbname'],$config['charset'],$config['pconnect']);
-		}
-		$this->db = &$db[$sign];
+            require_once('Model/'.ucfirst($this->dbdrive).'.class.php');
+            $db[$sign] = new $this->dbdrive($config['dbhost'], $config['dbuser'], $config['dbpsw'], $config['dbname'],$config['charset'],$config['pconnect']);
+        }
+	$this->db = &$db[$sign];
         return $this;
     }
     /**
@@ -164,18 +164,12 @@ class Model{
      * @param string $limit 条数限制
      */
     public function select($where=NULL, $field=NULL, $order=NULL, $limit=NULL){
-        if($where!=NULL){
-            $this->_where = $where;
-        }
-        if($field!=NULL){
-            $this->_field = $field;
-        }
-        if($order!=NULL){
-            $this->_order =$order;
-        }
-        if($limit!=NULL){
-            $this->_limit=$limit;
-        }
+        
+        $where && $this->_where = $where;
+        $field && $this->_field = $field;
+        $order && $this->_order = $order;
+        $limit && $this->_limit = $limit;
+        
         return $this->db->select($this->_where, $this->table_name, $this->_field, $this->_order, $this->_limit);
     }
     /**
@@ -193,9 +187,8 @@ class Model{
      * @param array or string 查询条件 可以是 数组 
      */
     public function count($where=NULL){
-        if($where!=NULL){
-            $this->_where = $where;
-        }
+        $where && $this->_where = $where;
+        
         return $this->db->count($this->table_name,$this->_where);
     }
     /**
@@ -204,12 +197,9 @@ class Model{
      * @param array or string $where 条件语句 可为数组
      */
     public function update($data=NULL, $where=NULL){
-        if($data!=NULL){
-            $this->_set = $data;
-        }
-        if($where!=NULL){
-            $this->_where = $where;
-        }
+        $data && $this->_set = $data;
+        $where && $this->_where = $where;
+        
         return $this->db->update($this->_set, $this->table_name, $this->_where);
     }
     /**
@@ -219,9 +209,7 @@ class Model{
       * @param bool $replace 是否 为替换插入
       */
     public function insert($data=NULL, $return_insert_id=false, $replace=false){
-        if($data!=NULL){
-            $this->_set=$data;
-        }
+        $data && $this->_set = $data;
         return $this->db->insert($this->_set, $this->table_name, $return_insert_id, $replace);
     }
     /**
@@ -230,9 +218,7 @@ class Model{
       * @return bool
       */
     public function delete($where=NULL){
-        if($where!=NULL){
-            $this->_where = $where;
-        }
+        $where && $this->_where = $where;
         return $this->db->delete($this->table_name,$this->_where);
     }
     /**

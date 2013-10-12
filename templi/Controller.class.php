@@ -47,7 +47,7 @@ abstract class Controller{
      * @param int $ms 等待时间
      */
     protected function show_message($msg, $url_forward=null, $ms=null, $module='index'){
-        $data['url_forward'] = $url_forward?$url_forward:'goback';
+        $data['url_forward'] = $url_forward?APP_URL.$url_forward:'goback';
         $data['ms'] = $ms?$ms:1250;
         $data['msg'] =$msg;
         $this->setOutput($data);

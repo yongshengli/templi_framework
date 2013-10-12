@@ -15,8 +15,8 @@ class View{
     private $viewVar = array();
     function __construct(){
         Templi::include_common_file('dir.func.php');
-        $this->template= APP_PATH.'view/';
-        $this->compile = APP_PATH.'cache/compile/';
+        $this->template= Templi::get_config('app_path').'view/';
+        $this->compile = Templi::get_config('app_path').'cache/compile/';
     }
     /**
      * 设置模板路径

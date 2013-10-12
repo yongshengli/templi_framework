@@ -1,1 +1,7 @@
-/nbproject/private/
+# Build folder and log file
+build/
+build.log
+cms/cache
+nbproject
+.gitignore~
+

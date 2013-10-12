@@ -25,7 +25,7 @@ class Cache_file{
         if(!$filename){
             return false;
         }
-        $file =APP_PATH.'cache/datas/'.$filename.'_cache.php';
+        $file =Templi::get_config('app_path').'cache/datas/'.$filename.'_cache.php';
         if(!file_exists($file)){
             return false;
         }
@@ -51,8 +51,8 @@ class Cache_file{
     public function set($filename, &$content){
         if(!$filename || !$content)return false;
         Templi::include_common_file('dir.func.php');
-        dir_create(APP_PATH.'cache/datas/');
-        $file =APP_PATH.'cache/datas/'.$filename.'_cache.php';
+        dir_create(Templi::get_config('app_path').'cache/datas/');
+        $file =Templi::get_config('app_path').'cache/datas/'.$filename.'_cache.php';
         if($this->cache_datatype=='array'){
             $file_size = file_put_contents($file, "<?php \nreturn ".var_export($content,true).";\n?>");
         }else{
