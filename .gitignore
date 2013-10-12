@@ -3,3 +3,4 @@ build/
 build.log
 application/cache
 nbproject
+.gitignore~

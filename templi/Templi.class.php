@@ -24,24 +24,45 @@ class Templi{
      */
     public function create_webapp($config){
         self::$_config = $config;
+        //公共基础配置
+        $this->init();
+        //设置运行模式
+        define('ENVIRONMENT',self::get_config('run_mode'));
+        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        //自定义异常处理
+        set_exception_handler(array('Templi','appException'));
         return $this;
     }
     /**
      * 初始化函数
      */
-    public function run(){
-        defined('IN_TEMPLI') or define('IN_TEMPLI', true); 
-        //TEMPLI 目录
-        defined('TEMPLI_PATH') or  define('TEMPLI_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
-        //当前时间
-        defined('SYS_TIME') or define('SYS_TIME', time());
-        //系统脚本开始时间
-        defined('SYS_START_TIME') or define('SYS_START_TIME', microtime(true));
-        //自定义异常处理
-        set_exception_handler(array('Templi','appException'));
-        //注册 __autoload 方法
-        spl_autoload_register(array('self', '__autoload'));
-        $this->init();
+    public function run(){ 
+        switch(ENVIRONMENT){
+            case 'development':
+                 error_reporting(E_ALL & ~E_NOTICE); 
+                 defined('APP_DEBUG') or define('APP_DEBUG',true);
+                 break;
+            case 'testing':
+            case 'production':
+                 error_reporting(0);
+                 defined('APP_DEBUG') or define('APP_DEBUG',false);
+                 break;
+            default:
+                exit('项目 run_mode 配置错误');
+        }
+        //载入公共函数库
+        self::include_file(TEMPLI_PATH.'function.func.php');
+        //载入异常处理类
+        self::include_file(TEMPLI_PATH.'Abnormal.class.php');
+        //载入控制器分配类
+        self::include_file(TEMPLI_PATH.'Application.class.php');
+        //载入 控制器类
+        self::include_file(TEMPLI_PATH.'Controller.class.php');
+        //载入 模型类
+        self::include_file(TEMPLI_PATH.'Model.class.php');
+        //载入 cookie 类
+        self::include_file(TEMPLI_PATH.'Cookie.class.php');
+        Appliction::init();
     }
     /**
      * 获取配置文件信息
@@ -176,37 +197,15 @@ class Templi{
      * 初始化 app
      */
     private function init(){
-        
-        //设置运行模式
-        define('ENVIRONMENT',self::get_config('run_mode'));
-        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
-        switch(ENVIRONMENT){
-            case 'development':
-                 error_reporting(E_ALL & ~E_NOTICE); 
-                 defined('APP_DEBUG') or define('APP_DEBUG',true);
-                 break;
-            case 'testing':
-            case 'production':
-                 error_reporting(0);
-                 defined('APP_DEBUG') or define('APP_DEBUG',false);
-                 break;
-            default:
-                exit('项目 run_mode 配置错误');
-        }
-        //载入公共函数库
-        self::include_file(TEMPLI_PATH.'function.func.php');
-        //载入异常处理类
-        self::include_file(TEMPLI_PATH.'Abnormal.class.php');
-        //载入控制器分配类
-        self::include_file(TEMPLI_PATH.'Application.class.php');
-        //载入 控制器类
-        self::include_file(TEMPLI_PATH.'Controller.class.php');
-        //载入 模型类
-        self::include_file(TEMPLI_PATH.'Model.class.php');
-        //载入 cookie 类
-        self::include_file(TEMPLI_PATH.'Cookie.class.php');
-        Appliction::init();
-        
+        defined('IN_TEMPLI') or define('IN_TEMPLI', true); 
+        //TEMPLI 目录
+        defined('TEMPLI_PATH') or  define('TEMPLI_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
+        //当前时间
+        defined('SYS_TIME') or define('SYS_TIME', time());
+        //系统脚本开始时间
+        defined('SYS_START_TIME') or define('SYS_START_TIME', microtime(true));
+        //注册 __autoload 方法
+        spl_autoload_register(array('self', '__autoload'));
     }
 }
 ?>
