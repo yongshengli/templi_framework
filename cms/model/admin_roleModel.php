@@ -22,7 +22,7 @@ class admin_roleModel extends Model{
         }
         return is_null($role_id)?$list:$list[$role_id];
     }
-    public function update($data, $where=''){
+    public function update($data=NULL, $where=''){
         $this->cache->clean('get_role');
         return parent::update($data, $where);
     }

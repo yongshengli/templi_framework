@@ -6,55 +6,52 @@ defined('IN_TEMPLI') or die('非法引用');
  * @email 739800600@qq.com
  * @date 2013-3-20
  */
-class Model{
-    //表前缀
-    public $prefix = ''; 
-    //表名       
+class Model{      
     public $table_name ='';
     //数据库连接对象
     protected $db; 
-    //数据库驱动   
-    protected $dbdrive;
     //缓存类
     public $cache=null;
     
     private $_where = '';
-    private $_field = '*';
+    private $_field = '';
     private $_order = '';
     private $_limit = '';
     private $_set   = '';
-    private $_page  =array('current_page'=>1,'pageNum'=>8,'urlrule'=>'','maxpage'=>0);
+    private $_page  = array();
+    //sql 语句
+    private $_last_sql;
     /**
      * 构造函数
      * @param string $table 表名
      * @param int $dbSign 数据库唯一标识
      * @param array $db 数据库配置
      */
-    function __construct($table='', $dbSign=0, $db=array()){
-        $this->prefix = templi::get_config('prefix');
-        $this->db($dbSign,$db);
+    function __construct($table='', $dbSign='master', $db=array()){
+        $db_config = Templi::get_config('db');
+        $this->db($dbSign,$db_config[$dbSign]);
         if($table){
-            $this->table_name =$this->prefix.$table;
+            $this->table_name =$this->db->prefix.$table;
         }
+        $this->rest_all_var();
     }
     /**
      * 设置数据库连接 切换数据库
      * @param init $sign 数据库标识
      * @param array $config 数据库配置信息  
      */
-    public function db($sign= 0,$config = array()){
+    public function db($sign= 'master', $config = array()){
 	static $db = array();
         Templi::include_common_file('Cache.class.php');
-        $this->cache = Cache::factory();
+        $this->cache = Cache::factory(); 
 	if(!$db[$sign]){
-            if(!$congfig){
-                $config =Templi::get_config($config);
-                $this->dbdrive = $config['dbdrive']?$config['dbdrive']:templi::get_config('dbdrive');
+            if(!$config){
+                $config = Templi::get_config("db")[$sign];
             }
-            require_once('Model/'.ucfirst($this->dbdrive).'.class.php');
-            $db[$sign] = new $this->dbdrive($config['dbhost'], $config['dbuser'], $config['dbpsw'], $config['dbname'],$config['charset'],$config['pconnect']);
+            require_once('Model/'.ucfirst($config['dbdrive']).'.class.php');
+            $db[$sign] = new $config['dbdrive']($config);
         }
-	$this->db = &$db[$sign];
+	$this->db = isset($db[$sign])?$db[$sign]:$db['master'];
         return $this;
     }
     /**
@@ -63,7 +60,7 @@ class Model{
      * @param string $table
      */
     public function table($table){
-        $this->table_name = $table;
+        $this->table_name = $this->db->prefix.$table;
         return $this;
     }
     /**
@@ -71,15 +68,28 @@ class Model{
      * @param string $field
      */
     public function field($field){
-        $this->_field =$field;
+        $fields = explode(',', $field);
+        array_walk($fields, array($this, 'add_special_char'));
+        $fields = implode(',', $fields);
+        
+        $this->_field = $fields;
+        
         return $this;
     }
     /**
      * where 条件
      * @param array or string $where 
      */
-    public function where($where){
-        $this->_where=$where;
+    public function where($where, $compare = '='){
+        $this->sqls($where, 'AND', $compare);
+        return $this;
+    }
+    /**
+     * where 条件
+     * @param array or string $where 
+     */
+    public function where_or($where, $compare = '='){
+        $this->sqls($where, 'OR', $compare = '=');
         return $this;
     }
     /**
@@ -87,7 +97,7 @@ class Model{
      * @param string  array $data
      */
     public function set($data){
-        $this->_set=$data;
+        $this->_set = array_merge($this->_set, $data);
         return $this;
     }
     /**
@@ -97,7 +107,7 @@ class Model{
      * example id desc
      */
     public function order($order){
-        $this->_order =$order;
+        $this->_order = $this->add_special_char($order);
         return $this;
     }
     /**
@@ -105,11 +115,11 @@ class Model{
      * @param string $limit 
      * example 0,20
      */
-    public function limit($listNum,$offset=NULL){
-        if($offset!=NULL){
-            $this->_limit= " $offset,$listNum";
+    public function limit($listNum,$offset = NULL){
+        if($offset != NULL){
+            $this->_limit = " $offset,$listNum";
         }else{
-            $this->_limit =$limit;
+            $this->_limit = $limit;
         }
         return $this;
     }
@@ -122,7 +132,7 @@ class Model{
      * maxpage 最大页数
      */
     public function page($page){
-        $this->_page = array_merge($this->_page,$page);
+        $this->_page = array_merge($this->_page, $page);
         return $this;
     }
     /**
@@ -165,12 +175,15 @@ class Model{
      */
     public function select($where=NULL, $field=NULL, $order=NULL, $limit=NULL){
         
-        $where && $this->_where = $where;
-        $field && $this->_field = $field;
-        $order && $this->_order = $order;
-        $limit && $this->_limit = $limit;
-        
-        return $this->db->select($this->_where, $this->table_name, $this->_field, $this->_order, $this->_limit);
+        $where && $this->where($where);
+        $field && $this->field($field);
+        $order && $this->order($order);
+        $limit && $this->limit($limit);
+        $this->_last_sql  = 'SELECT '.$this->_field.' FROM `'.$this->table_name.'`';
+        $this->_last_sql .= $this->_where?' WHERE '.$this->_where:'';
+        $this->_last_sql .= $this->_order?' ORDER BY '.$this->_order:'';
+        $this->_last_sql .= $limit?' LIMIT '.$limit:'';
+        return $this->query($this->_last_sql);
     }
     /**
      * 单条查询
@@ -179,17 +192,20 @@ class Model{
      * @param string  $oeder  排序
      */
     public function find($where=NULL, $field=NULL, $order=NULL){
-        $list = $this->select($where, $field, $order,$limit=1);
+        $list = $this->select($where, $field, $order, $limit=1);
         return $list[0];
     }
     /**
      * 查询数据条数
      * @param array or string 查询条件 可以是 数组 
      */
-    public function count($where=NULL){
-        $where && $this->_where = $where;
+    public function count($where = NULL){
+        $where && $this->where($where);
         
-        return $this->db->count($this->table_name,$this->_where);
+        $this->_last_sql = 'SELECT COUNT(*) AS `num` FROM '.$this->table_name;
+        $this->_last_sql .=$where?' where '.$this->_where:'';
+        $this->_last_sql .=' limit 1';
+        return $this->query($this->_last_sql);
     }
     /**
      * 修改数据
@@ -197,10 +213,43 @@ class Model{
      * @param array or string $where 条件语句 可为数组
      */
     public function update($data=NULL, $where=NULL){
-        $data && $this->_set = $data;
-        $where && $this->_where = $where;
+        $data && $this->set($data);
+        $where && $this->where($where);
         
-        return $this->db->update($this->_set, $this->table_name, $this->_where);
+        if(!$this->_where)
+             return false;
+        if(is_array($this->_set) && count($this->_set)>0){
+            foreach($this->_set as $k => $v){
+                switch(substr($v, 0, 2)){
+                    case '+=':
+                        $v= substr($v,2);
+                        if(is_numeric($v)){
+                            $fields[] =$this->add_special_char($k).'='.$this->add_special_char($k).'+'.$this->escape_string($v, false);
+                            
+                        }else{
+                            continue;
+                        }
+                        break;
+                    case '-=':
+                        $v= substr($v,2);
+                        if(is_numeric($v)){
+                            $fields[] =$this->add_special_char($k).'='.$this->add_special_char($k).'-'.$this->escape_string($v, false);
+                            
+                        }else{
+                            continue;
+                        }
+                        break;
+                    default:
+                        $fields[]=$this->add_special_char($k).'='.$this->escape_string($v );
+                        break;
+                }
+            }
+            $field = implode(',', $fields);
+        }elseif(is_string($this->_set) && $this->_set != ''){
+            $field = $this->_set;
+        }
+        $this->_last_sql ='UPDATE `'.$this->table_name.'` SET '.$field.' WHERE '.$this->_where;
+        return $this->query($this->_last_sql);
     }
     /**
       * 插入数据
@@ -208,9 +257,23 @@ class Model{
       * @param bool $return_insert_id 是否返回主键 号
       * @param bool $replace 是否 为替换插入
       */
-    public function insert($data=NULL, $return_insert_id=false, $replace=false){
-        $data && $this->_set = $data;
-        return $this->db->insert($this->_set, $this->table_name, $return_insert_id, $replace);
+    public function insert($data = NULL, $return_insert_id = false, $replace = false){
+        $data && $this->set($data);
+        
+        if(!is_array($this->_set) || count($this->_set) == 0){
+            return false;
+        } 
+        $fields = array_keys($this->_set);
+        $values = array_values($this->_set);
+        array_walk($fields, array($this, 'add_special_char'));
+        array_walk($values, array($this, 'escape_string'));
+        $fields = implode(',', $fields);
+        $values = implode(',', $values);
+        
+        $this->_last_sql  = $replace?'REPLACE INTO ':'INSERT INTO ';
+        $this->_last_sql .= $this->table_name. '('.$fields.') VALUES ('.$values.')';
+        $result = $this->query($this->_last_sql);
+        return $return_insert_id?$this->db->insert_id():$result;
     }
     /**
       * 删除数据 
@@ -218,20 +281,90 @@ class Model{
       * @return bool
       */
     public function delete($where=NULL){
-        $where && $this->_where = $where;
-        return $this->db->delete($this->table_name,$this->_where);
+        $where && $this->where($where);
+        if(!$this->_where) 
+            return false;
+        $this->_last_sql = 'DELETE FROM ' .$this->table_name. ' WHERE '.$this->_where;
+        return $this->query($this->_last_sql);
     }
     /**
      * 执行基本的 mysql查询
      */
     public function query($sql){
-        return $this->db->query($sql);
+        $sql = trim($sql);
+        $this->rest_all_var();
+        if (strtoupper(substr($sql, 0, 6)) == 'SELECT') {
+            return $this->db->query($sql);
+        } else {
+            return $this->db->execute($sql);
+        }
+    }
+    
+    /**
+     * 对字段两边加反引号，以保证数据库安全
+     * @param $value 数组值
+     */
+    public function add_special_char(&$value) {
+        if('*' == $value || false !== strpos($value, '(') || false !== strpos($value, '.') || false !== strpos ( $value, '`')) {
+            //不处理包含* 或者 使用了sql方法。
+        } else {
+            $value = '`'.trim($value).'`';
+        }
+        return $value;
+    }
+    /**
+     * 对字段值两边加引号，以保证数据库安全
+     * @param $value 数组值
+     * @param $quotation 
+     */
+    public function escape_string(&$value, $quotation = 1) {
+        if ($quotation) {
+                $q = '\'';
+        } else {
+                $q = '';
+        }
+        $value = $q.addslashes($value).$q;
+        return $value;
     }
     /**
      * 获取最后一次执行的sql 语句
      */
     public function last_sql(){
-        return $this->db->last_sql();
+        return $this->_last_sql;
+    }
+    /**
+     * 将数组转换为SQL语句
+     * @param array $where 要生成的数组
+     * @param string $font 连接串
+     * @param string $compare 比较字符 (=,!=,in not in, like)
+     */
+    final public function sqls($where, $font = ' AND ', $compare = '=') {
+        if (is_array($where)) {
+            $compare = strtoupper(trim($compare));
+            $allowed = array('=', '>=', '<=', '>', '<', '<>', '!=', 'LIKE');
+            if (!in_array($compare ,$allowed)) {
+                throw new Abnormal('不支持的比较操作符'.$compare, 0);
+            }
+            foreach ($where as $key=>$val) {
+                $this->_where && $this->_where .= ' '.$font ;
+                $this->_where .= ' '.$this->add_special_char($key). $compare .$this->escape_string($val, true);
+            }
+        } else {
+            $this->_where && $this->_where .= ' '.$font;
+            $this->_where .= ' '.$where;
+            
+        }
+    }
+    /**
+     * 重置 类属性
+     */
+    private function rest_all_var(){
+        $this->_where = '';
+        $this->_field = '*';
+        $this->_order = '';
+        $this->_limit = '';
+        $this->_set   = '';
+        $this->_page  = array('current_page'=>1,'pageNum'=>8,'urlrule'=>'','maxpage'=>0);
     }
 }
 

@@ -23,7 +23,6 @@ define('JS_URL',PUBLIC_URL.'js/');
 define('THEMES_URL',PUBLIC_URL.'themes/');
 require '../templi/Templi.class.php';
 $config = require ROOT_PATH.'config/config.php';
-
 $app = new Templi();
 $app->create_webapp($config)->run();
 

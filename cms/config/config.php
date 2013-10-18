@@ -22,15 +22,15 @@ $config = array(
     /**
      * 默认模块
      */
-     'default_module'=>'home',
+     'default_module'=>'index',
     /**
      * 默认控制器
      */
-     'default_controller'=>'member',
+     'default_controller'=>'index',
     /**
      * 默认操作
      */
-     'default_action'=>'login',
+     'default_action'=>'index',
     /**
      * url 配置
      * 类型 http://www.TempLi.com/m/c-a-id-5.html 1 静态需要开启apache rewrite 模块 0 动态 
@@ -76,5 +76,5 @@ $config = array(
     'session_lifetime' => 1800,
     'session_savepath' => ROOT_PATH.'application/cache/sessions/',
 );
-return array_merge($config,$database);
+return array_merge($config, array('db'=>$database));
 ?>
