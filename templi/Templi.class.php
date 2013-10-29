@@ -172,8 +172,7 @@ class Templi{
     /**
      * 自定义异常处理
      */
-    public static function appException($e){
-        echo 'sssss';die;
+    public static function appException($e){;
         halt($e->__toString());
     }
     /**
