@@ -9,13 +9,24 @@ return array(
      * 'prefix'=>'templi_',   //表前缀
      * 'dbdrive'=>'pdo_mysql', //数据库驱动
      */
-        'dbhost'=>'localhost',
-        'dbuser'=>'root',
-        'dbpsw'=>'liyongsheng',
-        'dbname'=>'templi',
-        'prefix'=>'templi_',
-        'dbdrive'=>'pdo_mysql',
-        'charset'=>'utf8'
+    'master'=> array(
+            'dbhost'=>'localhost',
+            'dbuser'=>'root',
+            'dbpsw'=>'liyongsheng',
+            'dbname'=>'templi',
+            'prefix'=>'templi_',
+            'dbdrive'=>'mysql',
+            'charset'=>'utf8'
+        ),
+    'slave'=>array(
+            'dbhost'=>'localhost',
+            'dbuser'=>'root',
+            'dbpsw'=>'liyongsheng',
+            'dbname'=>'templi2',
+            'prefix'=>'templi_',
+            'dbdrive'=>'mysql',
+            'charset'=>'utf8'
+        )
 );
 
 ?>

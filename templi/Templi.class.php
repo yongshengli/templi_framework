@@ -26,8 +26,6 @@ class Templi{
         self::$_config = $config;
         //公共基础配置
         $this->init();
-        //设置运行模式
-        define('ENVIRONMENT',self::get_config('run_mode'));
         //error_reporting(E_ERROR | E_WARNING | E_PARSE);
         //自定义异常处理
         set_exception_handler(array('Templi','appException'));
@@ -36,8 +34,8 @@ class Templi{
     /**
      * 初始化函数
      */
-    public function run(){ 
-        switch(ENVIRONMENT){
+    public function run(){
+        switch(self::get_config('run_mode')){
             case 'development':
                  error_reporting(E_ALL & ~E_NOTICE); 
                  defined('APP_DEBUG') or define('APP_DEBUG',true);

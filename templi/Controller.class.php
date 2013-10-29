@@ -62,7 +62,7 @@ abstract class Controller{
             $GLOBALS['action'] ='_empty';
             $this->_empty($action, $param);
         }else{
-			if(APP_DEBUG)
+	    if(APP_DEBUG)
                 throw new Abnormal($action.' 方法不存在',0,true);
             else
                 show_404();

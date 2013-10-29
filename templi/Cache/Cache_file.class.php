@@ -67,10 +67,10 @@ class Cache_file{
      */
     public function clean($filename=null){
         if($filename){
-            return @unlink(APP_PATH.'cache/datas/'.$filename.'_cache.php');
+            return @unlink(Templi::get_config('app_path').'cache/datas/'.$filename.'_cache.php');
         }else{
             templi::include_common_file('dir.func.php');
-            return dir_delete(APP_PATH.'cache/datas/');
+            return dir_delete(Templi::get_config('app_path').'cache/datas/');
         }
     }
        

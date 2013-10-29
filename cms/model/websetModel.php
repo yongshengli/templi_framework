@@ -19,11 +19,11 @@ class websetModel extends Model{
         }
         return $field?$list[$field]:$list;
     }
-    public function update($data, $where=''){
+    public function update($data=NULL, $where=''){
         $this->cache->clean('get_webset');
         return parent::update($data, $where);
     }
-    public function insert($data,$return_insert_id = false, $replace = false){
+    public function insert($data=NULL,$return_insert_id = false, $replace = false){
         $this->cache->clean('get_webset');
         return parent::insert($data, $where);
     }

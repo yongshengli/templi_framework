@@ -18,11 +18,11 @@ class admin_nodeModel extends Model{
         }
         return is_null($parent_id)?$list:$list[$parent_id];
     }
-    public function update($data, $where=''){
+    public function update($data=NULL, $where=''){
         $this->cache->clean('get_child_node');
         return parent::update($data, $where);
     }
-    public function insert($data, $return_insert_id = false, $replace = false){
+    public function insert($data=NULL, $return_insert_id = false, $replace = false){
         $this->cache->clean('get_child_node');
         return parent::insert($data, $where);
     }
