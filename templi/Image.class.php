@@ -320,9 +320,9 @@ class Image {
         $height = $size[1]?$size[1]:22;
         if (is_string($font))
             $font = explode(',', $font);
-        $fontface = $font[0]?$font[0]:5;
-        $fontsize = $font[1]?$font[1]:null;
-        $fontfile = $font[2]?$font[2]:NULL;
+        $fontface = isset($font[0])?$font[0]:5;
+        $fontsize = isset($font[1])?$font[1]:null;
+        $fontfile = isset($font[2])?$font[2]:NULL;
         $length = strlen($string);
         $width = ($length * 9 + 10) > $width ? $length * 9 + 10 : $width;
         if ($type != 'gif' && function_exists('imagecreatetruecolor')) {

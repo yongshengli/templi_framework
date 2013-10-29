@@ -16,10 +16,10 @@ class verifyController{
             );
         foreach($filed_arr as $key=>$val){
             if($key=='size'){
-                $width =$_GET['width']?intval($_GET['width']):$filed_arr['size'][0];
-                $height=$_GET['height']?intval($_GET['height']):$filed_arr['size'][1];
+                $width = isset($_GET['width'])?intval($_GET['width']):$filed_arr['size'][0];
+                $height= isset($_GET['height'])?intval($_GET['height']):$filed_arr['size'][1];
                 $size =array($width, $height);
-            }elseif($_GET[$key]){
+            }elseif(isset($_GET[$key])){
                 $$key =strval(trim($_GET[$key]));
             }else{
                 $$key =$val;

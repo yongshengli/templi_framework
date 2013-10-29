@@ -28,7 +28,14 @@ class Templi{
         $this->init();
         //error_reporting(E_ERROR | E_WARNING | E_PARSE);
         //自定义异常处理
-        set_exception_handler(array('Templi','appException'));
+        if(method_exists('Templi', 'appException') && function_exists('set_exception_handler')){
+            set_exception_handler(array('Templi','appException'));
+        }
+        //自定义错误处理
+        if(method_exists('Templi', 'appError') && function_exists('set_error_handler')){
+            set_error_handler(array('Templi','appError'));
+        }
+        
         return $this;
     }
     /**
@@ -166,7 +173,14 @@ class Templi{
      * 自定义异常处理
      */
     public static function appException($e){
+        echo 'sssss';die;
         halt($e->__toString());
+    }
+    /**
+     * 自定义错误处理
+     */
+    public static function appError($errno, $errstr, $errfile, $errline, $errcontext){
+        halt(array('message'=>$errstr,'file'=>$errfile,'line'=>$errline));
     }
     /**
      * 自动加载 类文件 包括 Model、controller、libraries 类

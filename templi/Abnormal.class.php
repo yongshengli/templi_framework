@@ -10,12 +10,12 @@ class Abnormal extends Exception{
     
     //额外的 调试信息
     private $extra;
-    public function __construct($message, $code, $extra=false){
+    public function __construct($message, $code=0, $extra=false){
         parent::__construct($message, $code);
-        $this->extra =$extra;
+        $this->extra = $extra;
     }
     public function __toString(){
-        $error =array();
+        /*$error =array();
         $trace = $this->getTrace();
         if($this->extra)
             array_shift($trace);
@@ -33,9 +33,10 @@ class Abnormal extends Exception{
         $error['file']  = $this->getFile();
         $error['line']  = $this->getLine();
         $error['message']= $this->message;
-        $error['code']  =$this->code;
-        $error['trace'] =$traceInfo;
-        return $error;
+        $error['code']  = $this->code;
+        $error['trace'] = $traceInfo;
+        return $error;*/
+        return parent::__toString();
     }
 }
 ?>

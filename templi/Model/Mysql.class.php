@@ -13,7 +13,7 @@ class Mysql extends DB{
       * 连接数据库
       */
     public function connect(){
-        if($pconnect){
+        if(isset($pconnect)){
             $this->linkid = @mysql_pconnect($this->dbhost, $this->dbuser, $this->dbpsw, 1);
         }else{
             $this->linkid = @mysql_connect($this->dbhost, $this->dbuser, $this->dbpsw, 1);
@@ -37,6 +37,7 @@ class Mysql extends DB{
         }else{
             if(!$this->linkid && APP_DEBUG){
                 throw new Abnormal($this->error_msg('未连接数据库'), 5, true);
+                return false;
             }
             $this->lastqueryid = mysql_query($sql,$this->linkid);
             if($this->lastqueryid === false && APP_DEBUG){
@@ -56,10 +57,11 @@ class Mysql extends DB{
         }
         if(!$this->linkid && APP_DEBUG){
             throw new Abnormal($this->error_msg('未连接数据库'), 5, true);
+            return false;
         }
         $this->lastqueryid = mysql_query($sql,$this->linkid);
         if($this->lastqueryid === false && APP_DEBUG){
-            throw new Abnormal($this->error_msg($this->error(),$sql),5,true);
+            throw new Abnormal($this->error_msg($this->error(), $sql), 5, true);
             return false;
         }else{
             return $this->affected_rows();

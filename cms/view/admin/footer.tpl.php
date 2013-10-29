@@ -1,4 +1,4 @@
-<?php if(ACTION=='add' or ACTION=='edit'):?>
+<?php if($GLOBALS['action']=='add' or $GLOBALS['action']=='edit'):?>
     <script type="text/javascript" charset="utf-8" src="<?php echo JS_URL?>formvalidator/formValidator.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="<?php echo JS_URL?>formvalidator/formValidatorRegex.js"></script>
 <?php endif?>

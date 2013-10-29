@@ -15,7 +15,7 @@ return array(
             'dbpsw'=>'liyongsheng',
             'dbname'=>'templi',
             'prefix'=>'templi_',
-            'dbdrive'=>'mysql',
+            'dbdrive'=>'Pdo_mysql',
             'charset'=>'utf8'
         ),
     'slave'=>array(
@@ -24,7 +24,7 @@ return array(
             'dbpsw'=>'liyongsheng',
             'dbname'=>'templi2',
             'prefix'=>'templi_',
-            'dbdrive'=>'mysql',
+            'dbdrive'=>'Pdo_mysql',
             'charset'=>'utf8'
         )
 );

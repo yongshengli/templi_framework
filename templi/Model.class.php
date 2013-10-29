@@ -11,13 +11,13 @@ class Model{
     //数据库连接对象
     protected $db; 
     //缓存类
-    public $cache=null;
+    public $cache = null;
     
     private $_where = '';
     private $_field = '';
     private $_order = '';
     private $_limit = '';
-    private $_set   = '';
+    private $_set   = array();
     private $_page  = array();
     //sql 语句
     private $_last_sql;
@@ -25,14 +25,11 @@ class Model{
      * 构造函数
      * @param string $table 表名
      * @param int $dbSign 数据库唯一标识
-     * @param array $db 数据库配置
+     * @param array $config 数据库配置
      */
-    function __construct($table='', $dbSign='master', $db=array()){
-        $db_config = Templi::get_config('db');
-        $this->db($dbSign,$db_config[$dbSign]);
-        if($table){
-            $this->table_name =$this->db->prefix.$table;
-        }
+    function __construct($table='', $dbSign='master', $config = array()){
+        $this->db($dbSign, $config);
+        $table && $this->table_name = $this->db->prefix.$table;
         $this->rest_all_var();
     }
     /**
@@ -44,7 +41,7 @@ class Model{
 	static $db = array();
         Templi::include_common_file('Cache.class.php');
         $this->cache = Cache::factory(); 
-	if(!$db[$sign]){
+	if(!isset($db[$sign])){
             if(!$config){
                 $config = Templi::get_config("db")[$sign];
             }
@@ -97,6 +94,10 @@ class Model{
      * @param string  array $data
      */
     public function set($data){
+        if (!is_array($data)) {
+            throw new Abnormal('仅支持数组数据类型');
+            return;
+        }
         $this->_set = array_merge($this->_set, $data);
         return $this;
     }
@@ -119,7 +120,7 @@ class Model{
         if($offset != NULL){
             $this->_limit = " $offset,$listNum";
         }else{
-            $this->_limit = $limit;
+            $this->_limit = $listNum;
         }
         return $this;
     }
@@ -193,7 +194,7 @@ class Model{
      */
     public function find($where=NULL, $field=NULL, $order=NULL){
         $list = $this->select($where, $field, $order, $limit=1);
-        return $list[0];
+        return isset($list[0])?$list[0]:array();
     }
     /**
      * 查询数据条数
@@ -212,42 +213,38 @@ class Model{
      * @param array or string $data要修改的数据 字符串为 sql 语句 数组key 为字段名 value 为字段值
      * @param array or string $where 条件语句 可为数组
      */
-    public function update($data=NULL, $where=NULL){
+    public function update($data = NULL, $where=NULL){
         $data && $this->set($data);
         $where && $this->where($where);
         
         if(!$this->_where)
              return false;
-        if(is_array($this->_set) && count($this->_set)>0){
-            foreach($this->_set as $k => $v){
-                switch(substr($v, 0, 2)){
-                    case '+=':
-                        $v= substr($v,2);
-                        if(is_numeric($v)){
-                            $fields[] =$this->add_special_char($k).'='.$this->add_special_char($k).'+'.$this->escape_string($v, false);
-                            
-                        }else{
-                            continue;
-                        }
-                        break;
-                    case '-=':
-                        $v= substr($v,2);
-                        if(is_numeric($v)){
-                            $fields[] =$this->add_special_char($k).'='.$this->add_special_char($k).'-'.$this->escape_string($v, false);
-                            
-                        }else{
-                            continue;
-                        }
-                        break;
-                    default:
-                        $fields[]=$this->add_special_char($k).'='.$this->escape_string($v );
-                        break;
-                }
+        foreach($this->_set as $k => $v){
+            switch(substr($v, 0, 2)){
+                case '+=':
+                    $v= substr($v,2);
+                    if(is_numeric($v)){
+                        $fields[] =$this->add_special_char($k).'='.$this->add_special_char($k).'+'.$this->escape_string($v, false);
+                    }else{
+                        continue;
+                    }
+                    break;
+                case '-=':
+                    $v= substr($v,2);
+                    if(is_numeric($v)){
+                        $fields[] =$this->add_special_char($k).'='.$this->add_special_char($k).'-'.$this->escape_string($v, false);
+
+                    }else{
+                        continue;
+                    }
+                    break;
+                default:
+                    $fields[]=$this->add_special_char($k).'='.$this->escape_string($v );
+                    break;
             }
-            $field = implode(',', $fields);
-        }elseif(is_string($this->_set) && $this->_set != ''){
-            $field = $this->_set;
         }
+        $field = implode(',', $fields);
+        
         $this->_last_sql ='UPDATE `'.$this->table_name.'` SET '.$field.' WHERE '.$this->_where;
         return $this->query($this->_last_sql);
     }
@@ -363,7 +360,7 @@ class Model{
         $this->_field = '*';
         $this->_order = '';
         $this->_limit = '';
-        $this->_set   = '';
+        $this->_set   = array();
         $this->_page  = array('current_page'=>1,'pageNum'=>8,'urlrule'=>'','maxpage'=>0);
     }
 }

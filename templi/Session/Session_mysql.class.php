@@ -2,22 +2,19 @@
 defined('IN_TEMPLI') or die('非法引用');
 /**
  *  session mysql 数据库存储类
- *
- * @copyright			(C) 2005-2010 PHPCMS
- * @license				http://www.phpcms.cn/license/
- * @lastmodify			2010-6-8
+ * 
  */
 class Session_mysql {
 	var $lifetime = 1800;
-	var $db;
+	var $model;
 	var $table;
     /**
      * 构造函数
      * 
      */
     public function __construct() {
-		$this->db = Templi::model('sessions');
-		$this->lifetime = Templi::get_config('session_lifetime');
+        $this->model = Templi::model('sessions');
+        $this->lifetime = Templi::get_config('session_lifetime');
     	session_set_save_handler(array(&$this,'open'), array(&$this,'close'), array(&$this,'read'), array(&$this,'write'), array(&$this,'destroy'), array(&$this,'gc'));
     	session_start();
     }
@@ -29,7 +26,7 @@ class Session_mysql {
      */
     public function open($save_path, $session_name) {
 		
-		return true;
+        return true;
     }
     /**
      * session_set_save_handler  close方法
@@ -44,8 +41,8 @@ class Session_mysql {
      * @return string 读取session_id
      */
     public function read($id) {
-		$r = $this->db->where(array('session_id'=>$id))->find();
-		return $r ? $r['user_data'] : '';
+        $r = $this->model->where(array('session_id'=>$id))->find();
+        return $r ? $r['user_data'] : '';
     } 
     /**
      * 写入session_id 的值
@@ -55,14 +52,14 @@ class Session_mysql {
      * @return mixed query 执行结果
      */
     public function write($id, $data) {
-		$ip = getip();
-		$sessiondata = array(
-							'session_id'=>$id,
-							'ip_address'=>$ip,
-							'last_activity'=>SYS_TIME,
-							'user_data'=>$data,
-						);
-		return $this->db->insert($sessiondata, 1,1);
+        $ip = getip();
+        $sessiondata = array(
+                        'session_id'=>$id,
+                        'ip_address'=>$ip,
+                        'last_activity'=>SYS_TIME,
+                        'user_data'=>$data,
+                    );
+        return $this->model->insert($sessiondata, 1,1);
     }
     /** 
      * 删除指定的session_id
@@ -71,7 +68,7 @@ class Session_mysql {
      * @return bool
      */
     public function destroy($id) {
-		return $this->db->delete(array('session_id'=>$id));
+        return $this->model->delete(array('session_id'=>$id));
     }
     /**
      * 删除过期的 session
@@ -80,8 +77,8 @@ class Session_mysql {
      * @return bool
      */
    public function gc($maxlifetime) {
-		$expiretime = SYS_TIME - $maxlifetime;
-		return $this->db->delete("`lastvisit`<$expiretime");
+        $expiretime = SYS_TIME - $maxlifetime;
+        return $this->model->delete("`lastvisit`<$expiretime");
     }
 }
 ?>
