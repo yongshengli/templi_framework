@@ -35,11 +35,10 @@ class Pdo_Mysql extends DB{
      public function query($sql){
         if(!$sql) return false;
         
-        $this->last_sql = $sql;
         $this->lastqueryid = $this->pdo->query($sql);
         if($this->lastqueryid===FALSE && APP_DEBUG){
            $err = $this->pdo->errorInfo();
-           throw new Abnormal($this->error_msg($err[3], $sql),5,true);
+           throw new Abnormal($this->error_msg($err[2], $sql),5);
         }
         return $this->lastqueryid->fetchAll(PDO::FETCH_ASSOC);
      }
@@ -53,15 +52,13 @@ class Pdo_Mysql extends DB{
       * 执行mysql 语句
       */
      public function execute($sql){
-        //die($sql);
-        $this->last_sql = $sql;
-        $this->lastqueryid = $this->pdo->prepare($sql);
-        if($this->lastqueryid===FALSE && APP_DEBUG){
+        
+        $result = $this->pdo->exec($sql);
+        if ($result === false) {
             $err = $this->pdo->errorInfo();
-            throw new Abnormal($this->error_msg($err[3],$sql),5,true);
+            throw new Abnormal($this->error_msg($err[2],$sql),5);
         }
-        $this->lastqueryid->execute();
-        return $this->affected_rows =$this->lastqueryid->rowCount();
+        return $result;
      }
      /**
       * 释放资源

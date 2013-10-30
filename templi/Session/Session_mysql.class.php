@@ -78,7 +78,7 @@ class Session_mysql {
      */
    public function gc($maxlifetime) {
         $expiretime = SYS_TIME - $maxlifetime;
-        return $this->model->delete("`lastvisit`<$expiretime");
+        return $this->model->delete("`last_activity`<$expiretime");
     }
 }
 ?>

@@ -108,7 +108,7 @@ class Model{
      * example id desc
      */
     public function order($order){
-        $this->_order = $this->add_special_char($order);
+        $this->_order = $order;
         return $this;
     }
     /**
@@ -262,11 +262,9 @@ class Model{
         } 
         $fields = array_keys($this->_set);
         $values = array_values($this->_set);
-        array_walk($fields, array($this, 'add_special_char'));
-        array_walk($values, array($this, 'escape_string'));
-        $fields = implode(',', $fields);
-        $values = implode(',', $values);
-        
+        $fields = implode(',',array_map(array($this, 'add_special_char'), $fields));
+        $values = implode(',',array_map(array($this, 'escape_string'), $values));
+
         $this->_last_sql  = $replace?'REPLACE INTO ':'INSERT INTO ';
         $this->_last_sql .= $this->table_name. '('.$fields.') VALUES ('.$values.')';
         $result = $this->query($this->_last_sql);
