@@ -16,6 +16,7 @@ class indexController extends Controller{
         //print_r($a);
         //print_r($data['nav']);
         //die;
+        array_merge($array1);
         $this->setOutput($data);
         $this->display();
     }

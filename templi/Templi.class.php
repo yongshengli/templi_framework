@@ -187,8 +187,24 @@ class Templi{
      * 自定义错误处理
      */
     public static function appError($errno, $errstr, $errfile, $errline){
-        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-        //halt(array('message'=>$errstr, 'file'=>$errfile, 'line'=>$errline));
+        //throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+        $error = array('message'=>$errstr, 'file'=>$errfile, 'line'=>$errline);
+        $trace = debug_backtrace();
+        $trace = array_slice($trace,3); //丢弃 数组前三个 跟踪
+        $error['trace'] = '';
+        foreach ($trace as $key => $val){
+            $error['trace'] .= sprintf("#%d [%s] %s(%d) %s%s%s(%s)\n",
+                    $key,
+                    date('y-m-d H:i:s'), 
+                    $val['file'], 
+                    $val['line'], 
+                    $val['class'],
+                    $val['type'],
+                    $val['function'], 
+                    implode(',', $val['args'])
+                    );
+        }
+        halt($error);
     }
     /**
      * 自动加载 类文件 包括 Model、controller、libraries 类
