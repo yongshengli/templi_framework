@@ -65,12 +65,15 @@ class Model{
      * @param string $field
      */
     public function field($field){
-        $fields = explode(',', $field);
-        array_walk($fields, array($this, 'add_special_char'));
-        $fields = implode(',', $fields);
-        
-        $this->_field = $fields;
-        
+        if (is_array($field)) {
+            $field = implode(',', array_map(array($this, 'add_special_char'), $field));
+        } else {
+            $fields = explode(',', $field);
+            array_walk($fields, array($this, 'add_special_char'));
+            $fields = implode(',', $fields); 
+        }
+        $this->_field && $this->_field .= ', ';
+        $this->_field .= $fields;
         return $this;
     }
     /**
@@ -108,7 +111,15 @@ class Model{
      * example id desc
      */
     public function order($order){
-        $this->_order = $order;
+        if (is_array($order)) {
+            foreach ($order as $key =>$val){
+                $this->_order && $this->_order .= ', ';
+                $this->_order .= $this->add_special_char($key).' '.$val;
+            }
+        } else {
+            $this->_order && $this->_order .= ', ';
+            $this->_order .= $order;
+        }
         return $this;
     }
     /**
