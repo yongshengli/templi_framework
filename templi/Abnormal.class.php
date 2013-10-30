@@ -8,35 +8,30 @@ defined('IN_TEMPLI') or die('非法引用');
  */
 class Abnormal extends Exception{
     
-    //额外的 调试信息
-    private $extra;
-    public function __construct($message, $code=0, $extra=false){
+    /*public function __construct($message, $code=0, $previous=true){
         parent::__construct($message, $code);
-        $this->extra = $extra;
-    }
+    }*/
     public function __toString(){
-        /*$error =array();
+        
         $trace = $this->getTrace();
-        if($this->extra)
-            array_shift($trace);
-        //print_r($trace);
+        array_shift($trace); //去除抛出异常处文件跟踪
         $traceInfo ='';
         $time =date('y-m-d H:i:s');
-        foreach($trace as $val){
-            $traceInfo .= '['.$time.'] '.$val['file'].' ('.$val['line'].') ';
-            $traceInfo .= isset($val['class'])?$val['class']:'';
-            $traceInfo .= isset($val['type'])?$val['type']:'';
-            $traceInfo .= isset($val['function'])?$val['function'].'(':'';
-            $traceInfo .= is_array($val['args'])?implode(', ', $val['args']):'';
-            $traceInfo .=")\n";
+        foreach($trace as $key => $val){
+            //print_r($val['args']);
+            $traceInfo .= sprintf("#%d [%s] %s(%d) %s%s%s(%s)\n",
+                        $key,
+                        $time,
+                        $val['file'],
+                        $val['line'],
+                        $val['class'],
+                        $val['type'],
+                        $val['function'],
+                        implode(',', $val['args'])
+                    );
         }
-        $error['file']  = $this->getFile();
-        $error['line']  = $this->getLine();
-        $error['message']= $this->message;
-        $error['code']  = $this->code;
-        $error['trace'] = $traceInfo;
-        return $error;*/
-        return parent::__toString();
+        return $traceInfo;
+        
     }
 }
 ?>

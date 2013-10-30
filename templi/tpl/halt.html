@@ -27,6 +27,7 @@ h3{border-bottom:1px solid #DDD;padding:5px 0;font-size:20px;}
     </div>
     <p class="title">[ 错误信息 ]</p>
     <p class="message">
+        <?php $error['code']?'code:'.$error['code']:''?>
         message:<?php echo $error['message'];?>
         file:<?php echo $error['file'];?>
         line:<?php echo $error['line'];?>

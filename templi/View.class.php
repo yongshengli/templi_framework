@@ -35,6 +35,7 @@ class View{
      * @param array $data 变量名
      */
     public function setOutput($data){
+        if (!is_array($data)) return;
         $this->viewVar = array_merge($this->viewVar,$data); 
     }
     /**

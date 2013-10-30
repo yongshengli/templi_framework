@@ -13,9 +13,9 @@ class indexController extends Controller{
         $a = Templi::model('menu')->select();
         
         echo Templi::model('menu')->last_sql();
-        print_r($a);
+        //print_r($a);
         //print_r($data['nav']);
-        die;
+        //die;
         $this->setOutput($data);
         $this->display();
     }

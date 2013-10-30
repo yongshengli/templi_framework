@@ -26,35 +26,37 @@ class Templi{
         self::$_config = $config;
         //公共基础配置
         $this->init();
-        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        switch(self::get_config('run_mode')){
+            case 'development':
+                 define('ERROR_TYPE', E_ALL & ~E_NOTICE);
+                 defined('APP_DEBUG') or define('APP_DEBUG',true);
+                 error_reporting(ERROR_TYPE); 
+                 
+                 break;
+            case 'testing':
+            case 'production':
+                 define('ERROR_TYPE', 0);
+                 defined('APP_DEBUG') or define('APP_DEBUG',false);
+                 error_reporting(0);
+                 break;
+            default:
+                exit('项目 run_mode 配置错误');
+        }
         //自定义异常处理
         if(method_exists('Templi', 'appException') && function_exists('set_exception_handler')){
             set_exception_handler(array('Templi','appException'));
         }
         //自定义错误处理
         if(method_exists('Templi', 'appError') && function_exists('set_error_handler')){
-            set_error_handler(array('Templi','appError'));
+            set_error_handler(array('Templi','appError'), ERROR_TYPE);
         }
-        
         return $this;
     }
     /**
      * 初始化函数
      */
     public function run(){
-        switch(self::get_config('run_mode')){
-            case 'development':
-                 error_reporting(E_ALL & ~E_NOTICE); 
-                 defined('APP_DEBUG') or define('APP_DEBUG',true);
-                 break;
-            case 'testing':
-            case 'production':
-                 error_reporting(0);
-                 defined('APP_DEBUG') or define('APP_DEBUG',false);
-                 break;
-            default:
-                exit('项目 run_mode 配置错误');
-        }
+        
         //载入公共函数库
         self::include_file(TEMPLI_PATH.'function.func.php');
         //载入异常处理类
@@ -172,14 +174,21 @@ class Templi{
     /**
      * 自定义异常处理
      */
-    public static function appException($e){;
-        halt($e->__toString());
+    public static function appException($e){
+        $error =array(
+            'code'=>    $e->getCode(),
+            'message'=> $e->getMessage(), 
+            'file'=>    $e->getFile(), 
+            'line'=>    $e->getLine(),  
+            'trace'=>   $e->__toString());
+        halt($error);
     }
     /**
      * 自定义错误处理
      */
-    public static function appError($errno, $errstr, $errfile, $errline, $errcontext){
-        halt(array('message'=>$errstr,'file'=>$errfile,'line'=>$errline));
+    public static function appError($errno, $errstr, $errfile, $errline){
+        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+        //halt(array('message'=>$errstr, 'file'=>$errfile, 'line'=>$errline));
     }
     /**
      * 自动加载 类文件 包括 Model、controller、libraries 类
