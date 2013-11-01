@@ -14,7 +14,8 @@ class websetController extends admin{
         Templi::include_common_file('Formcheck.class.php');
     }
     public function index(){
-        $data = $this->M_webset->getlist();
+        $page = isset($_GET['page'])?intval($_GET['page']):1;
+        $data = $this->M_webset->page($page)->getlist();
         //print_r($list);
         //$this->M_webset->get_webset();
         include $this->display();

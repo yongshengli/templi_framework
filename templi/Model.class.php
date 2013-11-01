@@ -16,9 +16,10 @@ class Model{
     private $_where = '';
     private $_field = '';
     private $_order = '';
-    private $_limit = '';
-    private $_set   = array();
-    private $_page  = array();
+    private $_limit = '';       
+    private $_set   = array();  //insert update操作数据
+    private $_page  = array();  //分页配置数组
+    private $_page_html = '';    //分页 html 代码
     //sql 语句
     private $_last_sql;
     /**
@@ -65,6 +66,10 @@ class Model{
      * @param string $field
      */
     public function field($field){
+        //不选字段默认为 * 防止用户输入*
+        if (trim($field) == '*') {
+            return $this;
+        }
         if (is_array($field)) {
             $field = implode(',', array_map(array($this, 'add_special_char'), $field));
         } else {
@@ -127,7 +132,7 @@ class Model{
      * @param string $limit 
      * example 0,20
      */
-    public function limit($listNum,$offset = NULL){
+    public function limit($listNum, $offset = NULL){
         if($offset != NULL){
             $this->_limit = " $offset,$listNum";
         }else{
@@ -138,13 +143,23 @@ class Model{
     /**
      * 分页设置
      * @param array $page
-     * current_page 当前页
-     * pageNum 每页显示的 页码数
-     * urlrule 分页 url 规则
-     * maxpage 最大页数
+     * $page['total'] 总数
+     * $page['listNum'] 每页显示条数
+     * $page['current_page'] 当前页
+     * $page['pageNum'] 每页显示的 页码数
+     * $page['urlrule'] 分页 url 规则
+     * $page['maxpage'] 最大页数
      */
     public function page($page){
-        $this->_page = array_merge($this->_page, $page);
+        if (is_array($page)) {
+            foreach ($this->_page as $key =>$val) {
+                if ($page[$key] !== NULL) {
+                    $this->_page[$key] = $page[$key];
+                }
+            }
+        } else {
+            $this->_page['current_page'] = $page;
+        }
         return $this;
     }
     /**
@@ -162,20 +177,30 @@ class Model{
      */
     public function getlist($where=NULL, $field=NULL, $order=NULL, $current_page=NULL, $listNum=NULL, $pageNum=NULL, $urlrule=NULL, $maxpage=NULL){
         $arr = array();
-        $total = $this->count($where);
+        $field && $this->field($field);
+        $where && $this->where($where);
+        $order && $this->order($order);
+        
+        
+        //分页
+        $current_page && $this->page(array(
+            'total'         =>  $this->count($this->_where),
+            'current_page'  =>  $current_page,
+            'listNum'       =>  $listNum,
+            'pageNum'       =>  $pageNum,
+            'urlrule'       =>  $urlrule,
+            'maxpage'       =>  $maxpage
+        ));
+        
         Templi::include_common_file('Page.class.php');
-        $page_config =array(
-                'total'=>$total,
-                'pageNum'=>$pageNum?$pageNum:$this->_page['pageNum'],
-                'listNum'=>$listNum?$listNum:($this->_limit?$this->_limit:20),
-                'current_page'=>$current_page?$current_page:$this->_page['current_page'],
-                'urlrule'=>$urlrule?$urlrule:$this->_page['urlrule'],
-                'maxpage'=>$maxpage?$maxpage:$this->_page['maxpage']
-            );
-        $page =new Page($page_config);
+        $page = new Page($this->_page);
+        if ($this->_page['listNum']) {
+            $this->limit($this->_page['listNum'], $page->offset);
+        }
+        $arr['list'] = $this->select();
         $arr['page_html'] = $page->page_html();
-        $arr['list'] = $this->select($where, $field, $order, "{$page->offset},$listNum");
-        $arr['total'] = $total;
+        $arr['total'] =  $this->_page['total'];
+        
         return $arr;
     }
     /**
@@ -217,7 +242,8 @@ class Model{
         $this->_last_sql = 'SELECT COUNT(*) AS `num` FROM '.$this->table_name;
         $this->_last_sql .=$where?' where '.$this->_where:'';
         $this->_last_sql .=' limit 1';
-        return $this->query($this->_last_sql);
+        $res = $this->query($this->_last_sql);
+        return isset($res[0]['num'])?$res[0]['num']:$res;
     }
     /**
      * 修改数据
@@ -370,7 +396,15 @@ class Model{
         $this->_order = '';
         $this->_limit = '';
         $this->_set   = array();
-        $this->_page  = array('current_page'=>1,'pageNum'=>8,'urlrule'=>'','maxpage'=>0);
+        $this->_page  = array(
+            'total'=>0,
+            'current_page'=>1, 
+            'pageNum'=>8, 
+            'listNum'=>20, 
+            'urlrule'=>'',
+            'maxpage'=>0
+            );
+        $this->_page_html = '';
     }
 }
 
