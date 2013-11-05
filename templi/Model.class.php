@@ -216,11 +216,11 @@ class Model{
         $field && $this->field($field);
         $order && $this->order($order);
         $limit && $this->limit($limit);
-        $this->_last_sql  = 'SELECT '.$this->_field.' FROM `'.$this->table_name.'`';
-        $this->_last_sql .= $this->_where?' WHERE '.$this->_where:'';
-        $this->_last_sql .= $this->_order?' ORDER BY '.$this->_order:'';
-        $this->_last_sql .= $limit?' LIMIT '.$limit:'';
-        return $this->query($this->_last_sql);
+        $sql  = 'SELECT '.$this->_field.' FROM `'.$this->table_name.'`';
+        $sql .= $this->_where?' WHERE '.$this->_where:'';
+        $sql .= $this->_order?' ORDER BY '.$this->_order:'';
+        $sql .= $limit?' LIMIT '.$limit:'';
+        return $this->query($sql);
     }
     /**
      * 单条查询
@@ -239,10 +239,10 @@ class Model{
     public function count($where = NULL){
         $where && $this->where($where);
         
-        $this->_last_sql = 'SELECT COUNT(*) AS `num` FROM '.$this->table_name;
-        $this->_last_sql .=$where?' where '.$this->_where:'';
-        $this->_last_sql .=' limit 1';
-        $res = $this->query($this->_last_sql);
+        $sql = 'SELECT COUNT(*) AS `num` FROM '.$this->table_name;
+        $sql .=$where?' where '.$this->_where:'';
+        $sql .=' limit 1';
+        $res = $this->query($sql);
         return isset($res[0]['num'])?$res[0]['num']:$res;
     }
     /**
@@ -282,8 +282,8 @@ class Model{
         }
         $field = implode(',', $fields);
         
-        $this->_last_sql ='UPDATE `'.$this->table_name.'` SET '.$field.' WHERE '.$this->_where;
-        return $this->query($this->_last_sql);
+        $sql ='UPDATE `'.$this->table_name.'` SET '.$field.' WHERE '.$this->_where;
+        return $this->query($sql);
     }
     /**
       * 插入数据
@@ -302,9 +302,9 @@ class Model{
         $fields = implode(',',array_map(array($this, 'add_special_char'), $fields));
         $values = implode(',',array_map(array($this, 'escape_string'), $values));
 
-        $this->_last_sql  = $replace?'REPLACE INTO ':'INSERT INTO ';
-        $this->_last_sql .= $this->table_name. '('.$fields.') VALUES ('.$values.')';
-        $result = $this->query($this->_last_sql);
+        $sql  = $replace?'REPLACE INTO ':'INSERT INTO ';
+        $sql .= $this->table_name. '('.$fields.') VALUES ('.$values.')';
+        $result = $this->query($sql);
         return $return_insert_id?$this->db->insert_id():$result;
     }
     /**
@@ -316,19 +316,19 @@ class Model{
         $where && $this->where($where);
         if(!$this->_where) 
             return false;
-        $this->_last_sql = 'DELETE FROM ' .$this->table_name. ' WHERE '.$this->_where;
-        return $this->query($this->_last_sql);
+        $sql = 'DELETE FROM ' .$this->table_name. ' WHERE '.$this->_where;
+        return $this->query($sql);
     }
     /**
      * 执行基本的 mysql查询
      */
     public function query($sql){
-        $sql = trim($sql);
+        $this->_last_sql = trim($sql);
         $this->rest_all_var();
-        if (strtoupper(substr($sql, 0, 6)) == 'SELECT') {
-            return $this->db->query($sql);
+        if (strtoupper(substr($this->_last_sql, 0, 6)) == 'SELECT') {
+            return $this->db->query($this->_last_sql);
         } else {
-            return $this->db->execute($sql);
+            return $this->db->execute($this->_last_sql);
         }
     }
     
