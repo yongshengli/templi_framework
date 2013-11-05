@@ -16,9 +16,10 @@ class adminController extends admin{
     }
     public function index(){
         //$data = $this->M_admin->getlist();
+        //echo Templi::get_config('db.master.prefix');die;
         $page =(int)$_GET['page'];
         $select = "SELECT a.*,ar.title AS role_name";
-        $from  =" from ".Templi::get_config('db')."admin as a LEFT JOIN {$this->M_admin->prefix}admin_role as ar ON ar.role_id=a.role_id";
+        $from  =" from ".Templi::get_config('db.master.prefix')."admin as a LEFT JOIN ".Templi::get_config('db.master.prefix')."admin_role as ar ON ar.role_id=a.role_id";
         $count = $this->M_admin->query("select count(*) as num".$from.' limit 1');
         $total = $count[0]['num'];
         Templi::include_common_file('Page.class.php');

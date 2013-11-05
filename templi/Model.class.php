@@ -44,7 +44,7 @@ class Model{
         $this->cache = Cache::factory(); 
 	if(!isset($db[$sign])){
             if(!$config){
-                $config = Templi::get_config("db")[$sign];
+                $config = Templi::get_config("db.{$sign}");
             }
             require_once('Model/'.ucfirst($config['dbdrive']).'.class.php');
             $db[$sign] = new $config['dbdrive']($config);

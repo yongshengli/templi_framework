@@ -78,16 +78,40 @@ class Templi{
      * $field 为数组时 设置配置信息
      * @param $field 
      */
-    public static function get_config($field = NULL){
+    public static function get_config($field = NULL, $default = NULL){
         //设置配置信息
         if(is_array($field)){
             self::$_config = array_merge(self::$_config, $field);
         }
         if(is_string($field)){
-            return isset(self::$_config[$field])? self::$_config[$field]:NULL;
+            //return isset(self::$_config[$field])? self::$_config[$field]:$default;
+            return self::getArrVal(self::$_config, $field, $default);
         }
         return self::$_config; 
     }
+    /**
+     * 获取 数组中元素的值
+     * @param array $arr
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public static function getArrVal($arr, $key, $default = NULL){
+        
+        $temp =  explode('.', $key);
+        $myKey = $temp[0];
+        
+        if (!isset($arr[$myKey])){
+            return $default;
+        }
+        
+        if(isset($temp[1])) {
+            array_shift($temp);
+            $temp = implode('.', $temp);
+            return self::getArrVal($arr[$myKey], $temp, $default);
+        }
+        return $arr[$myKey];
+    } 
     /**
      * 加载并实例化模型类
      * @param string $file 
