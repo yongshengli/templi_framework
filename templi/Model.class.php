@@ -33,23 +33,34 @@ class Model{
         $table && $this->table_name = $this->db->prefix.$table;
         $this->rest_all_var();
     }
+
+    /**
+     * 获取当前模型 的配置信息
+     * 访问数据的的配置信息
+     * 数据库表前缀 表名等
+     * @param $name
+     * @return mixed
+     */
+    public function __get($name){
+        return isset($this->db->$name)?$this->db->$name:NULL;
+    }
     /**
      * 设置数据库连接 切换数据库
      * @param init $sign 数据库标识
      * @param array $config 数据库配置信息  
      */
-    public function db($sign= 'master', $config = array()){
-	static $db = array();
+    public function db($sign = 'master', $config = array()){
+	    static $db = array();
         Templi::include_common_file('Cache.class.php');
         $this->cache = Cache::factory(); 
-	if(!isset($db[$sign])){
+	    if(!isset($db[$sign])){
             if(!$config){
                 $config = Templi::get_config("db.{$sign}");
             }
             require_once('Model/'.ucfirst($config['dbdrive']).'.class.php');
             $db[$sign] = new $config['dbdrive']($config);
         }
-	$this->db = isset($db[$sign])?$db[$sign]:$db['master'];
+	    $this->db = isset($db[$sign])?$db[$sign]:$db['master'];
         return $this;
     }
     /**
