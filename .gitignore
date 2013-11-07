@@ -4,4 +4,4 @@ build.log
 cms/cache
 nbproject
 .gitignore~
-
+.idea

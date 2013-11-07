@@ -110,7 +110,7 @@ class Model{
     }
     /**
      * 给 update insert 赋值
-     * @param string  array $data
+     * @param array $data
      */
     public function set($data){
         if (!is_array($data)) {
