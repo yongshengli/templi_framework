@@ -1,13 +1,6 @@
 <?php
-    class a{
-        const ABC = 'abc';
-        function output(){
-            echo self::ABC;
-        }
+    function aaa(array $a){
+        print_r($a);
     }
-    class aa extends a{
-        const ABC ='bcd';
-    }
-    $a = new aa();
-    $a->output();
+    aaa();
 ?>

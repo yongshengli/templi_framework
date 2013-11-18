@@ -22,10 +22,11 @@ class Model{
     private $_page_html = '';    //分页 html 代码
     //sql 语句
     private $_last_sql;
+
     /**
      * 构造函数
      * @param string $table 表名
-     * @param int $dbSign 数据库唯一标识
+     * @param int|string $dbSign 数据库唯一标识
      * @param array $config 数据库配置
      */
     function __construct($table='', $dbSign='master', $config = array()){
@@ -44,10 +45,12 @@ class Model{
     public function __get($name){
         return isset($this->db->$name)?$this->db->$name:NULL;
     }
+
     /**
      * 设置数据库连接 切换数据库
-     * @param init $sign 数据库标识
-     * @param array $config 数据库配置信息  
+     * @param int|string $sign 数据库标识
+     * @param array $config 数据库配置信息
+     * @return $this
      */
     public function db($sign = 'master', $config = array()){
 	    static $db = array();
@@ -67,6 +70,7 @@ class Model{
      * 设置操作数据表
      * 此方法不建议使用 （使用 此方法 会改变 之前模型 的操作表）
      * @param string $table
+     * @return $this
      */
     public function table($table){
         $this->table_name = $this->db->prefix.$table;
@@ -75,6 +79,8 @@ class Model{
     /**
      * 学则字段字段
      * @param string $field
+     *
+     * @return $this
      */
     public function field($field){
         //不选字段默认为 * 防止用户输入*
@@ -92,39 +98,47 @@ class Model{
         $this->_field .= $fields;
         return $this;
     }
+
     /**
      * where 条件
-     * @param array or string $where 
+     * @param array or string $where
+     *
+     * @param string $compare
+     * @return $this
      */
     public function where($where, $compare = '='){
         $this->sqls($where, 'AND', $compare);
         return $this;
     }
+
     /**
      * where 条件
-     * @param array or string $where 
+     * @param array or string $where
+     * @param string $compare
+     * @return $this
      */
     public function where_or($where, $compare = '='){
         $this->sqls($where, 'OR', $compare = '=');
         return $this;
     }
+
     /**
      * 给 update insert 赋值
      * @param array $data
+     * @throws Abnormal
+     * @return $this
      */
-    public function set($data){
-        if (!is_array($data)) {
-            throw new Abnormal('仅支持数组数据类型');
-            return;
-        }
+    public function set(array $data){
         $this->_set = array_merge($this->_set, $data);
         return $this;
     }
+
     /**
      * oder by
-     * @param string $order 
-     * 
+     * @param string $order
+     *
      * example id desc
+     * @return $this
      */
     public function order($order){
         if (is_array($order)) {
@@ -138,10 +152,13 @@ class Model{
         }
         return $this;
     }
+
     /**
-     * limit 
-     * @param string $limit 
-     * example 0,20
+     * limit
+     * @param $listNum
+     * @param null $offset
+     * @return $this
+     * @internal param string $limit example 0,20* example 0,20
      */
     public function limit($listNum, $offset = NULL){
         if($offset != NULL){
@@ -151,6 +168,7 @@ class Model{
         }
         return $this;
     }
+
     /**
      * 分页设置
      * @param array $page
@@ -160,6 +178,7 @@ class Model{
      * $page['pageNum'] 每页显示的 页码数
      * $page['urlrule'] 分页 url 规则
      * $page['maxpage'] 最大页数
+     * @return $this
      */
     public function page($page){
         if (is_array($page)) {
@@ -173,18 +192,23 @@ class Model{
         }
         return $this;
     }
+
     /**
      * 多条查询并分页
-     * @param string or array $where 条件语句 可以为数组 
+     * @param null $where
      * @param string $field 字段
-     * @param string $oreder 排序
-     * @param string $limit 条数限制
+     * @param null $order
      * @param int $current_page 当前页
-     * @param int $listNum 每页显示条数 
+     * @param int $listNum 每页显示条数
      * @param int $pageNum 每页显示的 页码数
      * @param string $urlrule url 规则
      * @param $maxpage 最多显示页数
-     * @param array $arr[list] 数据列表 $arr['page_html'] 页码html
+     * @internal param \or $string array $where 条件语句 可以为数组
+     * @internal param string $oreder 排序
+     * @internal param string $limit 条数限制
+     * @internal param array $arr [list] 数据列表 $arr['page_html'] 页码html
+     *
+     * @return array
      */
     public function getlist($where=NULL, $field=NULL, $order=NULL, $current_page=NULL, $listNum=NULL, $pageNum=NULL, $urlrule=NULL, $maxpage=NULL){
         $arr = array();
@@ -214,12 +238,18 @@ class Model{
         
         return $arr;
     }
+
     /**
      * 多条查询
-     * @param string or array $where 条件语句 可以为数组 
+     * @param null $where
      * @param string $field 字段
-     * @param string $oreder 排序
+     * @param null $order
      * @param string $limit 条数限制
+     *
+     * @internal param \or $string array $where 条件语句 可以为数组
+     * @internal param string $oreder 排序
+     *
+     * @return
      */
     public function select($where=NULL, $field=NULL, $order=NULL, $limit=NULL){
         
@@ -233,11 +263,17 @@ class Model{
         $sql .= $limit?' LIMIT '.$limit:'';
         return $this->query($sql);
     }
+
     /**
      * 单条查询
-     * @param string or array  $where语句 可以是数组
-     * @param string  $fields 要查找的字段
-     * @param string  $oeder  排序
+     * @param null $where
+     * @param null $field
+     * @param null $order
+     * @internal param \or $string array  $where语句 可以是数组
+     * @internal param string $fields 要查找的字段
+     * @internal param string $oeder 排序
+     *
+     * @return array()
      */
     public function find($where=NULL, $field=NULL, $order=NULL){
         $list = $this->select($where, $field, $order, $limit=1);
@@ -256,10 +292,13 @@ class Model{
         $res = $this->query($sql);
         return isset($res[0]['num'])?$res[0]['num']:$res;
     }
+
     /**
      * 修改数据
      * @param array or string $data要修改的数据 字符串为 sql 语句 数组key 为字段名 value 为字段值
      * @param array or string $where 条件语句 可为数组
+     *
+     * @return bool
      */
     public function update($data = NULL, $where=NULL){
         $data && $this->set($data);
@@ -296,12 +335,14 @@ class Model{
         $sql ='UPDATE `'.$this->table_name.'` SET '.$field.' WHERE '.$this->_where;
         return $this->query($sql);
     }
+
     /**
-      * 插入数据
-      * @param array $data 要添加的数据 key 为字段名 value 为字段值
-      * @param bool $return_insert_id 是否返回主键 号
-      * @param bool $replace 是否 为替换插入
-      */
+     * 插入数据
+     * @param array $data 要添加的数据 key 为字段名 value 为字段值
+     * @param bool $return_insert_id 是否返回主键 号
+     * @param bool $replace 是否 为替换插入
+     * @return bool
+     */
     public function insert($data = NULL, $return_insert_id = false, $replace = false){
         $data && $this->set($data);
         
@@ -342,10 +383,11 @@ class Model{
             return $this->db->execute($this->_last_sql);
         }
     }
-    
+
     /**
      * 对字段两边加反引号，以保证数据库安全
      * @param $value 数组值
+     * @return string
      */
     public function add_special_char(&$value) {
         if('*' == $value || false !== strpos($value, '(') || false !== strpos($value, '.') || false !== strpos ( $value, '`')) {
@@ -355,10 +397,12 @@ class Model{
         }
         return $value;
     }
+
     /**
      * 对字段值两边加引号，以保证数据库安全
      * @param $value 数组值
-     * @param $quotation 
+     * @param $quotation
+     * @return string
      */
     public function escape_string(&$value, $quotation = 1) {
         if ($quotation) {
@@ -375,11 +419,13 @@ class Model{
     public function last_sql(){
         return $this->_last_sql;
     }
+
     /**
      * 将数组转换为SQL语句
      * @param array $where 要生成的数组
      * @param string $font 连接串
      * @param string $compare 比较字符 (=,!=,in not in, like)
+     * @throws Abnormal
      */
     final public function sqls($where, $font = ' AND ', $compare = '=') {
         if (is_array($where)) {
