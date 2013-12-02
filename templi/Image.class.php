@@ -13,7 +13,8 @@ class Image {
      * 取得图像信息
      * @static
      * @access public
-     * @param string $image 图像文件名
+     * @param $img
+     * @internal param string $image 图像文件名
      * @return mixed
      */
 
