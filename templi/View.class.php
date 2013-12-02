@@ -38,19 +38,21 @@ class View{
         if (!is_array($data)) return;
         $this->viewVar = array_merge($this->viewVar,$data); 
     }
+
     /**
      * 分配变量 单个变量分配
      * @param string $name 变量名
-     * @param mid $value 变量值
+     * @param \mid|string $value 变量值
      */
     public function assign($name, $value=''){
         $this->viewVar[$name] = $value;
     }
+
     /**
-    * 页面显示
-    * @param string $template_file_name 模板文件名(不包括扩展名)
-    * @param string $template_file_extend 视图文件扩展名
-    */
+     * 页面显示
+     * @param string $template_file_name 模板文件名(不包括扩展名)
+     * @internal param string $template_file_extend 视图文件扩展名
+     */
     public function display($template_file_name=null){
         $template = $this->compile($template_file_name);
         extract($this->viewVar, EXTR_OVERWRITE);
@@ -135,4 +137,3 @@ class View{
         return $str;
     }
 }
-?>

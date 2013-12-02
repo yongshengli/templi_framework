@@ -8,23 +8,26 @@ defined('IN_TEMPLI') or die('非法引用');
  *
  */
  class Cookie{
-    /**
-     * 读取cookie
-     * @param string  $name 变量名
-     * @param bool $encrtypt 是否需要对其进行 base64_decode 解密 
-     */
+     /**
+      * 读取cookie
+      * @param string $name 变量名
+      * @param bool $encrtypt 是否需要对其进行 base64_decode 解密
+      * @return string
+      */
      
     public static function get($name, $encrtypt=true){
         
         return $_COOKIE[$name]?base64_decode($_COOKIE[$name]):'';
     }
-    /**
-     * 设置写入cookie 支持批量写入
-     * @param mid $name  变量名 $name = array('a'=>'a','b'=>b)
-     * @param mixed $value  值
-     * @param int $time 过期时间
-     * @param bool $encrypt 是否用base64_encode 进行加密
-     */
+
+     /**
+      * 设置写入cookie 支持批量写入
+      * @param mid $name 变量名 $name = array('a'=>'a','b'=>b)
+      * @param mixed $value 值
+      * @param int $time 过期时间
+      * @param bool $encrypt 是否用base64_encode 进行加密
+      * @return bool
+      */
     public static function set($name, $value='', $time =0, $encrypt=true){
         if(!$name) return false;
         if(is_array($name)){
@@ -46,4 +49,3 @@ defined('IN_TEMPLI') or die('非法引用');
     }
 
 }
-?>

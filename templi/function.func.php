@@ -11,6 +11,7 @@ defined('IN_TEMPLI') or die('非法引用');
 /**
  * 返回经addslashes处理过的字符串或数组
  * @param string or array  $data
+ * @return array|string
  * @rerurn string or array
  */
 function new_addslashes($data){
@@ -23,9 +24,11 @@ function new_addslashes($data){
         return $data;
     }
 }
+
 /**
  * 返回经stripslashes处理过的字符串或数组
  * @param string or array  $data
+ * @return array|string
  * @rerurn string or array
  */
 function new_stripslashes($data){
@@ -131,10 +134,14 @@ function get_url() {
 	$relate_url = isset($_SERVER['REQUEST_URI']) ? safe_replace($_SERVER['REQUEST_URI']) : $php_self.(isset($_SERVER['QUERY_STRING']) ? '?'.safe_replace($_SERVER['QUERY_STRING']) : $path_info);
 	return $sys_protocal.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '').$relate_url;
 }
+
 /**
  * 生成url 如果不穿 参数 则 返回当前页面url
  * @param string $main_params =$module/$controller/$action;
- * @param $param array   get 参数 array('id'=>3)
+ * @param array $params
+ * @param null $url_model
+ * @return string
+ * @internal param array $param get 参数 array('id'=>3)
  * @example url('home/member/index',array('id'=>28)));
  */
 function url($main_params = NULL, $params = array(), $url_model = NULL){
@@ -210,9 +217,11 @@ function getip() {
 	}
 	return preg_match ( '/[\d\.]{7,15}/', $ip, $matches ) ? $matches [0] : '';
 }
+
 /**
  * 检查字符串是否是UTF8编码
- * @param string $string 字符串
+ * @param $str
+ * @internal param string $string 字符串
  * @return Boolean
  */
 function isUtf8($str) {
@@ -246,10 +255,10 @@ function isUtf8($str) {
  * @static
  * @access public
  * @param string $str 需要转换的字符串
- * @param string $start 开始位置
+ * @param int|string $start 开始位置
  * @param string $length 截取长度
  * @param string $charset 编码格式
- * @param string $suffix 截断显示字符
+ * @param bool|string $suffix 截断显示字符
  * @return string
  */
 function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true) {
@@ -267,11 +276,13 @@ function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true) {
     }
     return $suffix ? $slice.'...' : $slice;
 }
+
 /**
  * 字符截取 支持UTF8/GBK
  * @param $string
  * @param $length
  * @param $dot
+ * @return mixed|string
  */
 function str_cut($string, $length, $dot = '...') {
 	$strlen = strlen($string);
@@ -325,11 +336,13 @@ function str_cut($string, $length, $dot = '...') {
 	}
 	return $strcut.$dot;
 }
+
 /**
  * 对数据进行编码转换
  * @param array or string $data       数组
- * @param string $input     需要转换的编码
- * @param string $output    转换后的编码
+ * @param string $input 需要转换的编码
+ * @param string $output 转换后的编码
+ * @return array|string
  */
 function array_iconv($data, $input = 'gbk', $output = 'utf-8') {
 	if (!is_array($data)) {

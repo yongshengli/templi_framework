@@ -14,8 +14,8 @@ class Templi{
      * 获取版本信息
      */
     public static function getVersion()
-   {
-	return '1.0.0';
+    {
+	    return '1.0.0';
     }
     /**
      * 创建应用
@@ -71,12 +71,15 @@ class Templi{
         self::include_file(TEMPLI_PATH.'Cookie.class.php');
         Appliction::init();
     }
+
     /**
      * 获取配置文件信息
      * $field 为空时 获取全部配置信息
      * $field 为字符串时 返回当前 索引 配置值
      * $field 为数组时 设置配置信息
-     * @param $field 
+     * @param $field
+     * @param null $default
+     * @return array|mixed
      */
     public static function get_config($field = NULL, $default = NULL){
         //设置配置信息
@@ -96,7 +99,7 @@ class Templi{
      * @param mixed $default
      * @return mixed
      */
-    public static function getArrVal($arr, $key, $default = NULL){
+    public static function getArrVal(array $arr, $key, $default = NULL){
         
         $temp =  explode('.', $key);
         $myKey = $temp[0];
@@ -111,11 +114,14 @@ class Templi{
             return self::getArrVal($arr[$myKey], $temp, $default);
         }
         return $arr[$myKey];
-    } 
+    }
+
     /**
      * 加载并实例化模型类
-     * @param string $file 
+     * @param $model
      * @param bool $type true 高级载入模型文件 false 快捷实例化模型
+     * @return
+     * @internal param string $file
      */
     public static function model($model,$type=false){
         static $_models;
@@ -130,10 +136,12 @@ class Templi{
         }
         return $_models[$model.$type];
     }
+
     /**
      * 加载模板视图文件
      * @param $file 文件名
-     * @param $module 模块名 
+     * @param $module 模块名
+     * @return string
      */
     public static function include_html($file,$module=null){
         self::include_common_file('View.class.php');
@@ -141,19 +149,24 @@ class Templi{
         $file = $module?($module.'/'.$file):($GLOBALS['module'].'/'.$file);
         return $view->loadView($file);
     }
+
     /**
-     * 加载模块 函数库 类库文件 
+     * 加载模块 函数库 类库文件
      * @param $file 文件名
-     * @param $module 模块名 
+     * @param $module 模块名
+     * @return bool
      */
     public static function include_module_file($file,$module=null){
         $path =$module?self::get_config('app_path').'controller/'.trim($module,'/').'/libraries/':self::get_config('app_path').'controller/'.$GLOBALS['module'].'/libraries/';
         return self::include_file($path.$file);
     }
+
     /**
      * 加载公共 函数库 类库文件
      * @param $file 文件名
-     * @param $module 模块名 
+     * @param null $path
+     * @internal param $module 模块名
+     * @return bool
      */
     public static function include_common_file($file,$path=null){
         
@@ -268,4 +281,3 @@ class Templi{
         spl_autoload_register(array('self', '__autoload'));
     }
 }
-?>

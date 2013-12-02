@@ -90,11 +90,13 @@ class Page{
         }
         return $multipage;
     }
+
     /**
      * 生成页 url 连接
      * @param string $urlrule url 规则
-     * @param int    $page 页数
+     * @param int $page 页数
      * @param string $par 页数跳转时要带的参数
+     * @return mixed|string
      */
      private function pageurl($urlrule, $page, $par='page={$page}'){
         //ajax 分页
@@ -124,5 +126,3 @@ class Page{
         return $url;
     }
 }
-
-?>

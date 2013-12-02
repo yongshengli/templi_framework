@@ -61,13 +61,16 @@ class Tree{
         //print_r($child);
         return $child?$child:false;
     }
+
     /**
-	* 得到树型结构
-	* @param int $parent_id ID，表示获得这个ID下的所有子级
-	* @param string $rule 生成树型结构的基本代码，例如："<option value=\$id \$selected>\$spacer\$name</option>"
-	* @param int $select_id 被选中的ID，比如在做树型下拉框的时候需要用到
-    * @param 
-	*/
+     * 得到树型结构
+     * @param int $parent_id ID，表示获得这个ID下的所有子级
+     * @param string $rule 生成树型结构的基本代码，例如："<option value=\$id \$selected>\$spacer\$name</option>"
+     * @param int|string $select_id 被选中的ID，比如在做树型下拉框的时候需要用到
+     * @param string $indentation
+     * @return string
+     * @internal param $
+     */
     public function get_tree($parent_id=0, $rule='', &$select_id = '', $indentation = ''){
         $n =1;
         $child =$this->get_child($parent_id);
@@ -99,4 +102,3 @@ class Tree{
         return $this->str;
     }
 }
-?>

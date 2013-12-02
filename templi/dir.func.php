@@ -11,13 +11,14 @@ function dir_path($path) {
 	if(substr($path, -1) != '/') $path = $path.'/';
 	return $path;
 }
+
 /**
-* 创建目录
-* 
-* @param	string	$path	路径
-* @param	string	$mode	属性
-* @return	string	如果已经存在则返回true，否则为flase
-*/
+ * 创建目录
+ *
+ * @param    string $path 路径
+ * @param int|string $mode 属性
+ * @return    string    如果已经存在则返回true，否则为flase
+ */
 function dir_create($path, $mode = 0777) {
 	if(is_dir($path)) return TRUE;
 	$ftp_enable = 0;

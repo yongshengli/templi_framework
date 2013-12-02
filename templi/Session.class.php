@@ -75,4 +75,3 @@ class Session{
          return isset($name) ? session_name($name) : session_name();
     }
 }
-?>

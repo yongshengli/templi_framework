@@ -73,8 +73,9 @@ class UploadFile {//类定义开始
     /**
      * 上传一个文件
      * @access private
-     * @param mixed $name 数据
-     * @param string $value  数据表名
+     * @param $file
+     * @internal param mixed $name 数据
+     * @internal param string $value 数据表名
      * @return string
      */
     private function save($file) {

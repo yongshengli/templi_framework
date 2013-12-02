@@ -15,10 +15,11 @@ abstract class Controller{
         if(method_exists($this,'init'))
             $this->init();
     }
+
     /**
      * 给模板文件分配变量
      * @param string $name 变量名称
-     * @param mid $value   变量值
+     * @param \mid|string $value 变量值
      */
     protected function assign($name, $value=''){
         $this->view->assign($name, $value); 
@@ -40,11 +41,14 @@ abstract class Controller{
         $file = $file?$file:$GLOBALS['controller'].'_'.$GLOBALS['action'];
         $this->view->display($path.$file); 
     }
+
     /**
      * 消息提示页
      * @param string $msg 消息内容
-     * @param string $url 跳转地址 
+     * @param null $url_forward
      * @param int $ms 等待时间
+     * @param string $module
+     * @internal param string $url 跳转地址
      */
     protected function show_message($msg, $url_forward=null, $ms=null, $module='index'){
         $data['url_forward'] = $url_forward?APP_URL.$url_forward:'goback';
@@ -69,4 +73,3 @@ abstract class Controller{
         }
     }
 }
-?>

@@ -48,21 +48,27 @@ class Formcheck{
      public static function isunique($data,$param=null){
         return !(Templi::model($param['table'])->find(array($param['field']=>$data),$param['field']));
      }
-     /**
-      * 数字大小 在木范围内
-      * @param  array $params
-      * $param['max'] 最大值
-      * $param['min'] 最小值
-      */
+
+    /**
+     * 数字大小 在木范围内
+     * @param $data
+     * @param null $param
+     * @return bool
+     * @internal param array $params $param['max'] 最大值* $param['max'] 最大值
+     * $param['min'] 最小值
+     */
      public static function numrange($data,$param=null){
          return $data<=$param['max'] && $data>=$param['min'];
      }
-     /**
-      * @param array $param 
-      * $param['encode'] 编码
-      * $param['max']    最大长度
-      * $param['min']    最小长度
-      */
+
+    /**
+     * @param $data
+     * @param array $param
+     * $param['encode'] 编码
+     * $param['max']    最大长度
+     * $param['min']    最小长度
+     * @return bool
+     */
      public static function strlength($data,$param=null){
          $c = mb_strlen($data, $param['encode']);
          return $c<=$param['max'] && $c>=$param['min'];
@@ -135,22 +141,26 @@ class Formcheck{
         }
         return true;
      }
+
     /**
      * 检查密码长度是否符合规定
      *
      * @param STRING $password
-     * @return 	TRUE or FALSE
+     * @param null $param
+     * @return    TRUE or FALSE
      */
     public static function is_password($password, $param=null) {
     	$strlen = strlen($password);
     	if($strlen >= 6 && $strlen <= 20) return true;
     	return false;
     }
+
     /**
      * 检查用户名是否符合规定
      *
      * @param STRING $username 要检查的用户名
-     * @return 	TRUE or FALSE
+     * @param null $param
+     * @return    TRUE or FALSE
      */
     public static function is_username($username, $param=null) {
     	$strlen = strlen($username);
@@ -161,10 +171,12 @@ class Formcheck{
     	}
     	return true;
     }
+
     /**
      * 检测输入中是否含有 错误字符/敏感字符
      *
      * @param char $string 要检查的字符串名称
+     * @param null $param
      * @return TRUE or FALSE
      */
     public static function is_badword($string, $param=null) {
@@ -177,4 +189,3 @@ class Formcheck{
     	return FALSE;
     }
 }
-?>

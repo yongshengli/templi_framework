@@ -40,9 +40,10 @@ class Image {
      * 为图片添加水印
      * @static public
      * @param string $source 原文件名
-     * @param string $water  水印图片
-     * @param string $$savename  添加水印后的图片名
-     * @param string $alpha  水印的透明度
+     * @param string $water 水印图片
+     * @param null $savename
+     * @param int|string $alpha 水印的透明度
+     * @internal param $string $$savename  添加水印后的图片名
      * @return void
      */
     static public function water($source, $water, $savename=null, $alpha=80) {
@@ -143,13 +144,13 @@ class Image {
      * 生成缩略图
      * @static
      * @access public
-     * @param string $image  原图
-     * @param string $type 图像格式
+     * @param string $image 原图
      * @param string $thumbname 缩略图文件名
-     * @param string $maxWidth  宽度
-     * @param string $maxHeight  高度
-     * @param string $position 缩略图保存目录
+     * @param string $type 图像格式
+     * @param int|string $maxWidth 宽度
+     * @param int|string $maxHeight 高度
      * @param boolean $interlace 启用隔行扫描
+     * @internal param string $position 缩略图保存目录
      * @return void
      */
     static function thumb($image, $thumbname, $type='', $maxWidth=200, $maxHeight=200, $interlace=true) {
@@ -223,22 +224,23 @@ class Image {
         }
         return false;
     }
+
     /**
-      +----------------------------------------------------------
+     * +----------------------------------------------------------
      * 生成特定尺寸缩略图 解决原版缩略图不能满足特定尺寸的问题 PS：会裁掉图片不符合缩略图比例的部分
-      +----------------------------------------------------------
+     * +----------------------------------------------------------
      * @static
      * @access public
-      +----------------------------------------------------------
-     * @param string $image  原图
-     * @param string $type 图像格式
+     * +----------------------------------------------------------
+     * @param string $image 原图
      * @param string $thumbname 缩略图文件名
-     * @param string $maxWidth  宽度
-     * @param string $maxHeight  高度
+     * @param string $type 图像格式
+     * @param int|string $maxWidth 宽度
+     * @param int|string $maxHeight 高度
      * @param boolean $interlace 启用隔行扫描
-      +----------------------------------------------------------
+     * +----------------------------------------------------------
      * @return void
-      +----------------------------------------------------------
+    +----------------------------------------------------------
      */
     static function thumb2($image, $thumbname, $type='', $maxWidth=200, $maxHeight=50, $interlace=true) {
         // 获取原图信息
@@ -301,16 +303,19 @@ class Image {
         }
         return false;
     }
+
     /**
      * 根据给定的字符串生成图像
      * @static
      * @access public
-     * @param string $string  字符串
-     * @param string $size  图像大小 width,height 或者 array(width,height)
-     * @param string $font  字体信息 fontface,fontsize 或者 array(fontface,fontsize)
+     * @param string $string 字符串
+     * @param array|string $size 图像大小 width,height 或者 array(width,height)
+     * @param array|string $font 字体信息 fontface,fontsize 或者 array(fontface,fontsize)
+     * @param string $filename
+     * @param array $rgb
      * @param string $type 图像格式 默认PNG
      * @param integer $disturb 是否干扰 1 点干扰 2 线干扰 3 复合干扰 0 无干扰 4 间断直线
-     * @param bool $border  是否加边框 array(color)
+     * @param bool $border 是否加边框 array(color)
      * @return string
      */
     static function buildString($string, $size=array(), $font = array(), $filename='', $rgb=array(), $type='png', $disturb=3, $border=true) {
@@ -390,12 +395,14 @@ class Image {
         }
         self::output($im, $type, $filename);
     }
+
     /**
      * 把图像转换成字符显示
      * @static
      * @access public
-     * @param string $image  要显示的图像
-     * @param string $type  图像类型，默认自动获取
+     * @param string $image 要显示的图像
+     * @param string $string
+     * @param string $type 图像类型，默认自动获取
      * @return string
      */
     static function showASCIIImg($image, $string='', $type='') {
@@ -430,10 +437,10 @@ class Image {
     /**
      * 生成UPC-A条形码
      * @static
+     * @param $code
      * @param string $type 图像格式
-     * @param string $type 图像格式
-     * @param string $lw  单元宽度
-     * @param string $hi   条码高度
+     * @param int|string $lw 单元宽度
+     * @param int|string $hi 条码高度
      * @return string
      */
     static function UPCA($code, $type='png', $lw=2, $hi=100) {

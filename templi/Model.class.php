@@ -464,5 +464,3 @@ class Model{
         $this->_page_html = '';
     }
 }
-
-?>

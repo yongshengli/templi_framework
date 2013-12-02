@@ -44,10 +44,11 @@ class String {
     static public function keyGen() {
         return str_replace('-','',substr(String::uuid(),1,-1));
     }
+
     /**
      * 产生随机字串，可用来自动生成密码
      * 默认长度6位 字母和数字混合 支持中文
-     * @param string $len 长度
+     * @param int|string $len 长度
      * @param string $type 字串类型
      * 0 字母 1 数字 2大写字母 3小写字母 4汉字 其它 混合
      * @param string $addChars 额外字符
@@ -94,8 +95,10 @@ class String {
     /**
      * 生成一定数量的随机数，并且不重复
      * @param integer $number 数量
-     * @param string $len 长度
-     * @param string $type 字串类型
+     * @param int $length
+     * @param int $mode
+     * @internal param string $len 长度
+     * @internal param string $type 字串类型
      * 0 字母 1 数字 其它 混合
      * @return string
      */
