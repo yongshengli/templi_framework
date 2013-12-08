@@ -1,7 +1,9 @@
 # Build folder and log file
 build/
 build.log
-cms/cache
+cms/cache/session
+cms/cache/data
+cms/cache/complile
 nbproject
 .gitignore~
 .idea
