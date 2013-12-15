@@ -30,7 +30,6 @@ class Image_verify{
         $randval = String::randString($length, $mode);
         Session::set($verifyName, strtolower($randval));
         return Image::buildString($randval, $size, $font, $filename='',$rgb=array(), $type, $disturb, $border);
-        
+
     }
 }
-?>

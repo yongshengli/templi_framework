@@ -94,10 +94,10 @@ class Image {
         $info = self::getImageInfo($imgFile);
         if ($info !== false) {
             $createFun = str_replace('/', 'createfrom', $info['mime']);
-            $im = $createFun($imgFile);
-            if ($im) {
-                $ImageFun = str_replace('/', '', $info['mime']);
+            $ImageFun = str_replace('/', '', $info['mime']);
+            if (function_exists($createFun)) {
                 //水印开始
+                $im = $createFun($imgFile);
                 if (!empty($text)) {
                     $tc = imagecolorallocate($im, 0, 0, 0);
                     if (is_file($text) && file_exists($text)) {//判断$text是否是图片路径
@@ -317,26 +317,31 @@ class Image {
      * @param string $type 图像格式 默认PNG
      * @param integer $disturb 是否干扰 1 点干扰 2 线干扰 3 复合干扰 0 无干扰 4 间断直线
      * @param bool $border 是否加边框 array(color)
+     * @throws Abnormal
      * @return string
      */
-    static function buildString($string, $size=array(), $font = array(), $filename='', $rgb=array(), $type='png', $disturb=3, $border=true) {
+    static function buildString($string, $size=array(), $font = array(), $filename='', $rgb=array(), $type='png', $disturb =3, $border = true) {
         if (is_string($size))
             $size = explode(',', $size);
         $width = $size[0];
         $height = $size[1]?$size[1]:22;
         if (is_string($font))
             $font = explode(',', $font);
-        $fontface = isset($font[0])?$font[0]:5;
-        $fontsize = isset($font[1])?$font[1]:null;
-        $fontfile = isset($font[2])?$font[2]:NULL;
+        $fontface = isset($font[0]) ? $font[0] : 5;
+        $fontsize = isset($font[1]) ? $font[1] : NULL;
+        $fontfile = isset($font[2]) ? $font[2] : NULL;
         $length = strlen($string);
         $width = ($length * 9 + 10) > $width ? $length * 9 + 10 : $width;
+
         if ($type != 'gif' && function_exists('imagecreatetruecolor')) {
             $im = @imagecreatetruecolor($width, $height);
         } else {
+            if(!function_exists('imagecreate')){
+                throw new Abnormal('请检查是否安装了gd库');
+            }
             $im = @imagecreate($width, $height);
         }
-        
+
         $r = Array(225, 255, 255, 223, 238);
         $g = Array(225, 236, 237, 255, 228);
         $b = Array(225, 236, 166, 125, 128);
@@ -350,7 +355,7 @@ class Image {
             if(!is_file($fontface))$fontface = 'font/elephant.ttf';
             if (is_null($color))
                 $color = imagecolorallocate($im, mt_rand(0, 120), mt_rand(0, 120), mt_rand(0, 120));
-            @imagettftext($im, $fontsize, mt_rand(-15,15) , $i * 10+5, ($height+$fontsize)/2, $color , $fontface, $string);  
+            @imagettftext($im, $fontsize, mt_rand(-15,15) , 10+5, ($height+$fontsize)/2, $color , $fontface, $string);
         }else{
             if (is_null($color))
                 $color = imagecolorallocate($im, mt_rand(0, 120), mt_rand(0, 120), mt_rand(0, 120));

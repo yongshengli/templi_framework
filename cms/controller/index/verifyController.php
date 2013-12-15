@@ -18,7 +18,7 @@ class verifyController{
             if($key=='size'){
                 $width = isset($_GET['width'])?intval($_GET['width']):$filed_arr['size'][0];
                 $height= isset($_GET['height'])?intval($_GET['height']):$filed_arr['size'][1];
-                $size =array($width, $height);
+                $size = array($width, $height);
             }elseif(isset($_GET[$key])){
                 $$key =strval(trim($_GET[$key]));
             }else{
@@ -26,7 +26,6 @@ class verifyController{
             }
         }
         Templi::include_common_file('Image_verify.class.php');
-        die(Image_verify::buildImageVerify($length, $mode, $size, $font, $disturb, $border,$type='png', $verifyName));
+        die(Image_verify::buildImageVerify($length, $mode, $size, $font, $disturb, $border, $type='png', $verifyName));
     }
 }
-?>
