@@ -76,7 +76,7 @@ class View{
         $compile_file_name = $file_info['extension']?($file_info['dirname'].'/'.$file_info['filename']):$template_file_name;
         //编译文件
         $compile_file =$this->compile.$compile_file_name.'.tpl.php';
-        
+
         if(!file_exists($template_file_path.$template_file)){
             if(APP_DEBUG)
                 throw new Abnormal($template_file_path.$template_file.'模板文件不存在', 0, true);

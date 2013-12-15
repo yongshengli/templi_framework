@@ -7,7 +7,7 @@
  * @date  2013-06-25
  */
 defined('IN_TEMPLI') or die('非法引用');
-templi::include_module_file('member.class.php');
+Templi::include_module_file('member.class.php');
 class memberController extends member{
     public function init(){
         parent::init();
@@ -44,7 +44,7 @@ class memberController extends member{
                 $show_captcha = true;
             
             $seo['title'] = '用户登录';
-            $this->assign('show_captcha',$show_captcha);
+            $this->assign('show_captcha', $show_captcha);
             $this->assign('seo',$seo);
             $this->display();
         }
@@ -161,4 +161,3 @@ class memberController extends member{
         }
     }
 }
-?>
