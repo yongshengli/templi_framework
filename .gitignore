@@ -3,7 +3,7 @@ build/
 build.log
 cms/cache/session
 cms/cache/data
-cms/cache/complile
+cms/cache/compile
 nbproject
 .gitignore~
 .idea
