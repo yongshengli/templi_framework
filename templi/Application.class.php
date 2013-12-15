@@ -27,7 +27,7 @@ class Appliction{
 	        // 关闭APP_DUBUG时 对页面压缩
 	        if(APP_DEBUG || !ob_start('ob_gzhandler')) ob_start();
                 call_user_func(array(&$controller,$GLOBALS['action']));
-	            ob_end_flush();
+	        ob_end_flush();
         }
     }
     /**
