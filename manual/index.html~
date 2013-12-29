@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>templi manual</title>
+    <meta charset="utf-8">
+    <link type="text/css" href="./css/main.css">
+</head>
+<body>
+    <h1>TEMPLI php 框架使用手册</h1>
+    <div>
+        <div class="subtitle">1、 控制器 controller
+        </div>
+        <div class="content">
+            控制器的命名 nameController.php
+            控制器的编写
+            <?php
+                class adminController extends Controller{
+                //初始化函数
+                public function init(){
+                //你的代码
+                }
+                //默认访问控制器
+                public function index(){
+                // 你的代码
+
+                //载入模型 快捷 查询 不引用模型文件
+                Templi::model(‘tableName’)->field()->where()->select();
+
+            //载入模型文件 使用模型文件内自定义的 方法add
+            Templi::model(‘tableName’,true)->add();
+
+            $this->assign(); // 模板变量赋值
+            $this->display();//页面输出
+            }
+            ?>
+            给模板 变量赋值
+            assign(变量名,变量值)； 每次只能给一个变量赋值
+            setOutput(数组); 批量赋值
+            视图输出
+            display(视图文件名,模块)；
+            当视图文件放置在 view/模块/控制器名_方法名.html 文件名可不写,
+            当调用当前模块下的 视图 是 模块名可不写 如$this->display(‘main’,’home’);
+        </div>
+    </div>
+    <div>
+        <div>2、 模型 model</div>
+        <div>
+            <p>
+            模型命名 nameModel.php
+            模型编写
+            <?php
+                class 表名Model extends Model{
+                    function __construct(){
+                        parent::__construct('表名');
+                    }
+                //你的方法
+                    public function add_news($data){
+                       //你的代码
+                    }
+            ?>
+            </p>
+            模型方法  where()   where 条件
+            field() 查字段
+            select() 执行查询 等等
+            也可以 使用 传统方式 select（$where,$fields,.....）
+            update() 修改
+            insert（） 插入
+            getlist()带分页的结果
+            count() 统计个数
+            find() 查询一条记录
+            query()  sql 语句查询
+        </div>
+    </div>
+</body>
+</html>

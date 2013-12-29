@@ -13,7 +13,7 @@ class Appliction{
      * 初始化应用
      */
     public static function init(){
-        
+
         $GLOBALS['module']     = (isset($_GET['m']) && $_GET['m'])?
             trim($_GET['m']):(isset($_POST['m'])?
                 trim($_POST['m']):Templi::get_config('default_module'));

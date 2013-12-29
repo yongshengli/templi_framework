@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7459503f-bc0b-4baa-92eb-b1a1be7ed918" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/Abnormal.class.php" afterPath="$PROJECT_DIR$/templi/Abnormal.class.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitmodules" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cms/cache/compile/index/showmessage.tpl.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/Application.class.php" afterPath="$PROJECT_DIR$/templi/Application.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/View.class.php" afterPath="$PROJECT_DIR$/templi/View.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cms/controller/home/memberController.php" afterPath="$PROJECT_DIR$/cms/controller/home/memberController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="templi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,10 +37,39 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="test.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bbs/test.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="13" selection-start="101" selection-end="101" vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="252">
+              <folding>
+                <element signature="e#6#86#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/manual/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="22" selection-start="1465" selection-end="1465" vertical-scroll-proportion="1.6161972" vertical-offset="0" max-vertical-offset="3942">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manual/css/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="99" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="198">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="verifyController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cms/controller/index/verifyController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="26" selection-start="169" selection-end="169" vertical-scroll-proportion="-4.6666665" vertical-offset="0" max-vertical-offset="648">
+            <state line="7" column="26" selection-start="169" selection-end="169" vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="648">
               <folding />
             </state>
           </provider>
@@ -49,7 +78,7 @@
       <file leaf-file-name="Image_verify.class.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templi/Image_verify.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="56" selection-start="1147" selection-end="1152" vertical-scroll-proportion="-16.25926" vertical-offset="119" max-vertical-offset="720">
+            <state line="31" column="56" selection-start="1147" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="720">
               <folding />
             </state>
           </provider>
@@ -58,7 +87,7 @@
       <file leaf-file-name="Image.class.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templi/Image.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="21" selection-start="4485" selection-end="4494" vertical-scroll-proportion="-30.666666" vertical-offset="1512" max-vertical-offset="9666">
+            <state line="130" column="21" selection-start="4485" selection-end="4494" vertical-scroll-proportion="0.0" vertical-offset="1512" max-vertical-offset="9666">
               <folding>
                 <marker date="1387086586171" expanded="true" signature="16923:16975" placeholder="..." />
               </folding>
@@ -69,7 +98,7 @@
       <file leaf-file-name="View.class.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templi/View.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="77" column="7" selection-start="2116" selection-end="2116" vertical-scroll-proportion="-7.3703704" vertical-offset="1187" max-vertical-offset="2592">
+            <state line="77" column="7" selection-start="2116" selection-end="2116" vertical-scroll-proportion="0.0" vertical-offset="1187" max-vertical-offset="2592">
               <folding />
             </state>
           </provider>
@@ -78,16 +107,16 @@
       <file leaf-file-name="memberController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cms/controller/home/memberController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="36" selection-start="144" selection-end="144" vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="3024">
+            <state line="8" column="36" selection-start="144" selection-end="144" vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="3024">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Application.class.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Application.class.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templi/Application.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="8" selection-start="229" selection-end="229" vertical-scroll-proportion="0.18243243" vertical-offset="162" max-vertical-offset="1350">
+            <state line="22" column="67" selection-start="675" selection-end="675" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="1350">
               <folding />
             </state>
           </provider>
@@ -122,15 +151,37 @@
         <option value="$PROJECT_DIR$/cms/controller/home/memberController.php" />
         <option value="$PROJECT_DIR$/templi/Abnormal.class.php" />
         <option value="$PROJECT_DIR$/templi/Application.class.php" />
+        <option value="$PROJECT_DIR$/bbs/test.php" />
+        <option value="$PROJECT_DIR$/manual/css/main.css" />
+        <option value="$PROJECT_DIR$/manual/index.html" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="x" value="64" />
-    <option name="y" value="-775" />
+    <option name="y" value="-7" />
     <option name="width" value="1303" />
     <option name="height" value="776" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>PHP</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>PhpCSValidationInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -158,7 +209,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -187,7 +237,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cms" />
+              <option name="myItemId" value="manual" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -201,56 +251,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cms" />
+              <option name="myItemId" value="manual" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="home" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bbs" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="Errors" />
+    <property name="FullScreen" value="false" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/manual/css" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -269,6 +295,23 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="7459503f-bc0b-4baa-92eb-b1a1be7ed918" name="Default" comment="" />
@@ -278,7 +321,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-775" width="1303" height="776" extended-state="6" />
+    <frame x="64" y="-7" width="1303" height="776" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -286,7 +329,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24289009" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24289009" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -313,30 +356,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="225" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/Templi.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="22" selection-start="2050" selection-end="2050" vertical-scroll-proportion="1.5703971" vertical-offset="195" max-vertical-offset="4320">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="7" selection-start="114" selection-end="114" vertical-scroll-proportion="0.22804055" vertical-offset="0" max-vertical-offset="592" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/Session.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="5" selection-start="485" selection-end="485" vertical-scroll-proportion="0.2533784" vertical-offset="135" max-vertical-offset="1230">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cms/config/database.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="34" selection-start="592" selection-end="592" vertical-scroll-proportion="0.5320946" vertical-offset="0" max-vertical-offset="592" />
@@ -347,23 +366,16 @@
         <state line="9" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="0.21915585" vertical-offset="0" max-vertical-offset="616" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bbs/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="36" selection-start="774" selection-end="774" vertical-scroll-proportion="-17.25926" vertical-offset="2" max-vertical-offset="594">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templi/Image_verify.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="56" selection-start="1147" selection-end="1152" vertical-scroll-proportion="-16.25926" vertical-offset="119" max-vertical-offset="720">
+        <state line="31" column="56" selection-start="1147" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="720">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Image.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="21" selection-start="4485" selection-end="4494" vertical-scroll-proportion="-30.666666" vertical-offset="1512" max-vertical-offset="9666">
+        <state line="130" column="21" selection-start="4485" selection-end="4494" vertical-scroll-proportion="0.0" vertical-offset="1512" max-vertical-offset="9666">
           <folding>
             <marker date="1387086586171" expanded="true" signature="16923:16975" placeholder="..." />
           </folding>
@@ -372,49 +384,80 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/View.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="7" selection-start="2116" selection-end="2116" vertical-scroll-proportion="-7.3703704" vertical-offset="1187" max-vertical-offset="2592">
+        <state line="77" column="7" selection-start="2116" selection-end="2116" vertical-scroll-proportion="0.0" vertical-offset="1187" max-vertical-offset="2592">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/Core_c.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="194" column="32" selection-start="5286" selection-end="5286" vertical-scroll-proportion="0.51891893" vertical-offset="3204" max-vertical-offset="6264">
-          <folding />
-        </state>
+        <state line="194" column="32" selection-start="5286" selection-end="5286" vertical-scroll-proportion="0.51891893" vertical-offset="3204" max-vertical-offset="6264" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cms/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="37" selection-start="667" selection-end="667" vertical-scroll-proportion="0.72887325" vertical-offset="0" max-vertical-offset="612">
-          <folding />
-        </state>
+        <state line="23" column="37" selection-start="667" selection-end="667" vertical-scroll-proportion="0.72887325" vertical-offset="0" max-vertical-offset="612" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Abnormal.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="1" selection-start="993" selection-end="993" vertical-scroll-proportion="1.1091549" vertical-offset="0" max-vertical-offset="738">
-          <folding />
-        </state>
+        <state line="35" column="1" selection-start="993" selection-end="993" vertical-scroll-proportion="1.1091549" vertical-offset="0" max-vertical-offset="738" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cms/controller/home/memberController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="36" selection-start="144" selection-end="144" vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="3024">
+        <state line="8" column="36" selection-start="144" selection-end="144" vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="3024">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cms/controller/index/verifyController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="26" selection-start="169" selection-end="169" vertical-scroll-proportion="-4.6666665" vertical-offset="0" max-vertical-offset="648">
+        <state line="7" column="26" selection-start="169" selection-end="169" vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="648">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Application.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="8" selection-start="229" selection-end="229" vertical-scroll-proportion="0.18243243" vertical-offset="162" max-vertical-offset="1350">
+        <state line="22" column="67" selection-start="675" selection-end="675" vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="1350">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbs/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="36" selection-start="774" selection-end="774" vertical-scroll-proportion="-17.25926" vertical-offset="2" max-vertical-offset="594">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi使用手册.wps">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="13" selection-start="5756" selection-end="5756" vertical-scroll-proportion="-5.1546392" vertical-offset="3270" max-vertical-offset="4932">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbs/test.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="13" selection-start="101" selection-end="101" vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="252">
+          <folding>
+            <element signature="e#6#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manual/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="99" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="198">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manual/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="22" selection-start="1465" selection-end="1465" vertical-scroll-proportion="1.6161972" vertical-offset="0" max-vertical-offset="3942">
           <folding />
         </state>
       </provider>

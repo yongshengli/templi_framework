@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>templi manual</title>
+    <meta charset="utf-8">
+    <style>
+        body{background-color: #C7EDCC;font-size: 14px;}
+        .subtitle{
+            font-size: 16px;color: green;font-weight: bold;
+        }
+        .content{
+            margin: 10px 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TEMPLI php 框架使用手册</h1>
+    <div>
+        <div class="subtitle">1、 控制器 controller
+        </div>
+        <div class="content">
+            <p>控制器的命名 nameController.php</p>
+            <p>控制器的编写
+                <pre>
+                class adminController extends Controller{
+                    //初始化函数
+                    public function init(){
+                        //你的代码
+                    }
+                    //默认访问控制器
+                    public function index(){
+                        // 你的代码
+
+                        //载入模型 快捷 查询 不引用模型文件
+                        Templi::model(‘tableName’)->field()->where()->select();
+
+                        //载入模型文件 使用模型文件内自定义的 方法add
+                        Templi::model(‘tableName’,true)->add();
+
+                        $this->assign(); // 模板变量赋值
+                        $this->display();//页面输出
+                    }
+                }
+                </pre>
+            </p>
+            <p>
+                给模板 变量赋值
+                <pre>
+                assign(变量名,变量值)； 每次只能给一个变量赋值
+                setOutput(数组); 批量赋值
+                </pre>
+            </p>
+            <p>
+                视图输出
+                <pre>
+                display(视图文件名,模块)；
+                当视图文件放置在 view/模块/控制器名_方法名.html 文件名可不写,
+                当调用当前模块下的 视图 是 模块名可不写 如$this->display(‘main’,’home’);
+                </pre>
+            </p>
+        </div>
+    </div>
+    <div>
+        <div class="subtitle">2、 模型 model</div>
+        <div class="content">
+            <p>
+                模型命名 nameModel.php
+            </p>
+            <p>
+                <pre>
+                模型编写
+
+                class 表名Model extends Model{
+                    function __construct(){
+                        parent::__construct('表名');
+                    }
+                    //你的方法
+                    public function add_news($data){
+                       //你的代码
+                    }
+                }
+                </pre>
+            </p>
+            <p>
+                模型方法
+            </p>
+            <p>
+                <pre>
+                where()   where 条件
+                field() 查字段
+
+                select() 执行查询 等等
+                也可以 使用 传统方式 select（$where,$fields,.....）
+                update() 修改
+                insert（） 插入
+                getlist()带分页的结果
+                count() 统计个数
+                find() 查询一条记录
+                query()  sql 语句查询
+                </pre>
+            </p>
+        </div>
+    </div>
+    <div>
+        <div class="subtitle">3、 视图view</div>
+        <div class="content">
+            <p>
+                If语句
+                <pre>
+                {if}
+                    //
+                {else}
+                    //
+                {if}
+                </pre>
+            </p>
+            <p>
+                变量输出
+                <pre>
+                {$var}
+                </pre>
+            </p>
+            <p>
+                Foreach 循环
+                <pre>
+                {loop $arr  $r}
+                    {$r[‘field’]}
+                {/loop}
+                </pre>
+            </p>
+            <p>
+                使用函数
+                {date(‘Y-m-d’,$time)}
+            </p>
+            <p>
+                载入其他视图
+                {template file='head'  module=’home’}  同一个模块下不用填写 module
+            </p>
+        </div>
+    </div>
+    <div>
+        <div class="subtitle">4、 加载类库 或函数库</div>
+        <div class="content">
+            <p>
+                加载模块类库或函数
+                <pre>
+                Templi::include_module_file($file,$module=null);
+                </pre>
+                加载公共类库或函数
+                <pre>
+                Templi::include_common_file($file,$path=null);
+                </pre>
+            </p>
+        </div>
+    </div>
+    <div>
+        <div class="subtitle">5、 获取配置信息</div>
+        <div class="content">
+            <p>
+                获取 配置文件信息
+                <pre>
+                Templi::get_config($field);
+                </pre>
+            </p>
+        </div>
+    </div>
+    <div>
+        <div class="subtitle">6、 附录</div>
+        <div class="content">
+            <p>
+                当前控制器
+                <pre>
+                    $GLOBALS[‘controller’]
+                </pre>
+                当前模块
+                <pre>
+                    $GLOBALS[‘model’]
+                </pre>
+                当前操作
+                <pre>
+                    $GLOBALS[‘action’]
+                </pre>
+            </p>
+            <p>
+                常量
+                <pre>
+                框架目录 TEMPLI_PATH
+                </pre>
+            </p>
+            <p>
+                文件目录说明
+            <pre>
+
+                application/  项目目录
+                    cache/   缓存目录
+                    config/  配置文件目录
+                    libraries/   公共函数库 类库目录
+                    controller/ 控制器目录
+                        home/   home模块
+                        admin/	admin模块
+                            libraries/  模块类库 木块函数库 目录
+
+                    model/   模型文件 目录
+                    view/    视图文件目录
+                        home/
+                        admin/
+            </pre>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
