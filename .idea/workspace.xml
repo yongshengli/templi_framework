@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7459503f-bc0b-4baa-92eb-b1a1be7ed918" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitmodules" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cms/cache/compile/index/showmessage.tpl.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/Application.class.php" afterPath="$PROJECT_DIR$/templi/Application.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="templi.iws" />
@@ -31,7 +28,7 @@
       <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bbs/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="36" selection-start="774" selection-end="774" vertical-scroll-proportion="-17.25926" vertical-offset="2" max-vertical-offset="594">
+            <state line="26" column="36" selection-start="774" selection-end="774" vertical-scroll-proportion="0.0" vertical-offset="2" max-vertical-offset="594">
               <folding />
             </state>
           </provider>
@@ -40,27 +37,25 @@
       <file leaf-file-name="test.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bbs/test.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="13" selection-start="101" selection-end="101" vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="252">
-              <folding>
-                <element signature="e#6#86#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/manual/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="22" selection-start="1465" selection-end="1465" vertical-scroll-proportion="1.6161972" vertical-offset="0" max-vertical-offset="3942">
+            <state line="8" column="13" selection-start="101" selection-end="101" vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="252">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/manual/css/main.css">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manual/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="99" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="198">
+            <state line="20" column="14" selection-start="467" selection-end="467" vertical-scroll-proportion="0.0" vertical-offset="234" max-vertical-offset="3942">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/manual/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="17" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0302521" vertical-offset="0" max-vertical-offset="595">
               <folding />
             </state>
           </provider>
@@ -70,15 +65,6 @@
         <entry file="file://$PROJECT_DIR$/cms/controller/index/verifyController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state line="7" column="26" selection-start="169" selection-end="169" vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="648">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Image_verify.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templi/Image_verify.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="56" selection-start="1147" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="720">
               <folding />
             </state>
           </provider>
@@ -154,6 +140,7 @@
         <option value="$PROJECT_DIR$/bbs/test.php" />
         <option value="$PROJECT_DIR$/manual/css/main.css" />
         <option value="$PROJECT_DIR$/manual/index.html" />
+        <option value="$PROJECT_DIR$/manual/README.md" />
       </list>
     </option>
   </component>
@@ -241,24 +228,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="manual" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -329,7 +298,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24289009" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24212144" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -356,11 +325,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cms/config/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="34" selection-start="592" selection-end="592" vertical-scroll-proportion="0.5320946" vertical-offset="0" max-vertical-offset="592" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="0.21915585" vertical-offset="0" max-vertical-offset="616" />
@@ -368,9 +332,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Image_verify.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="56" selection-start="1147" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="720">
-          <folding />
-        </state>
+        <state line="31" column="56" selection-start="1147" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="720" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Image.class.php">
@@ -427,37 +389,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bbs/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="36" selection-start="774" selection-end="774" vertical-scroll-proportion="-17.25926" vertical-offset="2" max-vertical-offset="594">
+        <state line="26" column="36" selection-start="774" selection-end="774" vertical-scroll-proportion="0.0" vertical-offset="2" max-vertical-offset="594">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi使用手册.wps">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="5756" selection-end="5756" vertical-scroll-proportion="-5.1546392" vertical-offset="3270" max-vertical-offset="4932">
-          <folding />
-        </state>
+        <state line="15" column="13" selection-start="5756" selection-end="5756" vertical-scroll-proportion="-5.1546392" vertical-offset="3270" max-vertical-offset="4932" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bbs/test.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="101" selection-end="101" vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="252">
-          <folding>
-            <element signature="e#6#86#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manual/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="99" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="198">
+        <state line="8" column="13" selection-start="101" selection-end="101" vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="252">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/manual/LICENSE">
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-3.8888888" vertical-offset="2205" max-vertical-offset="3528" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/manual/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="22" selection-start="1465" selection-end="1465" vertical-scroll-proportion="1.6161972" vertical-offset="0" max-vertical-offset="3942">
+        <state line="20" column="14" selection-start="467" selection-end="467" vertical-scroll-proportion="0.0" vertical-offset="234" max-vertical-offset="3942">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manual/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="17" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0302521" vertical-offset="0" max-vertical-offset="595">
           <folding />
         </state>
       </provider>
