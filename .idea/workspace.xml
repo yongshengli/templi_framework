@@ -9,10 +9,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/Cookie.class.php" afterPath="$PROJECT_DIR$/templi/Cookie.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/FormCreate.php" afterPath="$PROJECT_DIR$/templi/FormCreate.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/Formcheck.class.php" afterPath="$PROJECT_DIR$/templi/Formcheck.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/Image.class.php" afterPath="$PROJECT_DIR$/templi/Image.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/Templi.class.php" afterPath="$PROJECT_DIR$/templi/Templi.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/Tree.class.php" afterPath="$PROJECT_DIR$/templi/Tree.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/UploadFile.class.php" afterPath="$PROJECT_DIR$/templi/UploadFile.class.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templi/View.class.php" afterPath="$PROJECT_DIR$/templi/View.class.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="templi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,91 +36,93 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Cache.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templi/Cache.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="306">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Charts_xml.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templi/Charts_xml.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="19" selection-start="89" selection-end="89" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="2700">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Controller.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templi/Controller.class.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="3" selection-start="71" selection-end="71" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="1458">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="View.class.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templi/View.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="19" selection-start="78" selection-end="78" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="2610">
+            <state line="3" column="11" selection-start="58" selection-end="58" vertical-scroll-proportion="-0.6666667" vertical-offset="36" max-vertical-offset="2592">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Templi.class.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Templi.class.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templi/Templi.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="19" selection-start="67" selection-end="67" vertical-scroll-proportion="0.12972973" vertical-offset="0" max-vertical-offset="5202">
+            <state line="3" column="6" selection-start="47" selection-end="47" vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="5184">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Tree.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templi/Tree.class.php">
+      <file leaf-file-name="String.class.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templi/String.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="56" selection-end="56" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="1980">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="3690">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cookie.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templi/Cookie.class.php">
+      <file leaf-file-name="Session.class.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templi/Session.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="19" selection-start="78" selection-end="78" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="1026">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1476">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dir.func.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templi/dir.func.php">
+      <file leaf-file-name="redme.text" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templi/redme.text">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="2952">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Formcheck.class.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templi/Formcheck.class.php">
+      <file leaf-file-name="Image.class.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templi/Image.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="19" selection-start="81" selection-end="81" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="3546">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="9612">
+              <folding>
+                <marker date="1389771658001" expanded="false" signature="16865:16917" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Model.class.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templi/Model.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="8478">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FormCreate.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templi/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="270">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="function.func.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templi/function.func.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="7074">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FormCreate.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templi/FormCreate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="19" selection-start="83" selection-end="83" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="2016">
+            <state line="6" column="18" selection-start="124" selection-end="124" vertical-scroll-proportion="0.12676056" vertical-offset="36" max-vertical-offset="1998">
               <folding />
             </state>
           </provider>
@@ -143,12 +146,12 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/templi/Image.class.php" />
-        <option value="$PROJECT_DIR$/cms/controller/home/memberController.php" />
         <option value="$PROJECT_DIR$/bbs/test.php" />
         <option value="$PROJECT_DIR$/manual/css/main.css" />
         <option value="$PROJECT_DIR$/manual/index.html" />
         <option value="$PROJECT_DIR$/manual/README.md" />
+        <option value="$PROJECT_DIR$/templi/Image.class.php" />
+        <option value="$PROJECT_DIR$/templi/UploadFile.class.php" />
         <option value="$PROJECT_DIR$/templi/Abnormal.class.php" />
         <option value="$PROJECT_DIR$/templi/Application.class.php" />
         <option value="$PROJECT_DIR$/templi/Charts_xml.php" />
@@ -156,8 +159,8 @@
         <option value="$PROJECT_DIR$/templi/Cookie.class.php" />
         <option value="$PROJECT_DIR$/templi/Formcheck.class.php" />
         <option value="$PROJECT_DIR$/templi/FormCreate.php" />
-        <option value="$PROJECT_DIR$/templi/View.class.php" />
         <option value="$PROJECT_DIR$/templi/Tree.class.php" />
+        <option value="$PROJECT_DIR$/templi/View.class.php" />
         <option value="$PROJECT_DIR$/templi/Templi.class.php" />
       </list>
     </option>
@@ -343,67 +346,23 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/manual/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="126">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manual/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="29" selection-start="799" selection-end="799" vertical-scroll-proportion="-0.0" vertical-offset="540" max-vertical-offset="3942">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/Image.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="3" selection-start="169" selection-end="169" vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="9666">
-          <folding>
-            <marker date="1387086586171" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/UploadFile.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="14" selection-start="118" selection-end="118" vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="9360">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/Abnormal.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="19" selection-start="75" selection-end="75" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="756">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/Application.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="19" selection-start="93" selection-end="93" vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="1368">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/Cache.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templi/Charts_xml.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="19" selection-start="89" selection-end="89" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="2700">
+        <state line="3" column="21" selection-start="69" selection-end="69" vertical-scroll-proportion="-0.6666667" vertical-offset="36" max-vertical-offset="2682">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Controller.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="3" selection-start="71" selection-end="71" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="1458">
+        <state line="3" column="20" selection-start="67" selection-end="67" vertical-scroll-proportion="-0.6666667" vertical-offset="36" max-vertical-offset="1440">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/Cookie.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="11" selection-start="58" selection-end="58" vertical-scroll-proportion="-0.6666667" vertical-offset="36" max-vertical-offset="1008">
           <folding />
         </state>
       </provider>
@@ -417,42 +376,86 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Formcheck.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="19" selection-start="81" selection-end="81" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="3546">
+        <state line="3" column="14" selection-start="61" selection-end="61" vertical-scroll-proportion="-0.6666667" vertical-offset="36" max-vertical-offset="3528">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Tree.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="56" selection-end="56" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="1980">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/Cookie.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="19" selection-start="78" selection-end="78" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="1026">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templi/FormCreate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="19" selection-start="83" selection-end="83" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="2016">
+        <state line="3" column="8" selection-start="55" selection-end="55" vertical-scroll-proportion="-0.6666667" vertical-offset="36" max-vertical-offset="1962">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/View.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="19" selection-start="78" selection-end="78" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="2610">
+        <state line="3" column="11" selection-start="58" selection-end="58" vertical-scroll-proportion="-0.6666667" vertical-offset="36" max-vertical-offset="2592">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templi/Templi.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="19" selection-start="67" selection-end="67" vertical-scroll-proportion="0.12972973" vertical-offset="0" max-vertical-offset="5202">
+        <state line="3" column="6" selection-start="47" selection-end="47" vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="5184">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/String.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3690">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/Session.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1476">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/redme.text">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/Model.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8478">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/Image.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9612">
+          <folding>
+            <marker date="1389771658001" expanded="false" signature="16865:16917" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/function.func.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7074">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templi/FormCreate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="18" selection-start="124" selection-end="124" vertical-scroll-proportion="0.12676056" vertical-offset="36" max-vertical-offset="1998">
           <folding />
         </state>
       </provider>

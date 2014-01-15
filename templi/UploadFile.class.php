@@ -2,9 +2,6 @@
 defined('IN_TEMPLI') or die('非法引用');
 /**
  * 文件上传类 thinkphp 类库
- * @category   ORG
- * @package  ORG
- * @subpackage  Net
  * @author    liu21st <liu21st@gmail.com>
  */
 class UploadFile {//类定义开始

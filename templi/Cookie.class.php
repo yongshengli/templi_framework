@@ -2,7 +2,6 @@
 defined('IN_TEMPLI') or die('非法引用');
 /**
  * cookie 类
- * @package  TEMPLI
  * @author 七殇酒
  * @email 739800600@qq.com
  * @lastmodify   2013-4-25

@@ -1,10 +1,7 @@
 <?php
 defined('IN_TEMPLI') or die('非法引用');
 /**
- * 图像操作类库 thinkphp 
- * @category   ORG
- * @package  ORG
- * @subpackage  Util
+ * 图像操作类库 thinkphp
  * @author    liu21st <liu21st@gmail.com>
  */
 class Image {
