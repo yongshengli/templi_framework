@@ -2,6 +2,7 @@
 //defined('IN_TEMPLI') or die('非法引用');
 /**
  * form 验证 处理类
+ * @package  TEMPLI
  * @author 七觞酒
  * @email 739800600@qq.com
  * @date 2013-1-19

@@ -2,6 +2,7 @@
 defined('IN_TEMPLI') or die('非法引用');
 /**
 * tree 类
+* @package  TEMPLI
 * @param array 2维数组，例如：
 * array(
 *      1 => array('id'=>'1','parent_id'=>0,'name'=>'一级栏目一'),

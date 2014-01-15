@@ -4,6 +4,7 @@ defined('IN_TEMPLI') or die('非法引用');
  * 控制器分配类
  * 
  * php 模板引擎
+ * @package  TEMPLI
  * @author 七觞酒
  * @email 739800600@qq.com
  * @date 2013-3-19
