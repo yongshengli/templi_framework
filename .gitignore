@@ -6,4 +6,4 @@ cms/cache/data
 cms/cache/compile
 nbproject
 .gitignore~
-.idea
+.idea/
