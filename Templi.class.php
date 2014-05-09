@@ -6,7 +6,8 @@
  * @email 739800600@qq.com
  * @date  2013-07-08
  */
-class Templi{
+class Templi
+{
     
     private static $_config = array();
     
@@ -22,7 +23,8 @@ class Templi{
      * @param type $config
      * @return \Templi
      */
-    public function create_webapp($config){
+    public function create_webapp($config)
+    {
         self::$_config = $config;
         //公共基础配置
         $this->init();
@@ -55,21 +57,28 @@ class Templi{
     /**
      * 初始化函数
      */
-    public function run(){
+    public function run()
+    {
         
         //载入公共函数库
         self::include_file(TEMPLI_PATH.'function.func.php');
         //载入异常处理类
         self::include_file(TEMPLI_PATH.'Abnormal.class.php');
+        //载入路由配类
+        self::include_file(TEMPLI_PATH.'Router.class.php');
         //载入控制器分配类
-        self::include_file(TEMPLI_PATH.'Application.class.php');
+        self::include_file(TEMPLI_PATH.'Dispatcher.class.php');
         //载入 控制器类
         self::include_file(TEMPLI_PATH.'Controller.class.php');
         //载入 模型类
         self::include_file(TEMPLI_PATH.'Model.class.php');
         //载入 cookie 类
         self::include_file(TEMPLI_PATH.'Cookie.class.php');
-        Appliction::init();
+        $router = new Router();
+        $class = $router->module.'/'.$router->controller.'Controller';
+        $method = $router->action;
+        $dispatcher = new Dispatcher($class, $method);
+        $dispatcher->execute();
     }
 
     /**
@@ -81,7 +90,8 @@ class Templi{
      * @param null $default
      * @return array|mixed
      */
-    public static function get_config($field = NULL, $default = NULL){
+    public static function get_config($field = NULL, $default = NULL)
+    {
         //设置配置信息
         if(is_array($field)){
             self::$_config = array_merge(self::$_config, $field);
@@ -99,7 +109,8 @@ class Templi{
      * @param mixed $default
      * @return mixed
      */
-    public static function getArrVal(array $arr, $key, $default = NULL){
+    public static function getArrVal(array $arr, $key, $default = NULL)
+    {
         
         $temp =  explode('.', $key);
         $myKey = $temp[0];
@@ -123,7 +134,8 @@ class Templi{
      * @return
      * @internal param string $file
      */
-    public static function model($model,$type=false){
+    public static function model($model,$type=false)
+    {
         static $_models;
         if(!isset($_models[$model.$type])){
             if($type){
@@ -143,7 +155,8 @@ class Templi{
      * @param $module 模块名
      * @return string
      */
-    public static function include_html($file,$module=null){
+    public static function include_html($file,$module=null)
+    {
         self::include_common_file('View.class.php');
         $view =new View();
         $file = $module?($module.'/'.$file):($GLOBALS['module'].'/'.$file);
@@ -156,7 +169,8 @@ class Templi{
      * @param $module 模块名
      * @return bool
      */
-    public static function include_module_file($file,$module=null){
+    public static function include_module_file($file,$module=null)
+    {
         $path =$module?self::get_config('app_path').'controller/'.trim($module,'/').'/libraries/':self::get_config('app_path').'controller/'.$GLOBALS['module'].'/libraries/';
         return self::include_file($path.$file);
     }
@@ -168,7 +182,8 @@ class Templi{
      * @internal param $module 模块名
      * @return bool
      */
-    public static function include_common_file($file,$path=null){
+    public static function include_common_file($file,$path=null)
+    {
         
         if(is_null($path)){
             $result = self::include_file(self::get_config('app_path').'/libraries/'.$file);
@@ -184,7 +199,8 @@ class Templi{
      * 多位置引入文件
      * 找到文件 后返回
      */
-    public static function array_include($file_arr=array()){
+    public static function array_include($file_arr=array())
+    {
         foreach($file_arr as $file){
             $result = self::include_file($file);
             if($result){
@@ -197,7 +213,8 @@ class Templi{
      * 引入文件
      * 默认加载路径是 系统类库
      */
-    public static function include_file($file){
+    public static function include_file($file)
+    {
         static $_request_files = array();
         if(!isset($_request_files[$file])){
             if(!file_exists($file)){
@@ -211,8 +228,9 @@ class Templi{
     /**
      * 自定义异常处理
      */
-    public static function appException($e){
-        $error =array(
+    public static function appException($e)
+    {
+        $error = array(
             'code'=>    $e->getCode(),
             'message'=> $e->getMessage(), 
             'file'=>    $e->getFile(), 
@@ -223,7 +241,8 @@ class Templi{
     /**
      * 自定义错误处理
      */
-    public static function appError($errno, $errstr, $errfile, $errline){
+    public static function appError($errno, $errstr, $errfile, $errline)
+    {
         //throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
         $error = array('message'=>$errstr, 'file'=>$errfile, 'line'=>$errline);
         $trace = debug_backtrace();
@@ -246,7 +265,8 @@ class Templi{
     /**
      * 自动加载 类文件 包括 Model、controller、libraries 类
      */
-    public static function __autoload($class){
+    public static function __autoload($class)
+    {
         switch(TRUE){
             case substr($class,-5)=='Model':
                 self::include_file(self::get_config('app_path').'model/'.$class.'.php');
@@ -269,7 +289,8 @@ class Templi{
     /**
      * 初始化 app
      */
-    private function init(){
+    private function init()
+    {
         defined('IN_TEMPLI') or define('IN_TEMPLI', true); 
         //TEMPLI 目录
         defined('TEMPLI_PATH') or  define('TEMPLI_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
