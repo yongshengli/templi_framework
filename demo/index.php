@@ -11,7 +11,7 @@ $_root = dirname(_PHP_FILE_);
 //网站根url  不包含 http://www.templi.cc
 define('APP_URL',($_root=='/' || $_root=='\\')?'':$_root);
 
-require './Templi.class.php';
+require '../Templi.class.php';
 $config = require ROOT_PATH.'config/config.php';
 $app = new Templi();
 $app->create_webapp($config)->run();
