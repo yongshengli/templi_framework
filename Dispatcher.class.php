@@ -10,16 +10,18 @@ defined('IN_TEMPLI') or die('非法引用');
  */
 class Dispatcher
 {
+    public $dir = '';
     public $class = '';
     public $method = '';
 
     /**
      * 初始化应用
      */
-    function __construct($class, $method)
+    function __construct($module, $controller, $action)
     {
-        $this->class = $class;
-        $this->method = $method;
+        $this->dir = $module;
+        $this->class = $controller.'Controller';
+        $this->method = $action;
     }
 
     /**
@@ -31,7 +33,7 @@ class Dispatcher
 
         // 关闭APP_DUBUG时 对页面压缩
         if(APP_DEBUG || !ob_start('ob_gzhandler')) ob_start();
-        call_user_func(array(&$class, $this->action));
+        call_user_func(array(&$class, $this->method));
         ob_end_flush();
     }
     /**
@@ -39,13 +41,18 @@ class Dispatcher
      */
     private function __loade_controller()
     {
-        $path = Templi::get_config('app_path').'controller/'.$this->class.'.php';
+        if (empty($this->dir)) {
+            $path = Templi::get_config('app_path').'controller/'.$this->class.'.php';
+        } else {
+            $path = Templi::get_config('app_path').'controller/'.$this->dir.'/'.$this->class.'.php';
+        }
+
         if (file_exists($path)) {
             Templi::include_file($path);
             return new $this->class;
         } else {
             if(APP_DEBUG){
-                throw new Abnormal($path.'控制器不存在', 0, true);
+                throw new Abnormal($path.'控制器不存在', 0);
             } else {
                 show_404();
             }

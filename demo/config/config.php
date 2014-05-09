@@ -19,10 +19,11 @@ $config = array(
      * run_mode=>array('development','testing','production')
      */
      'run_mode'=>'development',
+
     /**
      * 默认模块
      */
-     'default_module'=>'index',
+     'default_module'=>'',
     /**
      * 默认控制器
      */
@@ -77,4 +78,3 @@ $config = array(
     'session_savepath' => ROOT_PATH.'application/cache/sessions/',
 );
 return array_merge($config, array('db'=>$database));
-?>
