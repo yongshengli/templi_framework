@@ -1,70 +1,113 @@
-<?php 
-defined('IN_TEMPLI') or die('非法引用');
+<?php
 /**
- * 控制器分配类
- * 
- * php 模板引擎
- * @author 七觞酒
- * @email 739800600@qq.com
- * @date 2013-3-19
+ * Created by PhpStorm.
+ * User: david
+ * Date: 14-5-9
+ * Time: 下午4:16
  */
-class Appliction{
+
+class Application
+{
+
     /**
-     * 初始化应用
+     * 获取 数组中元素的值
+     * @param array $arr
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
      */
-    public static function init(){
+    public static function getArrVal(array $arr, $key, $default = NULL)
+    {
 
-        $GLOBALS['module']     = (isset($_GET['m']) && $_GET['m'])?
-            trim($_GET['m']):(isset($_POST['m'])?
-                trim($_POST['m']):Templi::get_config('default_module'));
-        $GLOBALS['controller'] = (isset($_GET['c']) && $_GET['c'])?
-            trim($_GET['c']):(isset($_POST['c'])?
-                trim($_POST['c']):Templi::get_config('default_controller'));
-        $GLOBALS['action']     = (isset($_GET['a']) && $_GET['a'])?
-            trim($_GET['a']):(isset($_POST['a'])?
-                trim($_POST['a']):Templi::get_config('default_action'));
+        $temp =  explode('.', $key);
+        $myKey = $temp[0];
 
-        $controller = self::loade_controller($GLOBALS['controller'],$GLOBALS['module']);
-        if(substr($GLOBALS['action'],0,2)=='__'){
-            if(APP_DEBUG)
-                throw new Abnormal('受保护的方法不可访问',0,true);
-            else
-                show_404();
-        }else{
-	        // 关闭APP_DUBUG时 对页面压缩
-	        if(APP_DEBUG || !ob_start('ob_gzhandler')) ob_start();
-                call_user_func(array(&$controller,$GLOBALS['action']));
-	        ob_end_flush();
+        if (!isset($arr[$myKey])){
+            return $default;
         }
+
+        if(isset($temp[1])) {
+            array_shift($temp);
+            $temp = implode('.', $temp);
+            return self::getArrVal($arr[$myKey], $temp, $default);
+        }
+        return $arr[$myKey];
     }
     /**
-     * 加载控制器
+     * 引入文件
+     * 默认加载路径是 系统类库
      */
-    private static function loade_controller($classname,$module){
-        if(!is_dir(Templi::get_config('app_path').'controller/'.$module)){
-            if(APP_DEBUG)
-                throw new Abnormal($module.'模块不存在',0,true);
-            else
-                show_404();
+    public static function include_file($file)
+    {
+        static $_request_files = array();
+        if(!isset($_request_files[$file])){
+            if(!file_exists($file)){
+                return false;
+            }
+            $_request_files[$file] = require($file);
         }
-        $classname .= 'Controller';
-        $path = Templi::get_config('app_path').'controller/'.$module.'/'.$classname.'.php';
-        if(file_exists($path)){
-            Templi::include_file($path);
-            return new $classname;
-        }else{
-            //如果设置了empty控制器 则调用该控制器
-            $path =Templi::get_config('app_path').'controller/'.$module.'/emptyController.php';
-            if(file_exists($path)){
-                Templi::include_file($path);
-                return new emptyController();
-            }else{
-                if(APP_DEBUG)
-                    throw new Abnormal($classname.'控制器不存在',0,true);
-                else
-                    show_404();
-            }  
+        return $_request_files[$file];
+    }
+
+    /**
+     * 自定义异常处理
+     */
+    public static function appException($e)
+    {
+        $error = array(
+            'code'=>    $e->getCode(),
+            'message'=> $e->getMessage(),
+            'file'=>    $e->getFile(),
+            'line'=>    $e->getLine(),
+            'trace'=>   $e->__toString());
+        halt($error);
+    }
+    /**
+     * 自定义错误处理
+     */
+    public static function appError($errno, $errstr, $errfile, $errline)
+    {
+        //throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+        $error = array('message'=>$errstr, 'file'=>$errfile, 'line'=>$errline);
+        $trace = debug_backtrace();
+        $trace = array_slice($trace,3); //丢弃 数组前三个 跟踪
+        $error['trace'] = '';
+        foreach ($trace as $key => $val){
+            $error['trace'] .= sprintf("#%d [%s] %s(%d) %s%s%s(%s)\n",
+                $key,
+                date('y-m-d H:i:s'),
+                $val['file'],
+                $val['line'],
+                $val['class'],
+                $val['type'],
+                $val['function'],
+                implode(',', $val['args'])
+            );
+        }
+        halt($error);
+    }
+    /**
+     * 自动加载 类文件 包括 Model、controller、libraries 类
+     */
+    public static function __autoload($class)
+    {
+        switch(TRUE){
+            case substr($class,-5)=='Model':
+                self::include_file(self::get_config('app_path').'model/'.$class.'.php');
+                break;
+            case substr($class,-10)=='Controller':
+                self::array_include(array(
+                    self::get_config('app_path').'controller/'.$GLOBALS['module'].'/libraries/'.$class.'.php',
+                    self::get_config('app_path').'controller/'.$class.'.php'
+                ));
+                break;
+            default :
+                //libraries 必须以 .class.php 结尾才可自动载入
+                self::array_include(array(
+                    self::get_config('app_path').'controller/'.$GLOBALS['module'].'/libraries/'.$class.'.class.php',
+                    self::get_config('app_path').'libraries/'.$class.'.class.php',
+                    TEMPLI_PATH.$class.'.class.php',
+                ));
         }
     }
-}
-?>
+} 
