@@ -6,7 +6,8 @@ defined('IN_TEMPLI') or die('非法引用');
  * @email 739800600@qq.com
  * @date  2013-1-20
  */
-abstract class Controller{
+abstract class Controller
+{
     
     private $view = null;   //视图对象
     function __construct(){
@@ -16,6 +17,30 @@ abstract class Controller{
             $this->init();
     }
 
+    /**
+     * 获取当前 控制器名
+     * @return string
+     */
+    public function getControllerName()
+    {
+        return get_class($this);
+    }
+
+    /**
+     * 获取当前模块名
+     */
+    public function getModuleName()
+    {
+        return '';
+    }
+
+    /**
+     * 获取当前 操作 方法名
+     */
+    public function getActionName()
+    {
+        return '';
+    }
     /**
      * 给模板文件分配变量
      * @param string $name 变量名称
@@ -37,8 +62,12 @@ abstract class Controller{
      * @param $module 所在模块
      */
     protected function display($file=NULL,$module=NULL){
-        $path = $module?$module.'/':$GLOBALS['module'].'/';
-        $file = $file?$file:$GLOBALS['controller'].'_'.$GLOBALS['action'];
+
+        $controller = $this->getControllerName();
+        $action = $this->getActionName();
+
+        $path = $module ? $module.'/' : $module = $this->getModuleName().'/';
+        $file = $file ? $file : $controller.'_'.$action;
         $this->view->display($path.$file); 
     }
 

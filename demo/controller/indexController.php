@@ -8,9 +8,9 @@
 
 
 
-class indexController {
+class indexController extends Controller{
     public function index()
     {
-        echo 'sssddddd';
+        $this->display();
     }
 } 
