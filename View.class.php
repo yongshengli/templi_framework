@@ -14,7 +14,7 @@ class View{
     //模板变量
     private $viewVar = array();
     function __construct(){
-        Templi::include_common_file('dir.func.php');
+        require_once('dir.func.php');
         $this->template= Templi::get_config('app_path').'view/';
         $this->compile = Templi::get_config('app_path').'cache/compile/';
     }

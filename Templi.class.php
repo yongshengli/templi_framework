@@ -63,8 +63,9 @@ class Templi extends Application
     public static function getAPP()
     {
         if (empty(self::$_app)) {
-            self::$_app = new self();
+            self::$_app = new static();
         }
+        var_dump(self::$_app);
         return self::$_app;
     }
     /**
@@ -212,7 +213,7 @@ class Templi extends Application
      */
     public function include_html($file,$module=null)
     {
-        self::include_common_file('View.class.php');
+        $this->include_common_file('View.class.php');
         $view = new View();
         if ($module) {
             $file = $module.'/'.$file;
@@ -245,7 +246,7 @@ class Templi extends Application
      * @internal param $module 模块名
      * @return bool
      */
-    public static function include_common_file($file, $path=null)
+    public function include_common_file($file, $path=null)
     {
         if(is_null($path)){
             $result = self::include_file(self::get_config('app_path').'/libraries/'.$file);

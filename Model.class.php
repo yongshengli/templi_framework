@@ -54,7 +54,7 @@ class Model{
      */
     public function db($sign = 'master', $config = array()){
 	    static $db = array();
-        Templi::include_common_file('Cache.class.php');
+        require_once('Cache.class.php');
         $this->cache = Cache::factory(); 
 	    if(!isset($db[$sign])){
             if(!$config){

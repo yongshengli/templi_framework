@@ -12,7 +12,7 @@ abstract class Controller
     private $view = null;   //视图对象
     function __construct()
     {
-        templi::include_common_file('View.class.php');
+        require_once('View.class.php');
         $this->view =new View();
         if(method_exists($this,'init'))
             $this->init();
