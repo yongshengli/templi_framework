@@ -31,7 +31,7 @@ class Router
      */
     private  function __getCurrentModule(){
         if (isset($_GET['m']) && $_GET['m']){
-            $module = trim($_GET['m']);
+            $module = trim(strval($_GET['m']));
         } elseif(isset($_POST['m']) && $_POST['m']) {
             $module = trim(strval($_POST['m']));
         } else {
@@ -47,9 +47,9 @@ class Router
      */
     private function __getCurrentController(){
         if (isset($_GET['c']) && $_GET['c']) {
-            $controller = trim(intval($_GET['c']));
+           $controller = trim(strval($_GET['c']));
         } elseif(isset($_POST['c']) && $_POST['c']) {
-            $controller = trim(intval($_POST['c']));
+            $controller = trim(strval($_POST['c']));
         } else {
             $controller = Templi::get_config('default_controller');
         }

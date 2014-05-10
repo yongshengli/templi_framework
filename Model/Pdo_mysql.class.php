@@ -7,7 +7,7 @@ defined('IN_TEMPLI') or die('非法引用');
  * @date 2013-1-19
  */
 require_once 'DB.class.php';
-class Pdo_Mysql extends DB{
+class Pdo_mysql extends DB{
     private $pdo = NULL;        //pdo对象
     private $affected_rows = NULL; //影响行数
     

@@ -62,7 +62,7 @@ class Templi extends Application
      */
     public static function getAPP()
     {
-        if (!isset(self::$_app)) {
+        if (empty(self::$_app)) {
             self::$_app = new self();
         }
         return self::$_app;
@@ -72,7 +72,7 @@ class Templi extends Application
      */
     public function getModuleName()
     {
-        return $this->module;
+        return $this->_module;
     }
 
     /**
@@ -80,7 +80,7 @@ class Templi extends Application
      */
     public function getControllerName()
     {
-        return $this->controller;
+        return $this->_controller;
     }
 
     /**
@@ -88,7 +88,7 @@ class Templi extends Application
      */
     public function getActionName()
     {
-        return $this->action;
+        return $this->_action;
     }
     /**
      * 创建应用

@@ -134,11 +134,13 @@ abstract class Application
                 break;
             default :
                 //libraries 必须以 .class.php 结尾才可自动载入
-                self::array_include(array(
-                    self::get_config('app_path').'controller/'.$this->getModuleName().'/libraries/'.$class.'.class.php',
-                    self::get_config('app_path').'libraries/'.$class.'.class.php',
-                    TEMPLI_PATH.$class.'.class.php',
-                ));
+                self::array_include(
+                    array(
+                        self::get_config('app_path').'controller/'.$this->getModuleName().'/libraries/'.$class.'.class.php',
+                        self::get_config('app_path').'libraries/'.$class.'.class.php',
+                        TEMPLI_PATH.$class.'.class.php',
+                    )
+                );
         }
     }
 } 

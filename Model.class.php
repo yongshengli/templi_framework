@@ -60,8 +60,10 @@ class Model{
             if(!$config){
                 $config = Templi::get_config("db.{$sign}");
             }
-            require_once('Model/'.ucfirst($config['dbdrive']).'.class.php');
-            $db[$sign] = new $config['dbdrive']($config);
+            $className = ucfirst($config['dbdrive']);
+            $dbdriveFile = 'Model/' . $className . '.class.php';
+            require_once($dbdriveFile);
+            $db[$sign] = new $className($config);
         }
 	    $this->db = isset($db[$sign])?$db[$sign]:$db['master'];
         return $this;
