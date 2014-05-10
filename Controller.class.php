@@ -10,7 +10,8 @@ abstract class Controller
 {
     
     private $view = null;   //视图对象
-    function __construct(){
+    function __construct()
+    {
         templi::include_common_file('View.class.php');
         $this->view =new View();
         if(method_exists($this,'init'))
@@ -46,28 +47,42 @@ abstract class Controller
      * @param string $name 变量名称
      * @param \mid|string $value 变量值
      */
-    protected function assign($name, $value=''){
+    protected function assign($name, $value='')
+    {
         $this->view->assign($name, $value); 
     }
     /**
      * 给模板文件 批量分配变量
      * @param array $data 变量名称
      */
-    protected function setOutput($data){
+    protected function setOutput($data)
+    {
         $this->view->setOutput($data); 
     }
+
     /**
      * 显示 视图
      * @param $file 模板文件名称
-     * @param $module 所在模块
+     * @param null $dir
+     * @internal param \所在模块 $module
      */
-    protected function display($file=NULL,$module=NULL){
-
-        $controller = $this->getControllerName();
-        $action = $this->getActionName();
-
-        $path = $module ? $module.'/' : $module = $this->getModuleName().'/';
-        $file = $file ? $file : $controller.'_'.$action;
+    protected function display($file=NULL, $dir=NULL)
+    {
+        if (is_null($file) || is_null($dir)) {
+            $backtrace = debug_backtrace($provide_object = DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit = 2);
+            $controllerPath = $backtrace[0]['file'];
+            $dir = str_replace(Templi::get_config('app_path').'controller', '',dirname($controllerPath));
+            if (empty($file)) {
+                $controller = substr($backtrace[1]['class'], 0, -10);
+                $action = $backtrace[1]['function'];
+                $file = $controller.'_'.$action;
+            }
+        }
+        if (empty($dir)) {
+            $path = '';
+        } else {
+            $path = $dir.'/';
+        }
         $this->view->display($path.$file); 
     }
 
@@ -79,7 +94,8 @@ abstract class Controller
      * @param string $module
      * @internal param string $url 跳转地址
      */
-    protected function show_message($msg, $url_forward=null, $ms=null, $module='index'){
+    protected function show_message($msg, $url_forward=null, $ms=null, $module='index')
+    {
         $data['url_forward'] = $url_forward?APP_URL.$url_forward:'goback';
         $data['ms'] = $ms?$ms:1250;
         $data['msg'] =$msg;
@@ -90,7 +106,8 @@ abstract class Controller
     /**
      * 魔术方法 有不存在的操作的时候执行
      */
-    function __call($action, $param){
+    function __call($action, $param)
+    {
         if(method_exists($this,'_empty')){
             $GLOBALS['action'] ='_empty';
             $this->_empty($action, $param);
