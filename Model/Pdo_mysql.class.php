@@ -27,7 +27,7 @@ class Pdo_Mysql extends DB{
                     $message = iconv($encod, 'UTF-8', $message);
                 }
                 if(APP_DEBUG){
-                    throw new Abnormal($message, $e->getCode(), 500);
+                    throw new Abnormal($message, $e->getCode());
                 }
             }
         }
