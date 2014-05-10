@@ -79,7 +79,7 @@ class View{
 
         if(!file_exists($template_file_path.$template_file)){
             if(APP_DEBUG)
-                throw new Abnormal($template_file_path.$template_file.'模板文件不存在', 0, true);
+                throw new Abnormal($template_file_path.$template_file.'模板文件不存在', 500);
             else
                 show_404();
         }

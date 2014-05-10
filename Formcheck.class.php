@@ -22,7 +22,7 @@ class Formcheck{
      public static function checking(&$data,&$message,$rule=array()){
         foreach($rule as $key=>$val){
             if(!isset($data[$key]))
-                throw new Abnormal($key.'不存在',3);
+                throw new Abnormal($key.'不存在', 500);
             if(is_array($val['func'])){
                 $val['param'] =isset($val['param'])?$val['param']:NULL;
                 for($i=0;$i<count($val['func']);$i++){

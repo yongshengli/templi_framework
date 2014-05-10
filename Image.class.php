@@ -334,7 +334,7 @@ class Image {
             $im = @imagecreatetruecolor($width, $height);
         } else {
             if(!function_exists('imagecreate')){
-                throw new Abnormal('请检查是否安装了gd库');
+                throw new Abnormal('请检查是否安装了gd库', 500);
             }
             $im = @imagecreate($width, $height);
         }

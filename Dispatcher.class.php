@@ -52,7 +52,7 @@ class Dispatcher
             return new $this->class;
         } else {
             if(APP_DEBUG){
-                throw new Abnormal($path.'控制器不存在', 0);
+                throw new Abnormal($path.'控制器不存在', 500);
             } else {
                 show_404();
             }

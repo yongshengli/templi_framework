@@ -27,7 +27,7 @@ class Pdo_Mysql extends DB{
                     $message = iconv($encod, 'UTF-8', $message);
                 }
                 if(APP_DEBUG){
-                    throw new Abnormal($message, $e->getCode(), true);
+                    throw new Abnormal($message, $e->getCode(), 500);
                 }
             }
         }
@@ -38,7 +38,7 @@ class Pdo_Mysql extends DB{
         $this->lastqueryid = $this->pdo->query($sql);
         if($this->lastqueryid===FALSE && APP_DEBUG){
            $err = $this->pdo->errorInfo();
-           throw new Abnormal($this->error_msg($err[2], $sql),5);
+           throw new Abnormal($this->error_msg($err[2], $sql), 500);
         }
         return $this->lastqueryid->fetchAll(PDO::FETCH_ASSOC);
      }
@@ -56,7 +56,7 @@ class Pdo_Mysql extends DB{
         $result = $this->pdo->exec($sql);
         if ($result === false) {
             $err = $this->pdo->errorInfo();
-            throw new Abnormal($this->error_msg($err[2],$sql),5);
+            throw new Abnormal($this->error_msg($err[2],$sql), 500);
         }
         return $result;
      }

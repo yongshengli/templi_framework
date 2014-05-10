@@ -19,13 +19,13 @@ class Mysql extends DB{
             $this->linkid = @mysql_connect($this->dbhost, $this->dbuser, $this->dbpsw, 1);
         }
         if(!$this->linkid && APP_DEBUG){
-            throw new Abnormal($this->error_msg('Can not link to mysql'),5,true); 
+            throw new Abnormal($this->error_msg('Can not link to mysql'),500);
         }
         if($this->dbname){
             mysql_select_db($this->dbname,$this->linkid) or $this->error_msg('Can not use db '.$dbname);
 	    $this->execute(' set names '.$this->charset);
         }elseif(APP_DEBUG){
-            throw new Abnormal($this->error_msg('It not gave dbname'),5,true);
+            throw new Abnormal($this->error_msg('It not gave dbname'),500);
         }
     }
     /**
@@ -36,12 +36,12 @@ class Mysql extends DB{
             return false;
         }else{
             if(!$this->linkid && APP_DEBUG){
-                throw new Abnormal($this->error_msg('未连接数据库'), 5, true);
+                throw new Abnormal($this->error_msg('未连接数据库'), 500);
                 return false;
             }
             $this->lastqueryid = mysql_query($sql,$this->linkid);
             if($this->lastqueryid === false && APP_DEBUG){
-                throw new Abnormal($this->error_msg($this->error(),$sql),5, true);
+                throw new Abnormal($this->error_msg($this->error(),$sql),500);
                 return false;
             }else{
                 return $this->fetch_array($this->lastqueryid);
@@ -56,12 +56,12 @@ class Mysql extends DB{
             return false;
         }
         if(!$this->linkid && APP_DEBUG){
-            throw new Abnormal($this->error_msg('未连接数据库'), 5, true);
+            throw new Abnormal($this->error_msg('未连接数据库'), 500);
             return false;
         }
         $this->lastqueryid = mysql_query($sql,$this->linkid);
         if($this->lastqueryid === false && APP_DEBUG){
-            throw new Abnormal($this->error_msg($this->error(), $sql), 5, true);
+            throw new Abnormal($this->error_msg($this->error(), $sql), 500);
             return false;
         }else{
             return $this->affected_rows();

@@ -432,7 +432,7 @@ class Model{
             $compare = strtoupper(trim($compare));
             $allowed = array('=', '>=', '<=', '>', '<', '<>', '!=', 'LIKE');
             if (!in_array($compare ,$allowed)) {
-                throw new Abnormal('不支持的比较操作符'.$compare, 0);
+                throw new Abnormal('不支持的比较操作符'.$compare, 500);
             }
             foreach ($where as $key=>$val) {
                 $this->_where && $this->_where .= ' '.$font ;
