@@ -1,14 +1,30 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: david
+ * 应用抽象类
+ * User: 七觞酒
  * Date: 14-5-9
  * Time: 下午4:16
  */
 
-class Application
+abstract class Application
 {
+    /**
+     * 获取当前的木块名
+     * @return string
+     */
+    abstract  function getModuleName();
 
+    /**
+     * 获取当前的 控制器名
+     * @return string
+     */
+    abstract function getControllerName();
+
+    /**
+     * 获取当前方法名
+     * @return string
+     */
+    abstract function getActionName();
     /**
      * 获取 数组中元素的值
      * @param array $arr
@@ -86,10 +102,25 @@ class Application
         }
         halt($error);
     }
+
+    /**
+     * 多位置引入文件
+     * 找到文件 后返回
+     */
+    public static function array_include($file_arr=array())
+    {
+        foreach($file_arr as $file){
+            $result = self::include_file($file);
+            if($result){
+                return $result;
+            }
+        }
+        return false;
+    }
     /**
      * 自动加载 类文件 包括 Model、controller、libraries 类
      */
-    public static function __autoload($class)
+    public function __autoload($class)
     {
         switch(TRUE){
             case substr($class,-5)=='Model':
@@ -97,14 +128,14 @@ class Application
                 break;
             case substr($class,-10)=='Controller':
                 self::array_include(array(
-                    self::get_config('app_path').'controller/'.$GLOBALS['module'].'/libraries/'.$class.'.php',
+                    self::get_config('app_path').'controller/'.$this->getModuleName().'/libraries/'.$class.'.php',
                     self::get_config('app_path').'controller/'.$class.'.php'
                 ));
                 break;
             default :
                 //libraries 必须以 .class.php 结尾才可自动载入
                 self::array_include(array(
-                    self::get_config('app_path').'controller/'.$GLOBALS['module'].'/libraries/'.$class.'.class.php',
+                    self::get_config('app_path').'controller/'.$this->getModuleName().'/libraries/'.$class.'.class.php',
                     self::get_config('app_path').'libraries/'.$class.'.class.php',
                     TEMPLI_PATH.$class.'.class.php',
                 ));

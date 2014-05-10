@@ -56,7 +56,7 @@ class View{
     public function display($template_file_name=null){
         $template = $this->compile($template_file_name);
         extract($this->viewVar, EXTR_OVERWRITE);
-        require_once $template;
+        require_once($template);
     }
     /**
      * 载入 模板缓存文件
@@ -129,8 +129,8 @@ class View{
             10=>'<?php echo \\1;?>',//数组变量
             11=>'<?php echo \\1;?>',//变量
             12=>'<?php echo \\1;?>', //常量
-            13=>'<?php include Templi::include_html("\\1","\\2");?>',
-            14=>'<?php include Templi::include_html("\\1");?>',
+            13=>'<?php include Templi::getAPP()->include_html("\\1","\\2");?>',
+            14=>'<?php include Templi::getAPP()->include_html("\\1");?>',
         );
         
         $str = preg_replace($find_tag,$replace_tag,$str);
