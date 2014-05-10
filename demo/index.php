@@ -13,5 +13,4 @@ define('APP_URL',($_root=='/' || $_root=='\\')?'':$_root);
 
 require '../Templi.class.php';
 $config = require ROOT_PATH.'config/config.php';
-$app = new Templi();
-$app->create_webapp($config)->run();
+Templi::createWebApp($config)->run();

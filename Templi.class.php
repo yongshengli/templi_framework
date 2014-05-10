@@ -10,9 +10,44 @@ require_once 'Application.class.php';
 
 class Templi extends Application
 {
-    
+    private static $_app = null;
+    /**
+     * 应用配置
+     * @var array
+     */
     private static $_config = array();
-    
+    /**
+     * 当前模块名
+     * @var null
+     */
+    private $_module = null;
+    /**
+     * 当前控制器
+     * @var null
+     */
+    private $_controller = null;
+    /**
+     * 当前操作
+     * @var null
+     */
+    private $_action = null;
+
+    /**
+     * 初始化 app
+     */
+    function __construct()
+    {
+        defined('IN_TEMPLI') or define('IN_TEMPLI', true);
+        //TEMPLI 目录
+        defined('TEMPLI_PATH') or  define('TEMPLI_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
+        //当前时间
+        defined('SYS_TIME') or define('SYS_TIME', time());
+        //系统脚本开始时间
+        defined('SYS_START_TIME') or define('SYS_START_TIME', microtime(true));
+        //注册 __autoload 方法
+        spl_autoload_register(array('self', '__autoload'));
+    }
+
     /**
      * 获取版本信息
      */
@@ -20,22 +55,50 @@ class Templi extends Application
     {
 	    return '1.0.0';
     }
+    public static function getAPP()
+    {
+        if (!isset(self::$_app)) {
+            self::$_app = new self();
+        }
+        return self::$_app;
+    }
+    /**
+     * 获取模块名
+     */
+    public function getModuleName()
+    {
+        return $this->module;
+    }
+
+    /**
+     * 获取控制器名
+     */
+    public function getControllerName()
+    {
+        return $this->controller;
+    }
+
+    /**
+     * 获取当前操作名
+     */
+    public function getActionName()
+    {
+        return $this->action;
+    }
     /**
      * 创建应用
      * @param type $config
      * @return \Templi
      */
-    public function create_webapp($config)
+    public static function createWebApp($config)
     {
-        self::$_config = $config;
-        //公共基础配置
-        $this->init();
-        switch(self::get_config('run_mode')){
+        $app = self::getAPP();
+        $conf = self::get_config($config);
+        switch($conf['run_mode']){
             case 'development':
                  define('ERROR_TYPE', E_ALL & ~E_NOTICE);
                  defined('APP_DEBUG') or define('APP_DEBUG',true);
-                 error_reporting(ERROR_TYPE); 
-                 
+                 error_reporting(ERROR_TYPE);
                  break;
             case 'testing':
             case 'production':
@@ -54,14 +117,14 @@ class Templi extends Application
         if(method_exists('Templi', 'appError') && function_exists('set_error_handler')){
             set_error_handler(array('Templi','appError'), ERROR_TYPE);
         }
-        $this->load_http_lib();
-        return $this;
+        self::load_http_lib();
+        return $app;
     }
 
     /**
      * 载入 http应用必须的 类库
      */
-    private function load_http_lib()
+    private static function load_http_lib()
     {
         //载入公共函数库
         self::include_file(TEMPLI_PATH.'function.func.php');
@@ -85,6 +148,10 @@ class Templi extends Application
     public function run()
     {
         $router = new Router();
+        $this->_module = $router->module;
+        $this->_controller = $router->controller;
+        $this->_action = $router->action;
+
         $dispatcher = new Dispatcher($router->module, $router->controller, $router->action);
         $dispatcher->execute();
     }
@@ -107,9 +174,8 @@ class Templi extends Application
             //return isset(self::$_config[$field])? self::$_config[$field]:$default;
             return self::getArrVal(self::$_config, $field, $default);
         }
-        return self::$_config; 
+        return self::$_config;
     }
-
 
     /**
      * 加载并实例化模型类
@@ -118,7 +184,7 @@ class Templi extends Application
      * @return
      * @internal param string $file
      */
-    public static function model($model,$type=false)
+    public static function model($model, $type=false)
     {
         static $_models;
         if(!isset($_models[$model.$type])){
@@ -139,11 +205,15 @@ class Templi extends Application
      * @param $module 模块名
      * @return string
      */
-    public static function include_html($file,$module=null)
+    public function include_html($file,$module=null)
     {
         self::include_common_file('View.class.php');
         $view = new View();
-        $file = $module?($module.'/'.$file):($GLOBALS['module'].'/'.$file);
+        if ($module) {
+            $file = $module.'/'.$file;
+        } else {
+            $file = $this->getModuleName().'/'.$file;
+        }
         return $view->loadView($file);
     }
 
@@ -153,9 +223,13 @@ class Templi extends Application
      * @param $module 模块名
      * @return bool
      */
-    public static function include_module_file($file,$module=null)
+    public function include_module_file($file, $module=null)
     {
-        $path =$module?self::get_config('app_path').'controller/'.trim($module,'/').'/libraries/':self::get_config('app_path').'controller/'.$GLOBALS['module'].'/libraries/';
+        if ($module) {
+            $path = self::get_config('app_path').'controller/'.trim($module,'/').'/libraries/';
+        } else {
+            $path = self::get_config('app_path').'controller/'.$this->getModuleName().'/libraries/';
+        }
         return self::include_file($path.$file);
     }
 
@@ -168,7 +242,6 @@ class Templi extends Application
      */
     public static function include_common_file($file, $path=null)
     {
-        
         if(is_null($path)){
             $result = self::include_file(self::get_config('app_path').'/libraries/'.$file);
             if($result == false){
@@ -178,34 +251,5 @@ class Templi extends Application
             $result = self::include_file(trim($path,'/').'/'.$file);
         }
         return $result;
-    }
-    /**
-     * 多位置引入文件
-     * 找到文件 后返回
-     */
-    public static function array_include($file_arr=array())
-    {
-        foreach($file_arr as $file){
-            $result = self::include_file($file);
-            if($result){
-                return $result;
-            }
-        }
-        return false;
-    }
-    /**
-     * 初始化 app
-     */
-    private function init()
-    {
-        defined('IN_TEMPLI') or define('IN_TEMPLI', true);
-        //TEMPLI 目录
-        defined('TEMPLI_PATH') or  define('TEMPLI_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
-        //当前时间
-        defined('SYS_TIME') or define('SYS_TIME', time());
-        //系统脚本开始时间
-        defined('SYS_START_TIME') or define('SYS_START_TIME', microtime(true));
-        //注册 __autoload 方法
-        spl_autoload_register(array('self', '__autoload'));
     }
 }
