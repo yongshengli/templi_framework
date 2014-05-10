@@ -55,6 +55,11 @@ class Templi extends Application
     {
 	    return '1.0.0';
     }
+
+    /**
+     * 获取 当前应用
+     * @return application
+     */
     public static function getAPP()
     {
         if (!isset(self::$_app)) {
