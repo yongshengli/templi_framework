@@ -23,9 +23,9 @@ class Image_verify{
      * @return string
      */
     static function buildImageVerify($length=4, $mode=3, $size=array(70, 30), $font=array(), $disturb=3, $border=true,$type='png', $verifyName='verify') {
-        Templi::include_common_file('String.class.php');
-        Templi::include_common_file('Image.class.php');
-        Templi::include_common_file('Session.class.php');
+        require_once('String.class.php');
+        require_once('Image.class.php');
+        require_once('Session.class.php');
         Session::factory();
         $randval = String::randString($length, $mode);
         Session::set($verifyName, strtolower($randval));

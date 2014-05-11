@@ -65,7 +65,6 @@ class Templi extends Application
         if (empty(self::$_app)) {
             self::$_app = new static();
         }
-        var_dump(self::$_app);
         return self::$_app;
     }
     /**

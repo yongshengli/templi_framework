@@ -31,7 +31,10 @@ class base extends Controller{
     }
     /**
      * 获取用户组信息
+     *
      * @param int $group_id 用户组id
+     *
+     * @return array
      */
     protected function get_group_info($group_id=''){
         if(!$group_id) $group_id = Session::get('group_id');
@@ -45,7 +48,6 @@ class base extends Controller{
      * 加载项目所需文件
      */
     private function load_files(){
-        Templi::include_common_file('common.func.php');
+        Templi::getAPP()->include_common_file('common.func.php');
     }
 }
-?>

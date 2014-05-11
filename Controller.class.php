@@ -13,7 +13,7 @@ abstract class Controller
     function __construct()
     {
         require_once('View.class.php');
-        $this->view =new View();
+        $this->view = new View();
         if(method_exists($this,'init'))
             $this->init();
     }

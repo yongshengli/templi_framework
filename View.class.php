@@ -6,13 +6,15 @@ defined('IN_TEMPLI') or die('非法引用');
  * @email 739800600@qq.com
  * @date 2013-1-19
  */
-class View{
+class View
+{
     //视图文件路径
     public $template = '';
     //编译文件保存路径
     public $compile  = '';
     //模板变量
     private $viewVar = array();
+
     function __construct(){
         require_once('dir.func.php');
         $this->template= Templi::get_config('app_path').'view/';
@@ -69,13 +71,13 @@ class View{
      */
     private function compile($template_file_name=null){
          //视图文件名
-        $file_info =pathinfo($template_file_name);
-        $template_file =$file_info['extension']?$template_file_name:$template_file_name.'.html';
+        $file_info = pathinfo($template_file_name);
+        $template_file = $file_info['extension'] ? $template_file_name : $template_file_name.'.html';
         //视图文件路径
-        $template_file_path =$this->template;
+        $template_file_path = $this->template;
         $compile_file_name = $file_info['extension']?($file_info['dirname'].'/'.$file_info['filename']):$template_file_name;
         //编译文件
-        $compile_file =$this->compile.$compile_file_name.'.tpl.php';
+        $compile_file = $this->compile.$compile_file_name.'.tpl.php';
 
         if(!file_exists($template_file_path.$template_file)){
             if(APP_DEBUG)
@@ -83,8 +85,8 @@ class View{
             else
                 show_404();
         }
-        if(!file_exists($compile_file) || filemtime($compile_file)<filemtime($template_file_path.$template_file)){
-            $content   = file_get_contents($template_file_path.$template_file,filesize($template_file_path.$template_file));
+        if(!file_exists($compile_file) || filemtime($compile_file) < filemtime($template_file_path.$template_file)){
+            $content   = file_get_contents($template_file_path.$template_file, filesize($template_file_path.$template_file));
             $content = $this->replace_tag($content);
             dir_create(dirname($compile_file));
             file_put_contents($compile_file,$content);
