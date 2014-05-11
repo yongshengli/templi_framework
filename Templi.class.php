@@ -247,12 +247,12 @@ class Templi extends Application
      */
     public function include_common_file($file, $path=null)
     {
-        if(is_null($path)){
+        if (is_null($path)) {
             $result = self::include_file(self::get_config('app_path').'/libraries/'.$file);
             if($result == false){
                 $result = self::include_file(TEMPLI_PATH.$file);
             }
-        }else{
+        } else {
             $result = self::include_file(trim($path,'/').'/'.$file);
         }
         return $result;
