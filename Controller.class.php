@@ -12,8 +12,8 @@ abstract class Controller
     private $view = null;   //视图对象
     function __construct()
     {
-        templi::include_common_file('View.class.php');
-        $this->view =new View();
+        Templi::include_file(TEMPLI_PATH.'View.class.php');
+        $this->view = new View();
         if(method_exists($this,'init'))
             $this->init();
     }
@@ -109,13 +109,13 @@ abstract class Controller
     function __call($action, $param)
     {
         if(method_exists($this,'_empty')){
-            $GLOBALS['action'] ='_empty';
             $this->_empty($action, $param);
         }else{
-	    if(APP_DEBUG)
+	        if(APP_DEBUG){
                 throw new Abnormal($action.' 方法不存在', 500);
-            else
+            } else {
                 show_404();
+            }
         }
     }
 }

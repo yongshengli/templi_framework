@@ -50,7 +50,7 @@ class Cache_file{
      */
     public function set($filename, &$content){
         if(!$filename || !$content)return false;
-        Templi::include_common_file('dir.func.php');
+        require_once(TEMPLI_PATH.'dir.func.php');
         dir_create(Templi::get_config('app_path').'cache/datas/');
         $file =Templi::get_config('app_path').'cache/datas/'.$filename.'_cache.php';
         if($this->cache_datatype=='array'){
@@ -69,7 +69,7 @@ class Cache_file{
         if($filename){
             return @unlink(Templi::get_config('app_path').'cache/datas/'.$filename.'_cache.php');
         }else{
-            templi::include_common_file('dir.func.php');
+            require_once(TEMPLI_PATH.'dir.func.php');
             return dir_delete(Templi::get_config('app_path').'cache/datas/');
         }
     }

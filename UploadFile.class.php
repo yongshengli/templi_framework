@@ -106,7 +106,7 @@ class UploadFile {//类定义开始
                 $thumbPath      =   $this->thumbPath?$this->thumbPath:dirname($filename).'/';
                 $thumbExt       =   $this->thumbExt ? $this->thumbExt : $file['extension']; //自定义缩略图扩展名
                 // 生成图像缩略图
-                Templi::include_common_file($this->imageClassPath);
+                require_once($this->imageClassPath);
                 for($i=0,$len=count($thumbWidth); $i<$len; $i++) {
                     if(!empty($thumbFile[$i])) {
                         $thumbname  =   $thumbFile[$i];

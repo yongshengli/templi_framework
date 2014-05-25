@@ -62,8 +62,8 @@ class Templi extends Application
      */
     public static function getAPP()
     {
-        if (!isset(self::$_app)) {
-            self::$_app = new self();
+        if (empty(self::$_app)) {
+            self::$_app = new static();
         }
         return self::$_app;
     }
@@ -72,7 +72,7 @@ class Templi extends Application
      */
     public function getModuleName()
     {
-        return $this->module;
+        return $this->_module;
     }
 
     /**
@@ -80,7 +80,7 @@ class Templi extends Application
      */
     public function getControllerName()
     {
-        return $this->controller;
+        return $this->_controller;
     }
 
     /**
@@ -88,7 +88,7 @@ class Templi extends Application
      */
     public function getActionName()
     {
-        return $this->action;
+        return $this->_action;
     }
     /**
      * 创建应用
@@ -212,7 +212,7 @@ class Templi extends Application
      */
     public function include_html($file,$module=null)
     {
-        self::include_common_file('View.class.php');
+        $this->include_common_file('View.class.php');
         $view = new View();
         if ($module) {
             $file = $module.'/'.$file;
@@ -245,14 +245,14 @@ class Templi extends Application
      * @internal param $module 模块名
      * @return bool
      */
-    public static function include_common_file($file, $path=null)
+    public function include_common_file($file, $path=null)
     {
-        if(is_null($path)){
+        if (is_null($path)) {
             $result = self::include_file(self::get_config('app_path').'/libraries/'.$file);
             if($result == false){
                 $result = self::include_file(TEMPLI_PATH.$file);
             }
-        }else{
+        } else {
             $result = self::include_file(trim($path,'/').'/'.$file);
         }
         return $result;

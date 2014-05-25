@@ -6,7 +6,8 @@ defined('IN_TEMPLI') or die('非法引用');
  * @email 739800600@qq.com
  * @date 2013-3-20
  */
-class Model{      
+class Model
+{
     public $table_name ='';
     //数据库连接对象
     protected $db; 
@@ -29,7 +30,8 @@ class Model{
      * @param int|string $dbSign 数据库唯一标识
      * @param array $config 数据库配置
      */
-    function __construct($table='', $dbSign='master', $config = array()){
+    function __construct($table='', $dbSign='master', $config = array())
+    {
         $this->db($dbSign, $config);
         $table && $this->table_name = $this->db->prefix.$table;
         $this->rest_all_var();
@@ -42,8 +44,9 @@ class Model{
      * @param $name
      * @return mixed
      */
-    public function __get($name){
-        return isset($this->db->$name)?$this->db->$name:NULL;
+    public function __get($name)
+    {
+        return isset($this->db->$name) ? $this->db->$name : NULL;
     }
 
     /**
@@ -52,18 +55,21 @@ class Model{
      * @param array $config 数据库配置信息
      * @return $this
      */
-    public function db($sign = 'master', $config = array()){
+    public function db($sign = 'master', $config = array())
+    {
 	    static $db = array();
-        Templi::include_common_file('Cache.class.php');
+        require_once('Cache.class.php');
         $this->cache = Cache::factory(); 
 	    if(!isset($db[$sign])){
             if(!$config){
                 $config = Templi::get_config("db.{$sign}");
             }
-            require_once('Model/'.ucfirst($config['dbdrive']).'.class.php');
-            $db[$sign] = new $config['dbdrive']($config);
+            $className = ucfirst($config['dbdrive']);
+            $dbdriveFile = 'Model/' . $className . '.class.php';
+            require_once($dbdriveFile);
+            $db[$sign] = new $className($config);
         }
-	    $this->db = isset($db[$sign])?$db[$sign]:$db['master'];
+	    $this->db = isset($db[$sign]) ? $db[$sign] : $db['master'];
         return $this;
     }
     /**
@@ -72,7 +78,8 @@ class Model{
      * @param string $table
      * @return $this
      */
-    public function table($table){
+    public function table($table)
+    {
         $this->table_name = $this->db->prefix.$table;
         return $this;
     }
@@ -82,7 +89,8 @@ class Model{
      *
      * @return $this
      */
-    public function field($field){
+    public function field($field)
+    {
         //不选字段默认为 * 防止用户输入*
         if (trim($field) == '*') {
             return $this;
@@ -106,7 +114,8 @@ class Model{
      * @param string $compare
      * @return $this
      */
-    public function where($where, $compare = '='){
+    public function where($where, $compare = '=')
+    {
         $this->sqls($where, 'AND', $compare);
         return $this;
     }
@@ -117,7 +126,8 @@ class Model{
      * @param string $compare
      * @return $this
      */
-    public function where_or($where, $compare = '='){
+    public function where_or($where, $compare = '=')
+    {
         $this->sqls($where, 'OR', $compare = '=');
         return $this;
     }
@@ -128,7 +138,8 @@ class Model{
      * @throws Abnormal
      * @return $this
      */
-    public function set(array $data){
+    public function set(array $data)
+    {
         $this->_set = array_merge($this->_set, $data);
         return $this;
     }
@@ -140,7 +151,8 @@ class Model{
      * example id desc
      * @return $this
      */
-    public function order($order){
+    public function order($order)
+    {
         if (is_array($order)) {
             foreach ($order as $key =>$val){
                 $this->_order && $this->_order .= ', ';
@@ -160,7 +172,8 @@ class Model{
      * @return $this
      * @internal param string $limit example 0,20* example 0,20
      */
-    public function limit($listNum, $offset = NULL){
+    public function limit($listNum, $offset = NULL)
+    {
         if($offset != NULL){
             $this->_limit = " $offset,$listNum";
         }else{
@@ -180,7 +193,8 @@ class Model{
      * $page['maxpage'] 最大页数
      * @return $this
      */
-    public function page($page){
+    public function page($page)
+    {
         if (is_array($page)) {
             foreach ($this->_page as $key =>$val) {
                 if ($page[$key] !== NULL) {
@@ -210,7 +224,8 @@ class Model{
      *
      * @return array
      */
-    public function getlist($where=NULL, $field=NULL, $order=NULL, $current_page=NULL, $listNum=NULL, $pageNum=NULL, $urlrule=NULL, $maxpage=NULL){
+    public function getlist($where=NULL, $field=NULL, $order=NULL, $current_page=NULL, $listNum=NULL, $pageNum=NULL, $urlrule=NULL, $maxpage=NULL)
+    {
         $arr = array();
         $field && $this->field($field);
         $where && $this->where($where);
@@ -227,7 +242,7 @@ class Model{
             'maxpage'       =>  $maxpage
         ));
         
-        Templi::include_common_file('Page.class.php');
+        require_once('Page.class.php');
         $page = new Page($this->_page);
         if ($this->_page['listNum']) {
             $this->limit($this->_page['listNum'], $page->offset);
@@ -251,7 +266,8 @@ class Model{
      *
      * @return
      */
-    public function select($where=NULL, $field=NULL, $order=NULL, $limit=NULL){
+    public function select($where=NULL, $field=NULL, $order=NULL, $limit=NULL)
+    {
         
         $where && $this->where($where);
         $field && $this->field($field);
@@ -275,7 +291,8 @@ class Model{
      *
      * @return array()
      */
-    public function find($where=NULL, $field=NULL, $order=NULL){
+    public function find($where=NULL, $field=NULL, $order=NULL)
+    {
         $list = $this->select($where, $field, $order, $limit=1);
         return isset($list[0])?$list[0]:array();
     }
@@ -283,7 +300,8 @@ class Model{
      * 查询数据条数
      * @param array or string 查询条件 可以是 数组 
      */
-    public function count($where = NULL){
+    public function count($where = NULL)
+    {
         $where && $this->where($where);
         
         $sql = 'SELECT COUNT(*) AS `num` FROM '.$this->table_name;
@@ -300,7 +318,8 @@ class Model{
      *
      * @return bool
      */
-    public function update($data = NULL, $where=NULL){
+    public function update($data = NULL, $where=NULL)
+    {
         $data && $this->set($data);
         $where && $this->where($where);
         
@@ -343,7 +362,8 @@ class Model{
      * @param bool $replace 是否 为替换插入
      * @return bool
      */
-    public function insert($data = NULL, $return_insert_id = false, $replace = false){
+    public function insert($data = NULL, $return_insert_id = false, $replace = false)
+    {
         $data && $this->set($data);
         
         if(!is_array($this->_set) || count($this->_set) == 0){
@@ -364,7 +384,8 @@ class Model{
       * @param string or array $where 条件
       * @return bool
       */
-    public function delete($where=NULL){
+    public function delete($where=NULL)
+    {
         $where && $this->where($where);
         if(!$this->_where) 
             return false;
@@ -374,7 +395,8 @@ class Model{
     /**
      * 执行基本的 mysql查询
      */
-    public function query($sql){
+    public function query($sql)
+    {
         $this->_last_sql = trim($sql);
         $this->rest_all_var();
         if (strtoupper(substr($this->_last_sql, 0, 6)) == 'SELECT') {
@@ -389,7 +411,8 @@ class Model{
      * @param $value 数组值
      * @return string
      */
-    public function add_special_char(&$value) {
+    public function add_special_char(&$value)
+    {
         if('*' == $value || false !== strpos($value, '(') || false !== strpos($value, '.') || false !== strpos ( $value, '`')) {
             //不处理包含* 或者 使用了sql方法。
         } else {
@@ -404,7 +427,8 @@ class Model{
      * @param $quotation
      * @return string
      */
-    public function escape_string(&$value, $quotation = 1) {
+    public function escape_string(&$value, $quotation = 1)
+    {
         if ($quotation) {
                 $q = '\'';
         } else {
@@ -427,7 +451,8 @@ class Model{
      * @param string $compare 比较字符 (=,!=,in not in, like)
      * @throws Abnormal
      */
-    final public function sqls($where, $font = ' AND ', $compare = '=') {
+    final public function sqls($where, $font = ' AND ', $compare = '=')
+    {
         if (is_array($where)) {
             $compare = strtoupper(trim($compare));
             $allowed = array('=', '>=', '<=', '>', '<', '<>', '!=', 'LIKE');
@@ -447,7 +472,8 @@ class Model{
     /**
      * 重置 类属性
      */
-    private function rest_all_var(){
+    private function rest_all_var()
+    {
         $this->_where = '';
         $this->_field = '*';
         $this->_order = '';
