@@ -1,27 +1,35 @@
 <?php
 defined('IN_TEMPLI') or die('非法引用');
 /**
- * session 工厂函数
+ * session 封装
  * @author 七觞酒
  * @email 739800600@qq.com
  * @date  2013-4-20
  */
-class Session{
+class Session
+{
     /**
-     * 初始化session 
+     * session 工厂
+     * 创造一个session存储方式
      */
-    public static function factory(){
-        if(!isset($_SESSION)){
-            $session_storage =templi::get_config('session_storage');
-            $class_name ='Session_'.$session_storage;
-            require_once('Session/'.$class_name.'.class.php');
-            return new $class_name;
+    public static function factory()
+    {
+        if (!isset($_SESSION)) {
+            $instance = null;
+            $storageType = Templi::get_config('session_storage');
+            $func = 'session_'.$storageType;
+            if (method_exists(self, $func)) {
+                return self::$func();
+            } else {
+                throw new Abnormal('session 存储方式'.$storageType.'不支持', 500);
+            }
         }
     }
     /**
      * 获取session值
      */
-    public static function get($name){
+    public static function get($name)
+    {
         if(isset($_SESSION[$name])){
             return $_SESSION[$name];
         }else{
@@ -31,7 +39,8 @@ class Session{
     /**
      * 设置session值
      */
-    public static function set($name, $val='') {
+    public static function set($name, $val='')
+    {
         if(!$name) return;
         if(is_array($name)){
             foreach($name as $key=>$value)
@@ -47,7 +56,8 @@ class Session{
     /**
      * 设置session值
      */
-    public static function remove($name) {
+    public static function remove($name)
+    {
         if(is_array($name)){
             foreach($name as $val){
                 self::remove($val);
@@ -65,13 +75,60 @@ class Session{
     /**
      * 获得 当前 session id
      */
-    static function id($id = null) {
+    static function id($id = null)
+    {
         return isset($id) ? session_id($id) : session_id();
     }
     /**
      * 获得 当前session 名
      */
-    static function name(){
+    static function name()
+    {
          return isset($name) ? session_name($name) : session_name();
+    }
+    /**
+     * 以文件形式存储session
+     * @return mixed
+     */
+    private static function session_file()
+    {
+        $class_name ='Session_file';
+        require_once('Session/'.$class_name.'.class.php');
+        return new $class_name(Templi::get_config('session_savepath'));
+    }
+
+    /**
+     * session 存储到mysql数据库
+     * @return mixed
+     */
+    private static function session_mysql()
+    {
+        $class_name = 'Session_mysql';
+        $sessionModel = Templi::get_config('session_model');
+        $lifetime = Templi::get_config('session_lifetime');
+        require_once('Session/'.$class_name.'.class.php');
+        return new $class_name($sessionModel, $lifetime);
+    }
+
+    /**
+     * session 存储到memcached
+     */
+    private static function session_memcached()
+    {
+        return ;
+    }
+    /**
+     * session 存储到memcache
+     * @return mixed
+     */
+    private static function session_memcache()
+    {
+        $class_name = 'Session_memcache';
+        $memcaheHost = Templi::get_config('session.memcache_host');
+        $memcachePort = Templi::get_config('session.memcache_port');
+        $memcache = new Memcache();
+        $memcache->connect($memcaheHost, $memcachePort);
+        require_once('Session/' . $class_name. '.class.php');
+        return new $class_name($memcache);
     }
 }

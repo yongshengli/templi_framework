@@ -66,6 +66,7 @@ $config = array(
      * Session配置
      * session_mysql
      *     'session_storage' => 'mysql',
+     *     'session_model' => 'session',
      *     'session_lifetime' => 1800, //session 生命周期，0 表示随浏览器进程
      *     'session_n' => 0
      * session_file
