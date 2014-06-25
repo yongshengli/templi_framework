@@ -6,6 +6,8 @@ class Session_memcache
      * @var Memcache memcache实例
      */
     private $_memcache = null;
+
+    private $_lifetime = 0;
     /**
      * 构造函数
      *
@@ -14,6 +16,9 @@ class Session_memcache
         $this->_memcache = $memcache;
         if (!empty($lifetime)) {
             ini_set('session.gc_maxlifetime', $lifetime);
+            $this->_lifetime = $lifetime;
+        } else {
+            $this->_lifetime = ini_get('session.gc_maxlifetime');
         }
         session_set_save_handler(
             array(&$this,'open'), array(&$this,'close'),
@@ -55,7 +60,7 @@ class Session_memcache
      * @return mixed query 执行结果
      */
     public function write($sessionId, $data) {
-        return $this->_memcache->set($sessionId, $data);
+        return $this->_memcache->set($sessionId, $data, 0, $this->_lifetime);
     }
     /**
      * 删除指定的session_id
