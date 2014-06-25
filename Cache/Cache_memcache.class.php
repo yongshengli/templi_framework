@@ -41,7 +41,8 @@ class Cache_memcahe extends Memcache
         if($name){
             return $this->delete($name);
         }else{
-            return $this->flush();
+            $this->flush();
+            return true;
         }
     }
 }
