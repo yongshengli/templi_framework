@@ -8,13 +8,13 @@ defined('IN_TEMPLI') or die('非法引用');
  */
 class Cache_file{
     //缓存有效期
-    private $timeout = 0;
+    private $timeout = null;
     //缓存数据方式 1 array 2 serialize
-    private $cache_datatype ='array';
+    private $cache_datatype = null;
     //private $cache_datatype ='serialize';
-    public function __construct(){
-        $this->timeout = templi::get_config('cache_timeout');
-        $this->cache_datatype =templi::get_config('cache_datatype');
+    public function __construct($dataType='array', $timeout=0){
+        $this->timeout = $dataType;
+        $this->cache_datatype = $timeout;
     }
     /**
      * 读取缓存文件
@@ -75,4 +75,3 @@ class Cache_file{
     }
        
 }
-?>

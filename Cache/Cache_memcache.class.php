@@ -8,34 +8,57 @@ defined('IN_TEMPLI') or die('非法引用');
  */
 class Cache_memcahe extends Memcache
 {
-    public function __construct(){
-		$this->connect(templi::get_config('cache_host'), templi::get_config('cache_port'), templi::get_config('cache_timeout'));
+    /**
+     * @var int 默认数据有效期
+     */
+    private $_expire = null;
+    /**
+     * @var bool 数据是否压缩
+     */
+    private $_flag= null;
+
+    public function __construct($expire=0, $flag=0)
+    {
+        $this->_flag = $flag;
+        $this->_expire = $expire;
     }
     /**
      * 获取缓存
      * @param string $name  memcache id
      * @param boole
+     * @return mixed
      */
-    public function get($name, $flag=0){
+    public function get($name, $flag=null){
+        if (is_null($flag)) {
+            $flag = $this->_flag;
+        }
         $value = parent::get($name, $flag);
 		return $value;
     }
     /**
      * 设置缓存
      *
-     * @param sting $name memecache id
+     * @param string $name memecache id
      * @param mixed $value 缓存值
-     * @param int expire 有效期
-     * @param bool $flage 是否压缩
+     * @param int $expire 有效期
+     * @param bool $flag 是否压缩
      * @param boole
+     * @return bool
      */
-    public function set($name, $value, $expire = 0, $flag=false){
+    public function set($name, $value, $flag=null, $expire=null){
+        if (is_null($expire)) {
+            $expire = $this->_expire;
+        }
+        if (is_null($flag)) {
+            $flag = $this->_flag;
+        }
         return parent::set($name, $value, $flag, $expire);
     }
     /**
      * 清除缓存
+     *
      * @param string $name  memcache id
-     * @rerurn boole
+     * @return bool
      */
     public function clean($name=null){
         if($name){
