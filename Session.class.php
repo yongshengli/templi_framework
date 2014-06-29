@@ -18,8 +18,8 @@ class Session
             $instance = null;
             $storageType = Templi::get_config('session_storage');
             $func = 'session_'.$storageType;
-            if (method_exists(self, $func)) {
-                return self::$func();
+            if (method_exists('Session', $func)) {
+                self::$func();
             } else {
                 throw new Abnormal('session 存储方式'.$storageType.'不支持', 500);
             }
@@ -115,18 +115,35 @@ class Session
      */
     private static function session_memcached()
     {
-        return ;
+        $class_name = 'Session_memcached';
+        $memcaheHost = Templi::get_config('session_memcache_host');
+        $memcachePort = Templi::get_config('session_memcache_port');
+        if (class_exists('Memcached')) {
+            $memcache = new Memcached();
+        } else {
+            throw new Abnormal('未安装memcached扩展', 500);
+        }
+        $memcache->addServer($memcaheHost, $memcachePort);
+        require_once('Session/' . $class_name. '.class.php');
+        return new $class_name($memcache);
     }
+
     /**
      * session 存储到memcache
+     *
+     * @throws Abnormal
      * @return mixed
      */
     private static function session_memcache()
     {
         $class_name = 'Session_memcache';
-        $memcaheHost = Templi::get_config('session.memcache_host');
-        $memcachePort = Templi::get_config('session.memcache_port');
-        $memcache = new Memcache();
+        $memcaheHost = Templi::get_config('session_memcache_host');
+        $memcachePort = Templi::get_config('session_memcache_port');
+        if(class_exists('Memcache')) {
+            $memcache = new Memcache();
+        } else {
+            throw new Abnormal('未安装memcached扩展', 500);
+        }
         $memcache->connect($memcaheHost, $memcachePort);
         require_once('Session/' . $class_name. '.class.php');
         return new $class_name($memcache);
