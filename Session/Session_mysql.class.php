@@ -48,7 +48,9 @@ class Session_mysql {
      * @return string 读取session_id
      */
     public function read($sessionId) {
-        $r = $this->_model->where(array('session_id'=>$sessionId))->find();
+        $r = $this->_model->where(array('session_id'=>$sessionId))
+            ->limit(1)
+            ->fetchOne();
         return $r ? $r['user_data'] : '';
     } 
     /**

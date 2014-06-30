@@ -15,7 +15,8 @@ defined('IN_TEMPLI') or die('非法引用');
  *     ));
  */
 //templi::include_file();
-class Formcheck{
+class Formcheck
+{
     /**
      * 批量验证表单字段
      */
@@ -101,7 +102,7 @@ class Formcheck{
       * 验证是否为空
       */
      public static function isnotnull(&$data,$param=null){
-        $data =trim($data);
+        $data = trim($data);
         return $data!='';
      }
      /**

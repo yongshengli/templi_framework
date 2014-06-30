@@ -15,7 +15,7 @@ class Model
     protected $db;
 
     /** @var  Cache 缓存对象*/
-    private $cache = null;
+    public $cache = null;
 
     /** @var array 所有数据库 */
     private static $_dbs = [];
@@ -26,7 +26,7 @@ class Model
     private $_limit = '';       
     private $_set   = array();  //insert update操作数据
     private $_page  = array();  //分页配置数组
-    private $_page_html = '';    //分页 html 代码
+    private $_page_html = array();    //分页 html 代码
     //sql 语句
     private $_last_sql;
 
@@ -63,7 +63,7 @@ class Model
      * @param array $config 数据库配置信息
      * @return $this
      */
-    public function db($sign = 'master', $config = array())
+    public function db($sign='master', $config=array())
     {
 	    if (!isset(self::$_dbs[$sign])) {
             if(!$config){
@@ -87,19 +87,14 @@ class Model
      */
     public function fetch()
     {
-        if (empty($this->_page)) {
-            return $this->query($this->_select());
+        if (empty($this->_page_html)) {
+           $result = $this->query($this->_select());
         } else {
-            require_once('Page.class.php');
-            $page = new Page($this->_page);
-            if ($this->_page['listNum']) {
-                $this->limit($this->_page['listNum'], $page->offset);
-            }
-            $arr['list'] = $this->query($this->_select());
-            $arr['page_html'] = $page->page_html();
-            $arr['total'] =  $this->_page['total'];
-            return $arr;
+            $result = $this->_page_html;
+            $result['list'] = $this->query($this->_select());
         }
+        $this->rest_all_var();
+        return $result;
     }
 
     /**
@@ -115,13 +110,14 @@ class Model
     /**
      * 获取/设置缓存数据
      */
-    public function fetchCache($cacheId=null) {
+    public function fetchCache($cacheId=null)
+    {
         if (is_null($cacheId)) {
-            $cacheId = md5($this->_last_sql);
+            $cacheId = substr(md5($this->_last_sql), 10);
         }
-        $result = $this->get($cacheId);
+        $result = $this->cache->get($cacheId);
         if (is_null($cacheId) || empty($result)) {
-            $result = &$this->fetch();
+            $result = $this->fetch();
             $this->cache->set($cacheId, $result);
         }
         return $result;
@@ -264,14 +260,20 @@ class Model
     {
         if (is_array($page)) {
             foreach ($this->_page as $key =>$val) {
-                if ($page[$key] !== NULL) {
+                if (!is_null($page[$key])) {
                     $this->_page[$key] = $page[$key];
                 }
             }
         } else {
             $this->_page['current_page'] = $page;
         }
-        $this->_page['total'] = $this->count($this->_where);
+        require_once('Page.class.php');
+        $page = new Page($this->_page);
+        if (empty($this->_limit) && $this->_page['listNum']) {
+            $this->limit($this->_page['listNum'], $page->offset);
+        }
+        $this->_page_html['page_thml'] = $page->page_html();
+        $this->_page_html['total'] =  $this->count($this->_where);
         return $this;
     }
 
@@ -286,20 +288,15 @@ class Model
      * @param string $urlrule url 规则
      * @param int $maxpage 最多显示页数
      *
-     * @return array
+     * @return $this
      */
     public function getlist(
         $where=NULL, $field=NULL, $order=NULL, $current_page=NULL,
         $listNum=NULL, $pageNum=NULL, $urlrule=NULL, $maxpage=NULL
     ) {
-        $arr = array();
-        $field && $this->field($field);
-        $where && $this->where($where);
-        $order && $this->order($order);
-        
-        
+        $this->select($where, $field, $order);
         //分页
-        $current_page && $this->page(array(
+        $this->page(array(
             'current_page'  =>  $current_page,
             'listNum'       =>  $listNum,
             'pageNum'       =>  $pageNum,
@@ -338,21 +335,8 @@ class Model
         $sql  = 'SELECT '.$this->_field.' FROM `'.$this->table_name.'`';
         $sql .= $this->_where?' WHERE '.$this->_where:'';
         $sql .= $this->_order?' ORDER BY '.$this->_order:'';
-        $sql .= $this->_limit;
+        $sql .= $this->_limit? ' LIMIT '. $this->_limit : '';
         return $sql;
-    }
-    /**
-     * 单条查询
-     * @param null $where 语句 可以是数组
-     * @param null $field 要查找的字段
-     * @param null $order 排序
-     *
-     * @return array()
-     */
-    public function find($where=NULL, $field=NULL, $order=NULL)
-    {
-        $list = $this->select($where, $field, $order, $limit=1);
-        return isset($list[0])?$list[0]:array();
     }
     /**
      * 查询数据条数
@@ -457,7 +441,6 @@ class Model
     public function query($sql)
     {
         $this->_last_sql = trim($sql);
-        $this->rest_all_var();
         if (strtoupper(substr($this->_last_sql, 0, 6)) == 'SELECT') {
             return $this->db->query($this->_last_sql);
         } else {

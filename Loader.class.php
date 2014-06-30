@@ -22,7 +22,7 @@ trait Loader
             if(!file_exists($file)){
                 return false;
             }
-            $_request_files[$file] = require($file);
+            self::$_files[$file] = require($file);
         }
         return self::$_files[$file];
     }

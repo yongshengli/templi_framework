@@ -58,7 +58,7 @@ class Templi extends Application
 
     /**
      * 获取 当前应用
-     * @return application
+     * @return Templi
      */
     public static function getAPP()
     {
@@ -186,18 +186,17 @@ class Templi extends Application
      * 加载并实例化模型类
      * @param string $model
      * @param bool $type true 高级载入模型文件 false 快捷实例化模型
-     * @return
-     * @internal param string $file
+     * @return Model
      */
     public static function model($model, $type=false)
     {
         static $_models;
         if(!isset($_models[$model.$type])){
-            if($type){
+            if ($type) {
                 $class = $model.'Model';
                 self::load(self::get_config('app_path').'model/'.$class.'.php');
                 $_models[$model.$type] = new $class;
-            }else{
+            } else {
                 $_models[$model.$type] = new Model($model);
             }
         }
