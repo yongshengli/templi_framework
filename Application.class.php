@@ -6,8 +6,11 @@
  * Time: 下午4:16
  */
 
+require_once 'Loader.class.php';
+
 abstract class Application
 {
+    use Loader;
     /**
      * 获取当前的木块名
      * @return string
@@ -49,21 +52,6 @@ abstract class Application
         }
         return $arr[$myKey];
     }
-    /**
-     * 引入文件
-     * 默认加载路径是 系统类库
-     */
-    public static function include_file($file)
-    {
-        static $_request_files = array();
-        if(!isset($_request_files[$file])){
-            if(!file_exists($file)){
-                return false;
-            }
-            $_request_files[$file] = require($file);
-        }
-        return $_request_files[$file];
-    }
 
     /**
      * 自定义异常处理
@@ -104,27 +92,13 @@ abstract class Application
     }
 
     /**
-     * 多位置引入文件
-     * 找到文件 后返回
-     */
-    public static function array_include($file_arr=array())
-    {
-        foreach($file_arr as $file){
-            $result = self::include_file($file);
-            if($result){
-                return $result;
-            }
-        }
-        return false;
-    }
-    /**
      * 自动加载 类文件 包括 Model、controller、libraries 类
      */
     public function __autoload($class)
     {
-        switch(TRUE){
+        switch(true){
             case substr($class,-5)=='Model':
-                self::include_file(self::get_config('app_path').'model/'.$class.'.php');
+                self::load(self::get_config('app_path').'model/'.$class.'.php');
                 break;
             case substr($class,-10)=='Controller':
                 self::array_include(array(

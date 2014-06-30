@@ -48,7 +48,7 @@ class Dispatcher
         }
 
         if (file_exists($path)) {
-            Templi::include_file($path);
+            Templi::load($path);
             return new $this->class;
         } else {
             if(APP_DEBUG){

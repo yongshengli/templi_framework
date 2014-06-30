@@ -8,12 +8,18 @@ defined('IN_TEMPLI') or die('非法引用');
  */
 class Model
 {
+    /** @var string 当前表明 */
     public $table_name ='';
-    //数据库连接对象
-    protected $db; 
-    //缓存类
-    public $cache = null;
-    
+
+    /** @var  DB 当前数据库连接对象*/
+    protected $db;
+
+    /** @var  Cache 缓存对象*/
+    private $cache = null;
+
+    /** @var array 所有数据库 */
+    private static $_dbs = [];
+
     private $_where = '';
     private $_field = '';
     private $_order = '';
@@ -33,6 +39,8 @@ class Model
     function __construct($table='', $dbSign='master', $config = array())
     {
         $this->db($dbSign, $config);
+        require_once('Cache.class.php');
+        $this->cache = Cache::factory();
         $table && $this->table_name = $this->db->prefix.$table;
         $this->rest_all_var();
     }
@@ -57,20 +65,78 @@ class Model
      */
     public function db($sign = 'master', $config = array())
     {
-	    static $db = array();
-        require_once('Cache.class.php');
-        $this->cache = Cache::factory(); 
-	    if(!isset($db[$sign])){
+	    if (!isset(self::$_dbs[$sign])) {
             if(!$config){
                 $config = Templi::get_config("db.{$sign}");
             }
             $className = ucfirst($config['dbdrive']);
             $dbdriveFile = 'Model/' . $className . '.class.php';
             require_once($dbdriveFile);
-            $db[$sign] = new $className($config);
+            self::$_dbs[$sign] = new $className($config);
         }
-	    $this->db = isset($db[$sign]) ? $db[$sign] : $db['master'];
+        if (isset(self::$_dbs[$sign])) {
+            $this->db = self::$_dbs[$sign];
+        } else {
+            $this->db = self::$_dbs['master'];
+        }
         return $this;
+    }
+
+    /**
+     * 取数全部数据记录
+     */
+    public function fetch()
+    {
+        if (empty($this->_page)) {
+            return $this->query($this->_select());
+        } else {
+            require_once('Page.class.php');
+            $page = new Page($this->_page);
+            if ($this->_page['listNum']) {
+                $this->limit($this->_page['listNum'], $page->offset);
+            }
+            $arr['list'] = $this->query($this->_select());
+            $arr['page_html'] = $page->page_html();
+            $arr['total'] =  $this->_page['total'];
+            return $arr;
+        }
+    }
+
+    /**
+     * 取一条数据记录
+     *
+     * @return array
+     */
+    public function fetchOne()
+    {
+        $result = $this->fetch();
+        return isset($result[0]) ? $result[0] : [];
+    }
+    /**
+     * 获取/设置缓存数据
+     */
+    public function fetchCache($cacheId=null) {
+        if (is_null($cacheId)) {
+            $cacheId = md5($this->_last_sql);
+        }
+        $result = $this->get($cacheId);
+        if (is_null($cacheId) || empty($result)) {
+            $result = &$this->fetch();
+            $this->cache->set($cacheId, $result);
+        }
+        return $result;
+    }
+
+    /**
+     * 获取一条 缓存结果
+     *
+     * @param string $cacheId
+     * @return array
+     */
+    public function fetchCacheOne($cacheId=null)
+    {
+        $result = $this->fetchCache($cacheId);
+        return isset($result[0]) ? $result[0] : [];
     }
     /**
      * 设置操作数据表
@@ -96,7 +162,7 @@ class Model
             return $this;
         }
         if (is_array($field)) {
-            $field = implode(',', array_map(array($this, 'add_special_char'), $field));
+            $fields = implode(',', array_map(array($this, 'add_special_char'), $field));
         } else {
             $fields = explode(',', $field);
             array_walk($fields, array($this, 'add_special_char'));
@@ -109,7 +175,7 @@ class Model
 
     /**
      * where 条件
-     * @param array or string $where
+     * @param array|string $where
      *
      * @param string $compare
      * @return $this
@@ -122,7 +188,7 @@ class Model
 
     /**
      * where 条件
-     * @param array or string $where
+     * @param array|string $where
      * @param string $compare
      * @return $this
      */
@@ -167,10 +233,11 @@ class Model
 
     /**
      * limit
+     * $limit example 0,20* example 0,20
+     *
      * @param $listNum
      * @param null $offset
      * @return $this
-     * @internal param string $limit example 0,20* example 0,20
      */
     public function limit($listNum, $offset = NULL)
     {
@@ -204,28 +271,27 @@ class Model
         } else {
             $this->_page['current_page'] = $page;
         }
+        $this->_page['total'] = $this->count($this->_where);
         return $this;
     }
 
     /**
      * 多条查询并分页
-     * @param null $where
+     * @param null $where 条件语句 可以为数组
      * @param string $field 字段
-     * @param null $order
+     * @param string $order 排序
      * @param int $current_page 当前页
      * @param int $listNum 每页显示条数
      * @param int $pageNum 每页显示的 页码数
      * @param string $urlrule url 规则
-     * @param $maxpage 最多显示页数
-     * @internal param \or $string array $where 条件语句 可以为数组
-     * @internal param string $oreder 排序
-     * @internal param string $limit 条数限制
-     * @internal param array $arr [list] 数据列表 $arr['page_html'] 页码html
+     * @param int $maxpage 最多显示页数
      *
      * @return array
      */
-    public function getlist($where=NULL, $field=NULL, $order=NULL, $current_page=NULL, $listNum=NULL, $pageNum=NULL, $urlrule=NULL, $maxpage=NULL)
-    {
+    public function getlist(
+        $where=NULL, $field=NULL, $order=NULL, $current_page=NULL,
+        $listNum=NULL, $pageNum=NULL, $urlrule=NULL, $maxpage=NULL
+    ) {
         $arr = array();
         $field && $this->field($field);
         $where && $this->where($where);
@@ -234,37 +300,24 @@ class Model
         
         //分页
         $current_page && $this->page(array(
-            'total'         =>  $this->count($this->_where),
             'current_page'  =>  $current_page,
             'listNum'       =>  $listNum,
             'pageNum'       =>  $pageNum,
             'urlrule'       =>  $urlrule,
             'maxpage'       =>  $maxpage
         ));
-        
-        require_once('Page.class.php');
-        $page = new Page($this->_page);
-        if ($this->_page['listNum']) {
-            $this->limit($this->_page['listNum'], $page->offset);
-        }
-        $arr['list'] = $this->select();
-        $arr['page_html'] = $page->page_html();
-        $arr['total'] =  $this->_page['total'];
-        
-        return $arr;
+
+        return $this;
     }
 
     /**
      * 多条查询
-     * @param null $where
+     * @param array $where 条件语句 可以为数组
      * @param string $field 字段
-     * @param null $order
+     * @param string $order 排序
      * @param string $limit 条数限制
      *
-     * @internal param \or $string array $where 条件语句 可以为数组
-     * @internal param string $oreder 排序
-     *
-     * @return
+     * @return $this
      */
     public function select($where=NULL, $field=NULL, $order=NULL, $limit=NULL)
     {
@@ -273,21 +326,26 @@ class Model
         $field && $this->field($field);
         $order && $this->order($order);
         $limit && $this->limit($limit);
-        $sql  = 'SELECT '.$this->_field.' FROM `'.$this->table_name.'`';
-        $sql .= $this->_where?' WHERE '.$this->_where:'';
-        $sql .= $this->_order?' ORDER BY '.$this->_order:'';
-        $sql .= $limit?' LIMIT '.$limit:'';
-        return $this->query($sql);
+
+        return $this;
     }
 
     /**
+     * 生成 select sql 语句
+     */
+    private function _select()
+    {
+        $sql  = 'SELECT '.$this->_field.' FROM `'.$this->table_name.'`';
+        $sql .= $this->_where?' WHERE '.$this->_where:'';
+        $sql .= $this->_order?' ORDER BY '.$this->_order:'';
+        $sql .= $this->_limit;
+        return $sql;
+    }
+    /**
      * 单条查询
-     * @param null $where
-     * @param null $field
-     * @param null $order
-     * @internal param \or $string array  $where语句 可以是数组
-     * @internal param string $fields 要查找的字段
-     * @internal param string $oeder 排序
+     * @param null $where 语句 可以是数组
+     * @param null $field 要查找的字段
+     * @param null $order 排序
      *
      * @return array()
      */
@@ -298,14 +356,14 @@ class Model
     }
     /**
      * 查询数据条数
-     * @param array or string 查询条件 可以是 数组 
+     * @param array|string 查询条件 可以是 数组
      */
     public function count($where = NULL)
     {
         $where && $this->where($where);
         
         $sql = 'SELECT COUNT(*) AS `num` FROM '.$this->table_name;
-        $sql .=$where?' where '.$this->_where:'';
+        $sql .= $where?' where '.$this->_where:'';
         $sql .=' limit 1';
         $res = $this->query($sql);
         return isset($res[0]['num'])?$res[0]['num']:$res;
@@ -313,8 +371,8 @@ class Model
 
     /**
      * 修改数据
-     * @param array or string $data要修改的数据 字符串为 sql 语句 数组key 为字段名 value 为字段值
-     * @param array or string $where 条件语句 可为数组
+     * @param mixed $data 要修改的数据 字符串为 sql 语句 数组key 为字段名 value 为字段值
+     * @param mixed $where 条件语句 可为数组
      *
      * @return bool
      */
@@ -323,8 +381,9 @@ class Model
         $data && $this->set($data);
         $where && $this->where($where);
         
-        if(!$this->_where)
+        if(!$this->_where) {
              return false;
+        }
         foreach($this->_set as $k => $v){
             switch(substr($v, 0, 2)){
                 case '+=':
@@ -381,7 +440,7 @@ class Model
     }
     /**
       * 删除数据 
-      * @param string or array $where 条件
+      * @param string|array $where 条件
       * @return bool
       */
     public function delete($where=NULL)
@@ -408,7 +467,7 @@ class Model
 
     /**
      * 对字段两边加反引号，以保证数据库安全
-     * @param $value 数组值
+     * @param string $value 数组值
      * @return string
      */
     public function add_special_char(&$value)
@@ -423,7 +482,7 @@ class Model
 
     /**
      * 对字段值两边加引号，以保证数据库安全
-     * @param $value 数组值
+     * @param string $value 数组值
      * @param $quotation
      * @return string
      */

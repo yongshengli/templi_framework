@@ -92,7 +92,7 @@ class Templi extends Application
     }
     /**
      * 创建应用
-     * @param type $config
+     * @param array $config
      * @return \Templi
      */
     public static function createWebApp($config)
@@ -132,19 +132,19 @@ class Templi extends Application
     private static function load_http_lib()
     {
         //载入公共函数库
-        self::include_file(TEMPLI_PATH.'function.func.php');
+        self::load(TEMPLI_PATH.'function.func.php');
         //载入异常处理类
-        self::include_file(TEMPLI_PATH.'Abnormal.class.php');
+        self::load(TEMPLI_PATH.'Abnormal.class.php');
         //载入路由配类
-        self::include_file(TEMPLI_PATH.'Router.class.php');
+        self::load(TEMPLI_PATH.'Router.class.php');
         //载入控制器分配类
-        self::include_file(TEMPLI_PATH.'Dispatcher.class.php');
+        self::load(TEMPLI_PATH.'Dispatcher.class.php');
         //载入 控制器类
-        self::include_file(TEMPLI_PATH.'Controller.class.php');
+        self::load(TEMPLI_PATH.'Controller.class.php');
         //载入 模型类
-        self::include_file(TEMPLI_PATH.'Model.class.php');
+        self::load(TEMPLI_PATH.'Model.class.php');
         //载入 cookie 类
-        self::include_file(TEMPLI_PATH.'Cookie.class.php');
+        self::load(TEMPLI_PATH.'Cookie.class.php');
     }
 
     /**
@@ -165,9 +165,9 @@ class Templi extends Application
      * $field 为空时 获取全部配置信息
      * $field 为字符串时 返回当前 索引 配置值
      * $field 为数组时 设置配置信息
-     * @param $field
-     * @param null $default
-     * @return array|mixed
+     * @param string $field
+     * @param mixed  $default
+     * @return mixed
      */
     public static function get_config($field = NULL, $default = NULL)
     {
@@ -184,7 +184,7 @@ class Templi extends Application
 
     /**
      * 加载并实例化模型类
-     * @param $model
+     * @param string $model
      * @param bool $type true 高级载入模型文件 false 快捷实例化模型
      * @return
      * @internal param string $file
@@ -195,7 +195,7 @@ class Templi extends Application
         if(!isset($_models[$model.$type])){
             if($type){
                 $class = $model.'Model';
-                self::include_file(self::get_config('app_path').'model/'.$class.'.php');
+                self::load(self::get_config('app_path').'model/'.$class.'.php');
                 $_models[$model.$type] = new $class;
             }else{
                 $_models[$model.$type] = new Model($model);
@@ -206,8 +206,8 @@ class Templi extends Application
 
     /**
      * 加载模板视图文件
-     * @param $file 文件名
-     * @param $module 模块名
+     * @param string $file 文件名
+     * @param string $module 模块名
      * @return string
      */
     public function include_html($file,$module=null)
@@ -224,8 +224,8 @@ class Templi extends Application
 
     /**
      * 加载模块 函数库 类库文件
-     * @param $file 文件名
-     * @param $module 模块名
+     * @param string $file 文件名
+     * @param string $module 模块名
      * @return bool
      */
     public function include_module_file($file, $module=null)
@@ -235,25 +235,25 @@ class Templi extends Application
         } else {
             $path = self::get_config('app_path').'controller/'.$this->getModuleName().'/libraries/';
         }
-        return self::include_file($path.$file);
+        return self::load($path.$file);
     }
 
     /**
      * 加载公共 函数库 类库文件
-     * @param $file 文件名
-     * @param null $path
+     * @param string $file 文件名
+     * @param string $path
      * @internal param $module 模块名
      * @return bool
      */
     public function include_common_file($file, $path=null)
     {
         if (is_null($path)) {
-            $result = self::include_file(self::get_config('app_path').'/libraries/'.$file);
+            $result = self::load(self::get_config('app_path').'/libraries/'.$file);
             if($result == false){
-                $result = self::include_file(TEMPLI_PATH.$file);
+                $result = self::load(TEMPLI_PATH.$file);
             }
         } else {
-            $result = self::include_file(trim($path,'/').'/'.$file);
+            $result = self::load(trim($path,'/').'/'.$file);
         }
         return $result;
     }
