@@ -1,7 +1,7 @@
 <?php
 defined('IN_TEMPLI') or die('非法引用');
 /**
- * 模型类
+ * 模型基类
  * @author 七觞酒
  * @email 739800600@qq.com
  * @date 2013-3-20

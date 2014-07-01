@@ -1,7 +1,7 @@
 <?php
 defined('IN_TEMPLI') or die('非法引用');
 /**
- * TempLi 共共函数库 常用函数
+ * TempLi 控制器基类
  * @author 七觞酒
  * @email 739800600@qq.com
  * @date  2013-1-20
@@ -12,7 +12,7 @@ abstract class Controller
     private $view = null;   //视图对象
     function __construct()
     {
-        Templi::include_file(TEMPLI_PATH.'View.class.php');
+        require_once('View.class.php');
         $this->view = new View();
         if(method_exists($this,'init'))
             $this->init();
