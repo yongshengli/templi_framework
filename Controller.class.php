@@ -1,18 +1,18 @@
 <?php
 defined('IN_TEMPLI') or die('非法引用');
 /**
- * TempLi 共共函数库 常用函数
+ * TempLi 控制器基类
  * @author 七觞酒
  * @email 739800600@qq.com
  * @date  2013-1-20
  */
 abstract class Controller
 {
-    
-    private $view = null;   //视图对象
+    /** @var View  */
+    private $view = null;
     function __construct()
     {
-        Templi::load(TEMPLI_PATH.'View.class.php');
+        require_once('View.class.php');
         $this->view = new View();
         if(method_exists($this,'init'))
             $this->init();
@@ -32,7 +32,7 @@ abstract class Controller
      */
     public function getModuleName()
     {
-        return '';
+        return Templi::getApp()->getModuleName();
     }
 
     /**
@@ -40,12 +40,12 @@ abstract class Controller
      */
     public function getActionName()
     {
-        return '';
+        return Templi::getAPP()->getActionName();
     }
     /**
      * 给模板文件分配变量
      * @param string $name 变量名称
-     * @param \mid|string $value 变量值
+     * @param mixed $value 变量值
      */
     protected function assign($name, $value='')
     {
@@ -62,7 +62,7 @@ abstract class Controller
 
     /**
      * 显示 视图
-     * @param $file 模板文件名称
+     * @param string $file 模板文件名称
      * @param null $dir
      * @internal param \所在模块 $module
      */

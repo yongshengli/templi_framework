@@ -44,7 +44,7 @@ class View
     /**
      * 分配变量 单个变量分配
      * @param string $name 变量名
-     * @param \mid|string $value 变量值
+     * @param mixed|string $value 变量值
      */
     public function assign($name, $value=''){
         $this->viewVar[$name] = $value;
